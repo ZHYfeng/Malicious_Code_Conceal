@@ -1,0 +1,88 @@
+
+
+ Brundle Fly - Good-natured Linux ELF virus supporting kernel 2.2 and 2.4
+ --------------------------------------------------------------------------
+ Copyright 2001 Konrad Rieck <kr@roqe.org>, Konrad Kretschmer <kk@roqe.org>
+ In memory to Seth Brundle
+ $Id: README,v 1.5 2001/07/11 18:34:48 kr Exp $
+
+ 
+ Introduction
+ ------------
+ Brundle Fly (BF) is a good-natured Linux virus that infects ELF binaries. 
+ It is i386 specific and has been successfully tested on the following Linux
+ kernels: 2.2.17, 2.4.1, 2.4.3 and 2.4.5. BF is library-independent and
+ therefore works in either libc5 or glibc environment.
+
+ For detailed information read the german documentation brundle-fly.html at
+ http://www.roqe.org/brundle-fly. 
+
+
+ Short overview for compilation
+ ------------------------------
+
+ BF confirms to the GNU autoconf/automake standard and compiles as most 
+ GNU programs, using the following sequence of commands: 
+
+    $ ./configure
+    $ make
+
+ There are two important configure switches that control how the acutally
+ virus will work. 
+
+   --with-propagation
+  
+   The virus is compiled to injected its code into executable binaries in 
+   the following directoires: ., .., and ../... 
+   If this switch is not present the virus will only infect one files called
+   "./host".
+
+   --with-no-warning
+
+   By default every infected binary will push a message as: "WARNING:
+   brundle-fly infected!" to STDOUT. By selecting this switch you surpress
+   this warning. 
+ 
+   --help
+  
+   Get all the other switches for the configure script. 
+
+ Note that BF needs a very special environment to compile probably,
+ eventhough the virus seemed to work on most systems, it didn't compile 
+ correctly on those. We recommend one of the following setups that didn't
+ cause any problems.
+
+ - Linux kernel 2.4.5, gcc 2.95.3, as 2.9.1, ld 2.9.1
+ - Linux kernel 2.4.3, gcc 2.95.4, as 2.11.90.0.7, ld 2.11.90.0.7
+ - Linux kernel 2.2.17, gcc 2.95.2, as 2.9.5, ld 2.9.5
+
+ On any other environment first build the default version that only infects
+ the file called ./host and check if this binary really works by doing the
+ following inside the src directory:
+
+   $ cd src
+   $ chmod u+x ./brundle-fly
+   $ strace ./brundle-fly
+
+ After executing brundle-fly the file ./host has to be infected and should
+ warn you with the warning descripted above. A typical indication for an 
+ inproper environment is the signal "illegal instruction". 
+
+ You can find out how many files you can infect by running the following 
+ commands: 
+
+   $ cd src
+   $ make stats
+
+ Have fun, 
+ Konrad & Konrad 
+
+
+
+
+
+
+
+    
+ 
+

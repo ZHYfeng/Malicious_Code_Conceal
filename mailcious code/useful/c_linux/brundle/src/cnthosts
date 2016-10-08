@@ -1,0 +1,54 @@
+#!/bin/bash
+#
+# Brundle Fly - Good-natured Linux ELF virus supporting kernel 2.2 and 2.4
+# Copyright 2001 Konrad Rieck <kr@roqe.org>, Konrad Kretschmer <kk@roqe.org>
+# In memory to Seth Brundle 
+#
+# $Id: cnthosts,v 1.4 2001/07/11 10:14:10 kr Exp $
+#
+
+if [ -z "$*" ] ; then
+   echo "usage: cnt_hosts dir [dir ...]"
+   echo "this script counts all possible hosts in the given directories."
+   exit
+fi
+
+echo
+echo "This script would like to scan the following directories for files"
+echo "that represent potential hosts for the brundly-fly virus. It will"
+echo "not inject the virus. It will calculate some statistics."
+echo
+echo $*
+echo
+echo -n "Is this okay [y/n]: "
+
+read ans
+
+if [ "$ans" != "y" ] ; then
+   exit
+fi
+
+true=0
+false=0
+all=0
+echo "Counting possible hosts"
+
+for dir in $* ; do 
+   for i in $dir/* ; do 
+      if ./inject -n $i /tmp/brundle-fly 1>/dev/null 2>/dev/null ; then
+         ((true=true+1))
+         echo -n "o"
+      else
+         ((false=false+1))
+         echo -n "."
+      fi
+      ((all=all+1))
+   done
+   echo -n "*"
+done
+
+echo
+echo "$true binaries could be infected."
+echo "$false binaries could not be infected."
+((ratio=true*100/all))
+echo "Percentage: $ratio%"

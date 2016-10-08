@@ -1,0 +1,20 @@
+/* config.h.in.  Generated automatically from configure.in by autoheader.  */
+
+/* Define if you have the ANSI C header files.  */
+#undef STDC_HEADERS
+
+/* Define if you have the <elf.h> header file.  */
+#undef HAVE_ELF_H
+
+/* Define if you have the <sys/elf.h> header file.  */
+#undef HAVE_SYS_ELF_H
+
+/* Define if you have the <sys/exec_elf.h> header file.  */
+#undef HAVE_SYS_EXEC_ELF_H
+
+/* Name of package */
+#undef PACKAGE
+
+/* Version number of package */
+#undef VERSION
+

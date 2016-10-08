@@ -1,0 +1,87 @@
+dnl
+dnl Brundle Fly - Good-natured Linux ELF virus supporting kernel 2.2 and 2.4
+dnl Copyright 2001 Konrad Rieck <kr@roqe.org>, Konrad Kretschmer <kk@roqe.org>
+dnl In memory to Seth Brundle 
+dnl
+dnl $Id: configure.in,v 1.11 2001/07/11 15:36:28 kr Exp $
+dnl
+
+AC_INIT(README)
+AM_INIT_AUTOMAKE(brundle-fly, 0.0.1)
+AM_CONFIG_HEADER(config.h)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_CHECK_PROG(AS,as,as)
+AC_CHECK_PROG(LD,ld,ld)
+
+if test "x$GCC" != "xyes" ; then 
+  echo "Error:"
+  echo "The GNU C Compiler (gcc) is required to compile brundle-fly, you can"
+  echo "get the latest version at ftp://ftp.gnu.org."
+  exit
+fi
+
+if test "x$AS" != "xas" ; then 
+  echo "Error:"
+  echo "The GNU Assembler (gas) is required to compile brundle-fly, you can"
+  echo "get the latest version at ftp://ftp.gnu.org."
+  exit
+fi
+
+if test "x$LD" != "xld" ; then 
+  echo "Error:"
+  echo "The GNU linker (gld) is required to compile brundle-fly, you can"
+  echo "get the latest version at ftp://ftp.gnu.org."
+  exit
+fi
+
+
+dnl Checks for libraries.
+
+dnl Checks for headers
+AC_STDC_HEADERS
+AC_HAVE_HEADERS(elf.h sys/elf.h sys/exec_elf.h)
+
+AC_ARG_WITH(elf64,
+   [  --with-elf64            enable 64bit elf format],
+   [
+      if test "x$withval" != "$xno" ; then
+         CFLAGS="$CFLAGS -DELF_64BIT"        
+      fi                                      
+   ]                                                                             
+)
+
+AC_ARG_WITH(debug,
+   [  --with-debug            enable debug mode],
+   [
+      if test "x$withval" != "$xno" ; then
+         CFLAGS="$CFLAGS -DDEBUG -g"        
+      fi                                      
+   ]                                                                             
+)
+
+AC_ARG_WITH(propagation,
+   [  --with-propagation      enable self propagation],
+   [
+      if test "x$withval" != "$xno" ; then
+         VFLAGS="$VFLAGS -DPROPAGATION"        
+      fi                                      
+   ]                                                                             
+)
+
+AC_ARG_WITH(no-warning,
+   [  --with-no-warning       enable no warning],
+   [
+      if test "x$withval" != "$xno" ; then
+         VFLAGS="$VFLAGS -DSILENT"        
+      fi                                      
+   ]                                                                             
+)
+
+AC_SUBST(GCC)
+AC_SUBST(AS)
+AC_SUBST(LD)
+AC_SUBST(VFLAGS)
+AC_SUBST(CFLAGS)
+AC_OUTPUT(Makefile src/Makefile)

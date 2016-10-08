@@ -1,0 +1,7 @@
+2009-12-17 G2: disassembly is done only once, improved error checking
+2009-12-16 *: common code
+2009-12-15 G: error recovery
+2009-10-12 A: error recovery
+2009-07-12 A: .bss being copied by memcpy
+2009-07-10 G: Minor opr. in code invoking libc
+2009-07-10 G: Initial release

