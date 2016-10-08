@@ -1,0 +1,7 @@
+=== This file passed through VX Heavens (http://vx.netlux.org/) ===
+Virus Linux.Adhoc.b by herm1t / Sep 2003
+
+To compile type "make clean all". Size of virus ~1300 bytes.
+First copy will die with segmentation fault.
+Infects 1 file in current directory.
+Inline assembly was used only for the syscalls and "delta" routine.

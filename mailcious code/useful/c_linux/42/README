@@ -1,0 +1,53 @@
+Linux.FortyTwo (x) herm1t, aug 2008
+
+Features
+
+	* Polymorphic decryptor (Codegen + ETG)
+	* Uses crc32b (SSE4.2) instruction for decryption
+	* Uses signal handler to emulate crc32b on old CPU's
+	* Uses "layered" infection + EPO on both layers
+
+About
+
+Recently I read Peter Ferrie blog post where he expressing hope that soon
+people like me will run out of ideas and will stop writing viruses.
+(http://blogs.technet.com/mmpc/archive/2008/08/05/my-favourite-time-of-the-year.aspx)
+I just want to say that if i ever will run out of ideas (it is scarcely
+imaginable), i'll be using yours, Peter. ;-) Just to proove that it was not
+a mere assertion, I quickly wrote this virus. Let's read another Peter's post:
+
+	CRC32 in one instruction! Compare that to six instructions with a loop.
+	The performance increase could be significant. The instruction uses the
+	CRC32/4 (also known as CRC32C) polynomial (0x11EDC6F41). As a result,
+	anyone who was using the CRC-32-IEEE 802.3 polynomial (0x04C11DB7) will
+	need to recalculate their values, but that's easy. Maybe we will
+	finally see people using 32-bit CRC32 routines, instead of the 16-bit
+	copy-and-paste efforts because they didn't understand what's going on.
+ 
+	Of course, the downside is that the VX guys will probably be able to
+	take advantage of it before AV guys can. That's not as bad as it
+	sounds - a virus that relies solely on that instruction will run only
+	on that CPU and nothing earlier. Great, limited audience! On the other
+	hand, a virus that carries dual-case code (like Win32/Legacy did) will
+	defeat the purpose of having the modern code, since it would require
+	the use of CPUID (which we can fake, and thus force whichever code path
+	that we want). So a virus doesn't gain an advantage that way, except
+	as a possible and short-lived anti-emulation tactic, if it contains a
+	bug in the CPUID code (like Win32/Legacy did) and always chooses the
+	modern path.
+	(http://blogs.technet.com/mmpc/archive/2008/07/12/the-power-of-sse.aspx)
+	
+Right, this virus uses CRC32 instruction for decryption and in the same time
+avoids CPUID. The victim will be infected twice. The first "virus" (layer1)
+will setup the handler for the "Invalid instruction" signal. The second "virus"
+(layer2) consists of polymorphic decryptor (produced with CG/ETG) with crc32b
+inside and the virus itself. The layers looks like they are two different
+viruses, they located in different parts of file and will gain control in
+different ways (layer1 from .ctors, layer2 from __libc_start_main() where
+virus replaced the main()'s address with the address of itself).
+
+If an old CPU (like the box where I writing this) will attempt to execute
+the crc32b the control will be transfered to signal handler, when it will
+examine the location that raised the exception and if there are instruction
+we're waiting for, it will emulate its work. On Nehalems the crc32b will
+be executed natively without exceptions.
