@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1129747920 source:e:\zhy\git\malicious-code-conceal\mailcious-code\useful\c_windows\esenin\bindata.cpp
+
+1129869480 source:e:\zhy\git\malicious-code-conceal\mailcious-code\useful\c_windows\esenin\main.cpp
+	<windows.h>
+	<time.h>
+	"BinData.cpp"
+
+1129747920 e:\zhy\git\malicious-code-conceal\mailcious-code\useful\c_windows\esenin\bindata.cpp
+

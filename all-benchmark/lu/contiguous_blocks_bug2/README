@@ -1,0 +1,24 @@
+3.BUG2: Wrong synchronous barrier cause wrong outputs
+- contigouos_blocks版本
+- line=581
+```c
+    long id;
+```
+- line=607
+```c
+    id=ass;
+    assert(id == ass);
+    /*BARRIER(Global->start, P);*/
+```
+- line=649
+```c
+    ass++;
+    BARRIER(Global->start, P);
+```
+- 参数
+```c
+#define DEFAULT_N                         3
+#define DEFAULT_P                         2
+#define DEFAULT_B                         2
+```
+- 已测试

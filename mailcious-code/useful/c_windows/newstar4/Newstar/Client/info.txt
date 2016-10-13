@@ -1,0 +1,6 @@
+Created by Bull Moose (Formerly ATML) under the GPL.
+Newstar Client Connector:
+USAGE: client [Address] [Port] [Password]
+	[Address] = Address to the server.
+	[Port] = Port to the server.
+	[Password] = Secure password to connect to server.

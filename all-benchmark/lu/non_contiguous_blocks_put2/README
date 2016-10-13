@@ -1,0 +1,8 @@
+1.LU分解为矩阵计算，在main函数初始化，分配线程分别计算部分数据。通过同步机制保持各线程之间同步，如果修改同步机制会出错
+- 参数
+```c
+#define DEFAULT_N                         4
+#define DEFAULT_P                         2
+#define DEFAULT_B                         2
+#define PAGE_SIZE			1024
+```

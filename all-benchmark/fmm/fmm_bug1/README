@@ -1,0 +1,10 @@
+1.BUG1:Multi threads read and write global id without locks
+- 文件fmm.C函数ParallelExecute()中line=169，修改为:
+```c
+   // LOCK(G_Memory->count_lock);
+     my_id = G_Memory->id;
+     assert(my_id == G_Memory->id);
+     G_Memory->id++;
+   // UNLOCK(G_Memory->count_lock);
+```
+- 已测试

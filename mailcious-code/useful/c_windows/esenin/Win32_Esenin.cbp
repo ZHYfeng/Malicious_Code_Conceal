@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Win32_Esenin" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Win32 Release">
+				<Option output="E:/ZHY/git/malicious-code-conceal/mailcious-code/useful/c_windows/esenin/Release/Win32_Esenin" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Release" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-fexceptions" />
+					<Add option="-O2" />
+					<Add option="-DWIN32" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_MBCS" />
+				</Compiler>
+				<Linker>
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+				</Linker>
+			</Target>
+			<Target title="Win32 Debug">
+				<Option output="E:/ZHY/git/malicious-code-conceal/mailcious-code/useful/c_windows/esenin/Debug/Win32_Esenin" prefix_auto="1" extension_auto="1" />
+				<Option object_output="Debug" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-W" />
+					<Add option="-fexceptions" />
+					<Add option="-g" />
+					<Add option="-DWIN32" />
+					<Add option="-D_DEBUG" />
+					<Add option="-D_WINDOWS" />
+					<Add option="-D_MBCS" />
+				</Compiler>
+				<Linker>
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winspool" />
+					<Add library="comdlg32" />
+					<Add library="advapi32" />
+					<Add library="shell32" />
+					<Add library="ole32" />
+					<Add library="oleaut32" />
+					<Add library="uuid" />
+					<Add library="odbc32" />
+					<Add library="odbccp32" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="BinData.cpp" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

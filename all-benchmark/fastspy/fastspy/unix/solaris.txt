@@ -1,0 +1,4 @@
+To compile under Solaris add the folowing options to LDFLAGS:
+-lnsl -lsocket -lpthread -lposix4
+
+

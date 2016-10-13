@@ -1,0 +1,11 @@
+September 28, 2002 - Marc Pompl
+	* Security patch (buffer overflow) applied
+
+December 23, 2001 - Marc Pompl
+	* BugFix: cgi`s are now executable
+
+November 5, 2001 - Marc Pompl
+	* Security patch (buffer overflow) applied
+
+October 31, 2001 - Marc Pompl
+	* URLs now convert %20s correctly to spaces

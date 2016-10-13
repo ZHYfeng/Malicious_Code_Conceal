@@ -1,0 +1,45 @@
+NAME:
+        FastSpy
+        
+CATEGORY:
+        Network port scanners, security auditing tools.
+
+DESCRIPTION:
+
+        Fastspy  is  a  free  (GPL)  multiplatform  tool  to
+        inspect   network   enviroments   over   potentially
+        security flaws.
+
+        Its most simple features  include scanning of active
+        ports on a target machine  by services file or ports
+        range, subnet scan using wild chars to looking for a
+        specific  service over  a wide  range of  addresses,
+        also it performs logging and reporting.
+
+        Some advanced  features include possibility  to send
+        user data over  a connection during the  scan to log
+        server response.  It can also read  a user specified
+        list of hosts to check instead of using command line
+        options.  Also, timing  controls to  force a  low or
+        high network impact.
+
+DETAILS:
+
+        Fastspy  is  designed  to  be  a  high-multithreaded
+        program, the scan is implemented by a massive thread
+        generation  routine  to  maximize  network  bandwith
+        optimizing idle-time connection response.
+
+NOTES:   
+
+        One  of  Fastspy goals  is  the  portability of  the
+        source code across different operating systems.
+        To do this it  simply implements an embedded "Kernel
+        Abstraction  Library"  customizables  to  reach  the
+        requested functionality indipendently from OSes.
+        Currently  it   has  been  successfully   ported  to
+        win32  enviroments (winnt,  win9x) and  un*x (posix)
+        flavours.
+        
+        
+

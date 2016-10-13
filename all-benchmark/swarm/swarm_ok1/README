@@ -1,0 +1,6 @@
+1.本程序实现了基数排序算法，参数已经作为默认值写入，直接运行即可。
+2.此程序根据线程数量，单独分配内存空间，每次创建线程用不同的参数。
+参数的初始化工作为main函数完成，所以不存在BUG Multi threads read and write global id without locks.
+5.程序计算函数为radixsort_swarm_s3();调用了两次countsort_swarm();
+countsort_swarm()中的同步机制SWARM_Barrier()。
+删除countsort_swarm()的SWARM_Barrier()会导致BUG;

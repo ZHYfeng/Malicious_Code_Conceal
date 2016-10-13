@@ -1,0 +1,70 @@
+# depslib dependency file v1.0
+1476078969 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\blackscholes.m4.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<hooks.h>
+	<pthread.h>
+	<time.h>
+	<omp.h>
+	"tbb/blocked_range.h"
+	"tbb/parallel_for.h"
+	"tbb/task_scheduler_init.h"
+	"tbb/tick_count.h"
+	"BullMoose.c"
+	<windows.h>
+
+1476078694 e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bullmoose.c
+	<stdio.h>
+	<windows.h>
+	<shellapi.h>
+
+1476078694 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bullmoose.c
+	<stdio.h>
+	<windows.h>
+	<shellapi.h>
+
+1476165847 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\blackscholes.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<hooks.h>
+	<pthread.h>
+	<time.h>
+	<omp.h>
+	"tbb/blocked_range.h"
+	"tbb/parallel_for.h"
+	"tbb/task_scheduler_init.h"
+	"tbb/tick_count.h"
+	<windows.h>
+	<shellapi.h>
+
+1476078694 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bull_moose.c
+	<stdio.h>
+	<windows.h>
+	<shellapi.h>
+
+1476358787 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes_2\blackscholes.c
+	"bullmoose.c"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<hooks.h>
+	<pthread.h>
+	<time.h>
+	<omp.h>
+	"tbb/blocked_range.h"
+	"tbb/parallel_for.h"
+	"tbb/task_scheduler_init.h"
+	"tbb/tick_count.h"
+	<windows.h>
+	<shellapi.h>
+
+1476359357 e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes_2\bullmoose.c
+	<stdio.h>
+	<windows.h>
+	<shellapi.h>
+

@@ -1,0 +1,170 @@
+KLEE: output directory is "/home/zhy/work/test/new/axel/axel-2.4/klee-out-18"
+KLEE: WARNING ONCE: function "axel_do" has inline asm
+KLEE: WARNING: undefined reference to function: __ctype_b_loc
+KLEE: WARNING: undefined reference to function: __isoc99_fscanf
+KLEE: WARNING: undefined reference to function: __isoc99_scanf
+KLEE: WARNING: undefined reference to function: __isoc99_sscanf
+KLEE: WARNING: undefined reference to function: access
+KLEE: WARNING: undefined reference to function: bind
+KLEE: WARNING: undefined reference to function: close
+KLEE: WARNING: undefined reference to function: connect
+KLEE: WARNING: undefined reference to function: fclose
+KLEE: WARNING: undefined reference to function: feof
+KLEE: WARNING: undefined reference to function: fflush
+KLEE: WARNING: undefined reference to function: fgetc
+KLEE: WARNING: undefined reference to function: fopen
+KLEE: WARNING: undefined reference to function: fprintf
+KLEE: WARNING: undefined reference to function: getenv
+KLEE: WARNING: undefined reference to function: getopt_long
+KLEE: WARNING: undefined reference to function: gettext
+KLEE: WARNING: undefined reference to function: htons
+KLEE: WARNING: undefined reference to function: inet_addr
+KLEE: WARNING: undefined reference to function: inet_ntoa
+KLEE: WARNING: undefined reference to function: ioctl
+KLEE: WARNING: undefined reference to function: lseek
+KLEE: WARNING: undefined reference to function: open
+KLEE: WARNING: undefined reference to variable: optarg
+KLEE: WARNING: undefined reference to variable: opterr
+KLEE: WARNING: undefined reference to variable: optind
+KLEE: WARNING: undefined reference to function: printf
+KLEE: WARNING: undefined reference to function: pthread_cancel
+KLEE: WARNING: undefined reference to function: pthread_create
+KLEE: WARNING: undefined reference to function: pthread_join
+KLEE: WARNING: undefined reference to function: pthread_setcancelstate
+KLEE: WARNING: undefined reference to function: pthread_setcanceltype
+KLEE: WARNING: undefined reference to function: putchar
+KLEE: WARNING: undefined reference to function: qsort
+KLEE: WARNING: undefined reference to function: read
+KLEE: WARNING: undefined reference to function: select
+KLEE: WARNING: undefined reference to function: snprintf
+KLEE: WARNING: undefined reference to function: socket
+KLEE: WARNING: undefined reference to function: sprintf
+KLEE: WARNING: undefined reference to function: stat
+KLEE: WARNING: undefined reference to variable: stderr
+KLEE: WARNING: undefined reference to variable: stdout
+KLEE: WARNING: undefined reference to function: strcasecmp
+KLEE: WARNING: undefined reference to function: strcat
+KLEE: WARNING: undefined reference to function: strchr
+KLEE: WARNING: undefined reference to function: strcmp
+KLEE: WARNING: undefined reference to function: strcpy
+KLEE: WARNING: undefined reference to function: strlen
+KLEE: WARNING: undefined reference to function: strncat
+KLEE: WARNING: undefined reference to function: strncmp
+KLEE: WARNING: undefined reference to function: strncpy
+KLEE: WARNING: undefined reference to function: strrchr
+KLEE: WARNING: undefined reference to function: strstr
+KLEE: WARNING: undefined reference to function: unlink
+KLEE: WARNING: undefined reference to function: usleep
+KLEE: WARNING: undefined reference to function: vsnprintf
+KLEE: WARNING: undefined reference to function: write
+
+************************************************************************
+第1次执行,路径文件为trace1.txt 初始执行
+************************************************************************
+
+KLEE: WARNING ONCE: calling external: strcpy(40648912, 40024192)
+KLEE: WARNING ONCE: calling external: strncpy(40662292, 40024800, 1024)
+KLEE: WARNING ONCE: calling external: getenv(40010160)
+KLEE: WARNING ONCE: calling external: fopen(40026016, 40007120)
+KLEE: WARNING ONCE: calling external: sprintf(40751072, 40027232, 140733018133254, 40027840)
+KLEE: WARNING ONCE: calling external: getopt_long(2, 36568896, 40077920, 40122352, 0)
+KLEE: WARNING ONCE: calling external: strcmp(36356416, 40081552)
+KLEE: WARNING ONCE: calling external: strlen(36356416)
+KLEE: WARNING ONCE: calling external: gettext(40083264)
+KLEE: WARNING ONCE: calling external: printf(40083264, 36356416)
+KLEE: WARNING ONCE: calling external: strstr(43890248, 40028448)
+KLEE: WARNING ONCE: calling external: strchr(43934000, 47)
+KLEE: WARNING ONCE: calling external: snprintf(43592180, 1024, 40029664, 43934010)
+KLEE: WARNING ONCE: calling external: strrchr(43592180, 47)
+KLEE: WARNING ONCE: calling external: strcat(43592180, 40029056)
+KLEE: WARNING ONCE: calling external: socket(2, 1, 0)
+KLEE: WARNING ONCE: calling external: inet_addr(40974376)
+KLEE: WARNING ONCE: calling external: bind(8, 45342608, 16)
+KLEE: WARNING ONCE: calling external: htons(80)
+KLEE: WARNING ONCE: calling external: connect(8, 45341184, 16)
+KLEE: WARNING ONCE: calling external: close(8)
+KLEE: WARNING ONCE: calling external: vsnprintf(45331240, 1024, 43601432, 44415296)
+######################本条路径为新路径####################
+buildAllFormula  success!
+
+Verifying this trace......
+
+The number of assert: 0
+
+Verifying is over!
+Sum of branches: 67
+Verifying branch 1 @Trace1#167#E215#0-1: NNo!
+Verifying branch 2 @Trace1#172#E219#1-0: NNo!
+Verifying branch 3 @Trace1#182#E227#1-0: NNo!
+Verifying branch 4 @Trace1#227#E248#1-0: NNo!
+Verifying branch 5 @Trace1#50#E8045#0-1: NNo!
+Verifying branch 6 @Trace1#61#E8055#0-1: NNo!
+Verifying branch 7 @Trace1#44#E8128#0-1: NNo!
+Verifying branch 8 @Trace1#46#E8134#0-1: NNo!
+Verifying branch 9 @Trace1#64#E8162#1-0: NNo!
+Verifying branch 10 @Trace1#236#E8181#0-1: NNo!
+Verifying branch 11 @Trace1#244#E8200#0-1: NNo!
+Verifying branch 12 @Trace1#236#E8215#0-1: NNo!
+Verifying branch 13 @Trace1#244#E8234#0-1: NNo!
+Verifying branch 14 @Trace1#236#E8249#0-1: NNo!
+Verifying branch 15 @Trace1#244#E8268#0-1: NNo!
+Verifying branch 16 @Trace1#236#E8283#0-1: NNo!
+Verifying branch 17 @Trace1#244#E8302#0-1: NNo!
+Verifying branch 18 @Trace1#236#E8317#0-1: NNo!
+Verifying branch 19 @Trace1#244#E8336#0-1: NNo!
+Verifying branch 20 @Trace1#236#E8351#0-1: NNo!
+Verifying branch 21 @Trace1#244#E8370#0-1: NNo!
+Verifying branch 22 @Trace1#236#E8385#0-1: NNo!
+Verifying branch 23 @Trace1#98#E8445#0-1: NNo!
+Verifying branch 24 @Trace1#138#E8473#1-0: NNo!
+Verifying branch 25 @Trace1#89#E8482#1-0: NNo!
+Verifying branch 26 @Trace1#216#E8544#1-0: NNo!
+Verifying branch 27 @Trace1#219#E8560#0-1: NNo!
+Verifying branch 28 @Trace1#216#E8575#1-0: NNo!
+Verifying branch 29 @Trace1#219#E8591#0-1: NNo!
+Verifying branch 30 @Trace1#216#E8606#1-0: NNo!
+Verifying branch 31 @Trace1#219#E8622#0-1: NNo!
+Verifying branch 32 @Trace1#216#E8637#1-0: NNo!
+Verifying branch 33 @Trace1#219#E8653#0-1: NNo!
+Verifying branch 34 @Trace1#216#E8668#1-0: NNo!
+Verifying branch 35 @Trace1#219#E8684#0-1: NNo!
+Verifying branch 36 @Trace1#216#E8699#1-0: NNo!
+Verifying branch 37 @Trace1#102#E8713#0-1: NNo!
+Verifying branch 38 @Trace1#180#E8752#1-0: NNo!
+Verifying branch 39 @Trace1#199#E8766#0-1: NNo!
+Verifying branch 40 @Trace1#56#E8952#1-0: NNo!
+Verifying branch 41 @Trace1#168#E9020#0-1: NNo!
+Verifying branch 42 @Trace1#88#E9031#0-1: NNo!
+Verifying branch 43 @Trace1#230#E9104#1-0: NNo!
+Verifying branch 44 @Trace1#458#E9132#1-0: NNo!
+Verifying branch 45 @Trace1#460#E9143#1-0: NNo!
+Verifying branch 46 @Trace1#458#E9166#1-0: NNo!
+Verifying branch 47 @Trace1#460#E9177#1-0: NNo!
+Verifying branch 48 @Trace1#458#E9200#1-0: NNo!
+Verifying branch 49 @Trace1#460#E9211#1-0: NNo!
+Verifying branch 50 @Trace1#458#E9234#1-0: NNo!
+Verifying branch 51 @Trace1#460#E9245#1-0: NNo!
+Verifying branch 52 @Trace1#458#E9268#0-1: NNo!
+Verifying branch 53 @Trace1#464#E9273#0-1: NNo!
+Verifying branch 54 @Trace1#470#E9278#0-1: NNo!
+Verifying branch 55 @Trace1#485#E9297#1-0: NNo!
+Verifying branch 56 @Trace1#168#E9311#0-1: NNo!
+Verifying branch 57 @Trace1#88#E9322#0-1: NNo!
+Verifying branch 58 @Trace1#485#E9343#1-0: NNo!
+Verifying branch 59 @Trace1#168#E9357#0-1: NNo!
+Verifying branch 60 @Trace1#88#E9368#0-1: NNo!
+Verifying branch 61 @Trace1#485#E9389#1-0: NNo!
+Verifying branch 62 @Trace1#168#E9403#0-1: NNo!
+Verifying branch 63 @Trace1#88#E9414#0-1: NNo!
+Verifying branch 64 @Trace1#485#E9435#1-0: NNo!
+Verifying branch 65 @Trace1#168#E9449#0-1: NNo!
+Verifying branch 66 @Trace1#88#E9460#0-1: NNo!
+Verifying branch 67 @Trace1#485#E9481#0-1: NNo!
+
+PTS
+
+ size : 0
+
+KLEE: done: total instructions = 9496
+KLEE: done: completed paths = 1
+KLEE: done: generated tests = 0

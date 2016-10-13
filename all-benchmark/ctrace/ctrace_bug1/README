@@ -1,0 +1,10 @@
+1.BUG1:deadlock
+- line=475添加宏定义，改变解锁机制，可能导致死锁。
+```c
+#define ERR1 1
+```
+- line=1191添加
+```c
+assert( _hashreads>-1 && _hashreads<2 );
+```
+- 已测试

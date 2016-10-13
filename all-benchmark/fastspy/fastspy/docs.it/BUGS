@@ -1,0 +1,22 @@
+=========
+  BUGS
+=========
+
+28-08-2000 
+con una determinata serie di opzioni, cercando il servizio ssh nel dominio di
+redhat, abbastanza frequentemente, dopo aver trovato uno dei tanti
+ip capita che uno di questi venga segnalato due volte, i tag <data
+received> si sovrappongono e viene riportata una sequenza di caratteri
+causali su tutto lo schermo, ripetuta ad intervalli regolari, quando
+si tenta di dare ctrl-c tutti i thread attivi in quel momento si
+incatastano nell'handler del segnale SIGINT e spesso non si riesce neanche
+a chiuderesi se non con un kill -9. Il terminale viene sputtanato
+(bisogna dare anche un ^V[ESCc per ripristinarlo).
+La riga di comando incriminata e':
+
+fs -i input -p ssh -d 10 -w 10 -s 206.132.41.*
+
+Questo problema si verifica con molta facilita' probabilmente quando
+in una scansione per servizio vengono trovati moltissimi ip attivi in
+una subnet, in concomitanza con le opzioni di input da file, quindi di
+invio e ricezione dalla socket e dei tempi di scansione stretti.

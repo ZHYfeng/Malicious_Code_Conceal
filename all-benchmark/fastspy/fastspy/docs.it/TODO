@@ -1,0 +1,7 @@
+-  Prevedere   un'opzione  per   la  ricerca   da  un   file  services
+personalizzato. Potrebbe  essere utile per effetturare  delle ricerche
+mirate per  trovare delle porte  senza usare tutte quelle  di sistema.
+Per  far questo  bastera' prevedere  che l'opzione  -s possa  avere un
+parametro <nome_file> opzionale.
+
+- Tradurre tutta la "documentazione" e gli help in inglese! :>

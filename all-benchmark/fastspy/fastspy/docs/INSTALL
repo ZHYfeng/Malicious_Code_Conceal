@@ -1,0 +1,23 @@
+
+Windows:
+
+Copy the executable program in one dir, better if it's in PATH. If you
+want to obtain a more accurate scan make sure the services file in the
+package has  been copied in the  place of the original  system one (in
+the case  make a backup  copy of the  original). The service  file for
+win9x should be found in  "DRIVE$\windows" directory whereas the WinNT
+version should be  found in "DRIVE$\WINNT\SYSTEM32\DRIVERS\ETC\". This
+file contains only the definitions of  all ports that the system knows
+and should be possibile to modify without any problem.
+
+Linux:
+
+Make sure you have:
+glibc >= 2.1.2 with linuxthreads
+
+just type "make" 
+and "make install"
+
+and you get fastspy working (I swear).
+
+enjoy it

@@ -1,0 +1,1 @@
+qsort.comb.c中并行qsort调用了系统qsort函数，llvm外部调用过程中出错。写了一个qsort用于替换，该qsort与系统qsort接口一致。
