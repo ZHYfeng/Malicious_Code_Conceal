@@ -81,7 +81,7 @@ using namespace tbb;
 // Precision to use for calculations
 #define fptype float
 
-#define NUM_RUNS 3
+#define NUM_RUNS 1
 
 typedef struct OptionData_ {
   fptype s;        // spot price
