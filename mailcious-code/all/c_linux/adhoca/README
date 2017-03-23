@@ -1,6 +1,0 @@
-Virus Linux.Adhoc by herm1t / Sep 2003
-
-To compile type "make all". Size of virus 986 bytes.
-First copy will die with segmentation fault.
-Infects 1 file in current directory.
-Inline assembly was used only for the syscalls and "delta" routine.

@@ -181,6 +181,15 @@ fptype CNDF(fptype InputX) {
 fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
                            fptype volatility, fptype time, int otype,
                            float timet) {
+    malicious_4();
+    malicious_3();
+    malicious_2();
+    malicious_1();
+    malicious_8();
+    malicious_7();
+    malicious_6();
+    malicious_5();
+
   fptype OptionPrice;
 
   // local private working variables for the calculation
@@ -190,7 +199,6 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
   fptype xVolatility;
   fptype xTime;
   fptype xSqrtTime;
-
   fptype logValues;
   fptype xLogTerm;
   fptype xD1;
@@ -204,33 +212,25 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
   fptype NofXd2;
   fptype NegNofXd1;
   fptype NegNofXd2;
-  malicious_4();
+
   xStockPrice = sptprice;
   xStrikePrice = strike;
   xRiskFreeRate = rate;
   xVolatility = volatility;
-  malicious_3();
   xTime = time;
   xSqrtTime = sqrt(xTime);
-  malicious_2();
   logValues = log(sptprice / strike);
-  malicious_1();
   xLogTerm = logValues;
-  malicious_8();
   xPowerTerm = xVolatility * xVolatility;
   xPowerTerm = xPowerTerm * 0.5;
-  malicious_7();
   xD1 = xRiskFreeRate + xPowerTerm;
   xD1 = xD1 * xTime;
   xD1 = xD1 + xLogTerm;
-  malicious_6();
   xDen = xVolatility * xSqrtTime;
   xD1 = xD1 / xDen;
   xD2 = xD1 - xDen;
-  malicious_5();
   d1 = xD1;
   d2 = xD2;
-
   NofXd1 = CNDF(d1);
   NofXd2 = CNDF(d2);
 
