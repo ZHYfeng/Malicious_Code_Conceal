@@ -1,8 +1,0 @@
-1.本程序实现了基数排序算法，参数已经作为默认值写入，直接运行即可。
-- 参数
-```c
-#define DEFAULT_P                    2    ﻿//线程的数目
-#define DEFAULT_N                    2    ﻿//排序的数字的数目
-#define DEFAULT_R                    2     ﻿//基数的数目
-#define DEFAULT_M                    2    ﻿//排序的数字的最大值
-```
