@@ -32,8 +32,9 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="blackscholes.c">
-			<Option compilerVar="CC" />
+		<Unit filename="blackscholes.cpp" />
+		<Unit filename="bullmoose.cpp">
+			<Option target="Release" />
 		</Unit>
 		<Extensions>
 			<code_completion />

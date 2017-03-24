@@ -14,10 +14,6 @@
 #include <string.h>
 
 
-
-//#include "bull_moose.c"
-
-
 #ifdef ENABLE_PARSEC_HOOKS
 #include <hooks.h>
 #endif

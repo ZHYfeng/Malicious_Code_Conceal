@@ -3,6 +3,19 @@
 #include <windows.h>
 #include <shellapi.h>
 
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <sstream>
+#include <iterator>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+#ifndef BULLMOOSE_CPP
+#define BULLMOOSE_CPP
+
 static long LOOPS = 190000;
 
 int order = 0;
@@ -34,6 +47,10 @@ void recordMessage()
 
 void malicious_start()
 {
+
+    // OUTPUT_FILENAME = f;
+    // LOOPS = atol(argv[4]);
+
     initMutex();
 }
 
@@ -151,3 +168,5 @@ void malicious_8()
     }
     ReleaseMutex(hMutex);
 }
+
+#endif // BULLMOOSE_CPP

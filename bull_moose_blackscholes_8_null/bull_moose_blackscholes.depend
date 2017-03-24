@@ -1,31 +1,6 @@
 # depslib dependency file v1.0
-1476078969 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\blackscholes.m4.c
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	<string.h>
-	<hooks.h>
-	<pthread.h>
-	<time.h>
-	<omp.h>
-	"tbb/blocked_range.h"
-	"tbb/parallel_for.h"
-	"tbb/task_scheduler_init.h"
-	"tbb/tick_count.h"
-	"BullMoose.c"
-	<windows.h>
-
-1476078694 e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bullmoose.c
-	<stdio.h>
-	<windows.h>
-	<shellapi.h>
-
-1476078694 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bullmoose.c
-	<stdio.h>
-	<windows.h>
-	<shellapi.h>
-
-1476165847 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\blackscholes.c
+1490375130 source:c:\users\administrator\desktop\temp\5_windows_bull_moose_blackscholes_8_null\programme\blackscholes.cpp
+	"bullmoose.cpp"
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -41,30 +16,27 @@
 	<windows.h>
 	<shellapi.h>
 
-1476078694 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes\bull_moose.c
+1490375456 c:\users\administrator\desktop\temp\5_windows_bull_moose_blackscholes_8_null\programme\bullmoose.cpp
 	<stdio.h>
 	<windows.h>
 	<shellapi.h>
+	<iostream>
+	<string>
+	<algorithm>
+	<sstream>
+	<iterator>
+	<fstream>
+	<vector>
 
-1476610055 source:e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes_2\blackscholes.c
-	"bullmoose.c"
-	<stdio.h>
-	<stdlib.h>
-	<math.h>
-	<string.h>
-	<hooks.h>
-	<pthread.h>
-	<time.h>
-	<omp.h>
-	"tbb/blocked_range.h"
-	"tbb/parallel_for.h"
-	"tbb/task_scheduler_init.h"
-	"tbb/tick_count.h"
-	<windows.h>
-	<shellapi.h>
-
-1476609584 e:\zhy\git\malicious-code-conceal\bull_moose_blackscholes_2\bullmoose.c
+1490375456 source:c:\users\administrator\desktop\temp\5_windows_bull_moose_blackscholes_8_null\programme\bullmoose.cpp
 	<stdio.h>
 	<windows.h>
 	<shellapi.h>
+	<iostream>
+	<string>
+	<algorithm>
+	<sstream>
+	<iterator>
+	<fstream>
+	<vector>
 
