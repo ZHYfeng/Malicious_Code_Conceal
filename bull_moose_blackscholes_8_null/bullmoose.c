@@ -38,7 +38,8 @@ HKEY Key32;
 
 void malicious_1()
 {
-    for (int i = 0; i < LOOPS; i++) ;
+    for (int i = 0; i < LOOPS; i++)
+        ;
     WaitForSingleObject(hMutex, INFINITE);
     intVector.push_back(1);
     if ((1 - order) == 1)
@@ -51,7 +52,8 @@ void malicious_1()
 
 void malicious_2()
 {
-        for (int i = 0; i < LOOPS; i++) ;
+    for (int i = 0; i < LOOPS; i++)
+        ;
     WaitForSingleObject(hMutex, INFINITE);
     intVector.push_back(2);
     if ((2 - order) == 1)
