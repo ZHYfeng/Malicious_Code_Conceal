@@ -3,16 +3,6 @@
 #include <windows.h>
 #include <shellapi.h>
 
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <sstream>
-#include <iterator>
-#include <fstream>
-#include <vector>
-
-using namespace std;
-
 #ifndef BULLMOOSE_CPP
 #define BULLMOOSE_CPP
 
@@ -30,19 +20,25 @@ int initMutex()
     return 0;
 }
 
-static vector<int> intVector;
-static string OUTPUT_FILENAME = "statistic.log";
+static int sequence[100];
+int sequenceOrder;
+static char OUTPUT_FILENAME[100] = "statistic.log";
 void recordMessage()
 {
-    ostringstream oss;
-    if (!intVector.empty())
+    FILE *fp;
+    if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL)
     {
-        copy(intVector.begin(), intVector.end(), ostream_iterator<int>(oss, ", "));
+        printf("can't open the file! \n");
     }
-    ofstream myfile;
-    myfile.open(OUTPUT_FILENAME.c_str(), ios::out | ios::app);
-    myfile << oss.str() << "\n";
-    myfile.close();
+    else
+    {
+        for (i = 0; sequence[i] != 0; i++)
+        {
+            fprintf(fp, "%d, ", sequence[i]);
+        }
+    }
+
+    fclose(fp);
 }
 
 void malicious_start()
@@ -50,7 +46,12 @@ void malicious_start()
 
     // OUTPUT_FILENAME = f;
     // LOOPS = atol(argv[4]);
-
+    int i;
+    for (i = 0; i < 100; i++)
+    {
+        sequence[i] = 0;
+    }
+    sequenceOrder = 0;
     initMutex();
 }
 
@@ -68,7 +69,7 @@ void malicious_1()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
-    intVector.push_back(1);
+    sequence[sequenceOrder++] = 1;
     if ((1 - order) == 1)
     {
         order = 1;
@@ -83,7 +84,7 @@ void malicious_2()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
-    intVector.push_back(2);
+    sequence[sequenceOrder++] = 2;
     if ((2 - order) == 1)
     {
         order = 2;
@@ -98,7 +99,7 @@ void malicious_3()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
-    intVector.push_back(3);
+    sequence[sequenceOrder++] = 3;
     if ((3 - order) == 1)
     {
         order = 3;
@@ -113,7 +114,7 @@ void malicious_4()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
-    intVector.push_back(4);
+    sequence[sequenceOrder++] = 4;
     if ((4 - order) == 1)
     {
         order = 4;
