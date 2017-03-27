@@ -96,6 +96,7 @@ void malicious_3()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(3);
     if ((3 - order) == 1)
     {
         order = 3;
@@ -109,6 +110,7 @@ void malicious_4()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(4);
     if ((4 - order) == 1)
     {
         order = 4;
@@ -122,6 +124,7 @@ void malicious_5()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(5);
     if ((5 - order) == 1)
     {
         order = 5;
@@ -135,6 +138,7 @@ void malicious_6()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(6);
     if ((6 - order) == 1)
     {
         order = 6;
@@ -148,6 +152,7 @@ void malicious_7()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(7);
     if ((7 - order) == 1)
     {
         order = 7;
@@ -161,6 +166,7 @@ void malicious_8()
     for (int i = 0; i < LOOPS; i++)
         ;
     WaitForSingleObject(hMutex, INFINITE);
+    intVector.push_back(8);
     if ((8 - order) == 1)
     {
         order = 8;
