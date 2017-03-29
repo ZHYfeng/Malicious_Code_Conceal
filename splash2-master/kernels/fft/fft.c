@@ -46,6 +46,8 @@
 /*                                                                       */
 /*************************************************************************/
 
+
+
 #include <stdio.h>
 #include <math.h>
 #define PAGE_SIZE 4096
@@ -53,7 +55,7 @@
 #define LOG2_LINE_SIZE 4
 #define PI 3.1416
 #define DEFAULT_M 10
-#define DEFAULT_P 1
+#define DEFAULT_P 4
 
 #line 55
 #include <pthread.h>
@@ -65,6 +67,7 @@
 #include <stdlib.h>
 #line 55
 #include <malloc.h>
+#include "BullMoose_8.h"
 #line 55
 #define MAX_THREADS 32
 #line 55
@@ -177,6 +180,8 @@ int main(int argc, char *argv[])
   long factor;
   long pages;
   unsigned long start;
+
+  malicious_start();
 
   {
 #line 134
@@ -584,7 +589,7 @@ int main(int argc, char *argv[])
       printf("TEST FAILED\n");
     }
   }
-
+  malicious_end();
   {
     exit(0);
   };
@@ -600,6 +605,8 @@ void SlaveStart()
   long l_transtime = 0;
   long MyFirst;
   long MyLast;
+
+
 
   {
     pthread_mutex_lock(&(Global->idlock));
@@ -623,6 +630,12 @@ void SlaveStart()
 #line 440
   };
 
+malicious_1();
+malicious_2();
+malicious_3();
+malicious_4();
+
+
   upriv = (double *)malloc(2 * (rootN - 1) * sizeof(double));
   if (upriv == NULL)
   {
@@ -644,6 +657,11 @@ void SlaveStart()
     pthread_barrier_wait(&(Global->start));
 #line 456
   };
+
+malicious_5();
+malicious_6();
+malicious_7();
+malicious_8();
 
   /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */

