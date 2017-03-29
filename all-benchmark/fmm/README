@@ -1,4 +1,0 @@
-1.在box.H中#define MAX_PARTICLES_PER_BOX 2和Total_Particles = 2共同影响程序规模，修改规模需要两个参数共同修改。
-2.其他参数Precision = 1.0;Number_Of_Processors = 2;Time_Steps = 1;Timestep_Dur = 1.0;
-- 输入数据已经写入程序。直接make。
-3.在main函数初始化，分配线程分别计算部分数据。通过同步机制保持各线程之间同步，如果修改同步机制会出错

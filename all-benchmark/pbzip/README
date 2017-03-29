@@ -1,5 +1,0 @@
-1.在函数void *consumer (void *q)中，line=6842。
-调用了pthread_cond_wait(fifo->notEmpty, fifo->mut);
-一般不会执行或者在line=6773的pthread_cond_signal(fifo->notEmpty)之前执行。
-2.计算出一条前缀，导致pthread_cond_wait在pthread_cond_signal之后执行，
-从而有一个线程没有唤醒，而其他线程可以执行完，出错。
