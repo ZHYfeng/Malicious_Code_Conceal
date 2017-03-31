@@ -58,7 +58,7 @@ pthread_t PThreadTable[MAX_THREADS];
 #define SH_MEM_AMT   100000000
 #define DEFAULT_PPS         32
 #define DEFAULT_CS       16384
-#define DEFAULT_P            1
+#define DEFAULT_P            4
 
 double CacheSize = DEFAULT_CS;
 double CS;
