@@ -171,6 +171,8 @@ int main(int argc, char *argv[])
 	struct timeval	FullTime;
 #line 123
 
+malicious_start();
+
 #line 123
 	gettimeofday(&FullTime, NULL);
 #line 123
@@ -501,6 +503,8 @@ int main(int argc, char *argv[])
     CheckResult(n, a, rhs);
   }
 
+malicious_end();
+
   {exit(0);};
 }
 
@@ -545,6 +549,11 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 	pthread_barrier_wait(&(Global->start));
 #line 441
 };
+
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
 
   /* to remove cold-start misses, all processors touch their own data */
   TouchA(block_size, MyNum);
