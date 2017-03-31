@@ -1,5 +1,5 @@
 TARGET = programme
-OBJS = BullMoose_8.o amal.o assign.o bfac.o bksolve.o block2.o fo.o malloc.o \
+OBJS = BullMoose_4.o amal.o assign.o bfac.o bksolve.o block2.o fo.o malloc.o \
        mf.o numLL.o parts.o seg.o solve.o tree.o util.o
 
 CC := gcc
@@ -32,4 +32,4 @@ bksolve.c: matrix.h
 mf.c: matrix.h
 solve.c: matrix.h
 
-BullMoose_8.c: BullMoose_8.h
+BullMoose_4.c: BullMoose_4.h

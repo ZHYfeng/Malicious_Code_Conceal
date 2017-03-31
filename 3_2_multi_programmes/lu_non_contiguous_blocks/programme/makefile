@@ -1,5 +1,5 @@
 TARGET = programme
-OBJS = BullMoose_8.o lu.o
+OBJS = BullMoose_4.o lu.o
 
 CC := gcc
 CFLAGS := -O3 -g3 -pthread -D_POSIX_C_SOURCE=200112
@@ -15,4 +15,4 @@ clean:
 	$(CC) -c $(CFLAGS) $*.c
 
 
-BullMoose_8.c: BullMoose_8.h
+BullMoose_4.c: BullMoose_4.h

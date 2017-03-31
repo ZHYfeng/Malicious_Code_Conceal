@@ -1,5 +1,5 @@
 TARGET = programme
-OBJS = BullMoose_8.o jacobcalc.o laplacalc.o main.o multi.o slave1.o slave2.o
+OBJS = BullMoose_4.o jacobcalc.o laplacalc.o main.o multi.o slave1.o slave2.o
 
 include ../../../Makefile.config
 
@@ -11,4 +11,4 @@ laplacalc.c: decs.h
 multi.c : decs.h
 slave2.c: decs.h
 
-BullMoose_8.c: BullMoose_8.h
+BullMoose_4.c: BullMoose_4.h

@@ -1,5 +1,5 @@
 TARGET = programme
-OBJS = BullMoose_8.o bndry.o cnstnt.o cshift.o initia.o interf.o intraf.o kineti.o mdmain.o poteng.o predcor.o syscons.o water.o
+OBJS = BullMoose_4.o bndry.o cnstnt.o cshift.o initia.o interf.o intraf.o kineti.o mdmain.o poteng.o predcor.o syscons.o water.o
 
 CC := gcc
 CFLAGS := -O3 -g3 -pthread -D_POSIX_C_SOURCE=200112
@@ -27,4 +27,4 @@ poteng.o: poteng.c global.h split.h mdvar.h frcnst.h water.h wwpot.h parameters.
 predcor.o: predcor.c split.h mdvar.h parameters.h mddata.h global.h
 syscons.o: syscons.c parameters.h mdvar.h water.h wwpot.h cnst.h mddata.h global.h
 water.o: water.c parameters.h mdvar.h water.h wwpot.h cnst.h mddata.h fileio.h frcnst.h randno.h global.h split.h
-BullMoose_8.c: BullMoose_8.h
+BullMoose_4.c: BullMoose_4.h

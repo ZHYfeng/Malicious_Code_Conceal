@@ -1,7 +1,4 @@
-if "%current_path%"=="" (
-    set current_path=%cd%
-)
-
+set current_path=%cd%
 
 set RUN_TIMES=10000
 del %current_path%\statistic.log
