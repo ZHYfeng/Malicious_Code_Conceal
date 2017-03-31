@@ -2,21 +2,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "C++ Launch (Windows)",
-            "type": "cppvsdbg",
+            "name": "Python",
+            "type": "python",
             "request": "launch",
-            "program": "enter program name, for example ${workspaceRoot}/a.exe",
-            "args": [],
-            "stopAtEntry": false,
+            "stopOnEntry": true,
+            "pythonPath": "${config.python.pythonPath}",
+            "program": "${file}",
             "cwd": "${workspaceRoot}",
-            "environment": [],
-            "externalConsole": false
-        },
-        {
-            "name": "C++ Attach (Windows)",
-            "type": "cppvsdbg",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "env": null,
+            "envFile": "${workspaceRoot}/.env",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
+            ]
         }
     ]
 }
