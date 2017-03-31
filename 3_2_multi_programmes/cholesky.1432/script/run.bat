@@ -1,6 +1,6 @@
 set current_path=%cd%
 
-set RUN_TIMES=10000
+set RUN_TIMES=100
 del %current_path%\statistic.log
 
 for /l %%b in (1, 1, %RUN_TIMES%) do (
