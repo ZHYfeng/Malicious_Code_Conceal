@@ -1,0 +1,15 @@
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 amal.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 assign.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 bfac.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 bksolve.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 block2.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 fo.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 malloc.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 mf.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 numLL.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 parts.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 seg.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 solve.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 tree.c
+gcc -c -g3 -pthread -D_POSIX_C_SOURCE=200112 util.c
+gcc amal.o assign.o bfac.o bksolve.o block2.o fo.o malloc.o mf.o numLL.o parts.o seg.o solve.o tree.o util.o -g3 -pthread -D_POSIX_C_SOURCE=200112 -o CHOLESKY -lm

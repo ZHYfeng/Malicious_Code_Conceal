@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
 #line 98
 	struct timeval	FullTime;
 #line 98
-
+malicious_start();
 #line 98
 	gettimeofday(&FullTime, NULL);
 #line 98
@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
       printf("PASSED\n");
     }
   }
-
+malicious_end();
   {exit(0);}
 }
 
@@ -416,7 +416,10 @@ void Go()
 	pthread_barrier_wait(&(Global->start));
 #line 339
 };
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 
