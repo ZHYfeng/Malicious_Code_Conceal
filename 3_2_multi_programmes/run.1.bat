@@ -1,7 +1,7 @@
 set current_path=%cd%
 
 set RUN_TIMES=100
-del %current_path%\statistic.log
+del %current_path%\statistic.log %current_path%\sequence.log
 
 for /l %%b in (1, 1, %RUN_TIMES%) do (
     %current_path%\..\programme\programme.exe

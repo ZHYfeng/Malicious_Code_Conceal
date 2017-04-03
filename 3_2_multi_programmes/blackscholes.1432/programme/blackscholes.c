@@ -201,11 +201,6 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
   fptype NegNofXd1;
   fptype NegNofXd2;
 
-malicious_1();
-malicious_4();
-malicious_3();
-malicious_2();
-
   xStockPrice = sptprice;
   xStrikePrice = strike;
   xRiskFreeRate = rate;
@@ -311,7 +306,10 @@ int bs_thread(void *tid_ptr) {
   int tid = *(int *)tid_ptr;
   int start = tid * (numOptions / nThreads);
   int end = start + (numOptions / nThreads);
-
+malicious_1();
+malicious_4();
+malicious_3();
+malicious_2();
   for (j = 0; j < NUM_RUNS; j++) {
 #ifdef ENABLE_OPENMP
 #pragma omp parallel for private(i, price, priceDelta)
