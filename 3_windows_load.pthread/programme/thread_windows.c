@@ -8,7 +8,7 @@
 #define MAX_THREADS 10
 
 static char OUTPUT_FILENAME[100] = "sequence.log";
-static char IF_FILENAME[100] = "statistic.log";
+static char IF_FILENAME[100] = "occurrence.log";
 
 static long LOOPS = 190000;
 static unsigned int THREAD_NUMS = 4;
@@ -56,9 +56,9 @@ int main(int argc, char *argv[])
 {
 	int i;
 
-    // THREAD_NUMS = atoi(argv[1]);
-    // MCODE_NUMS = atoi(argv[2]);
-    LOOPS = atol(argv[1]);
+    THREAD_NUMS = atoi(argv[1]);
+    MCODE_NUMS = atoi(argv[2]);
+    LOOPS = atol(argv[3]);
 
     pthread_mutex_init(&mutex, NULL);
     for (i = 0; i < 100; i++)
@@ -80,8 +80,6 @@ inline void placeholder()
     for (int i = 0; i < LOOPS; i++)
     {
         j = i;
-        j = j + i;
-        i = j / 2;
     }
 }
 

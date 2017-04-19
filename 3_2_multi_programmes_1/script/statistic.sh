@@ -2,7 +2,7 @@
 rm *.1-2-3-4
 for FILE in ./sequence_*.log
 do 
-    python3 ../../0_statistic/calc_subsec_and_sort.py -f $FILE -s 1-2-3-4 
+    python3 ../../0_statstic/script/calc_subsec_and_sort.py -f $FILE -s 1-2-3-4 
 done
 
 rm result.txt

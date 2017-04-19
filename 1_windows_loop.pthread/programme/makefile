@@ -2,14 +2,14 @@ TARGET = programme
 OBJS = thread_windows.o
 
 CC := gcc
-CFLAGS := -g3 -pthread -D_POSIX_C_SOURCE=200112
+CFLAGS := -pthread
 LDFLAGS := -lm -static
 
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) -o $(TARGET) $(LDFLAGS)
 
 clean:
-	rm -rf *.C *.H *.o $(TARGET)
+	rm -rf *.o $(TARGET)
 
 .c.o:
 	$(CC) -c $(CFLAGS) $*.c
