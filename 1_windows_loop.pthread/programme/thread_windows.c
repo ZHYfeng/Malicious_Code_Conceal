@@ -8,7 +8,7 @@
 #define MAX_THREADS 10
 
 static char OUTPUT_FILENAME[100] = "sequence.log";
-static char IF_FILENAME[100] = "statistic.log";
+static char IF_FILENAME[100] = "occurrence.log";
 
 static long LOOPS = 190000;
 static unsigned int THREAD_NUMS = 4;
@@ -77,7 +77,10 @@ int main(int argc, char *argv[])
 inline void placeholder()
 {
     int j;
-    for (int i = 0; i < LOOPS; i++);
+    for (int i = 0; i < LOOPS; i++)
+    {
+        j = i;
+    }
 }
 
 void recordMessage()

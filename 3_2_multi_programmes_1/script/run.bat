@@ -1,8 +1,8 @@
 set current_path=%cd%
-set RUN_TIMES=1000
+set RUN_TIMES=10000
 set sleep_time=2000
 
-for /d %%i in (*) do (
+for /d %%i in (../apps/*) do (
 
     cd %%i/programme
     del *.o *.exe 
