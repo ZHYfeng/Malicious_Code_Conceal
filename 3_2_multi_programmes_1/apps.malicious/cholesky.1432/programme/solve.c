@@ -54,6 +54,7 @@ pthread_t PThreadTable[MAX_THREADS];
 
 #include <math.h>
 #include "matrix.h"
+#include "bullmoose.h"
 
 #define SH_MEM_AMT   100000000
 #define DEFAULT_PPS         32

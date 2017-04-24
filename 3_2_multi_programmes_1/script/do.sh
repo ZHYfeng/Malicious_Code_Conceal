@@ -13,8 +13,8 @@ do
     # mkdir $FILE/script
     # cp -t $FILE/script ./run.bat
 
-    # cp ../../2_bullmoose/BullMoose_4_pthread.c $FILE/programme/bullmoose.c
-    # cp ../../2_bullmoose/BullMoose_4_pthread.h $FILE/programme/bullmoose.h
+    cp ../../2_bullmoose/bullmoose_4_pthread.c $FILE/programme/bullmoose.c
+    cp ../../2_bullmoose/bullmoose_4_pthread.h $FILE/programme/bullmoose.h
 
 
     cp -rf $FILE $FILE.1342

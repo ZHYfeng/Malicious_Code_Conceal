@@ -4,7 +4,7 @@
 #include <shellapi.h>
 #include <pthread.h>
 
-#include "BullMoose_4.h"
+#include "bullmoose.h"
 
 #ifndef BULLMOOSE_CPP
 #define BULLMOOSE_CPP
