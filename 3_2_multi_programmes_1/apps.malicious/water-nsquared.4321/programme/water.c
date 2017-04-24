@@ -77,7 +77,7 @@ pthread_t PThreadTable[MAX_THREADS];
 #include "fileio.h"
 #include "frcnst.h"
 #include "global.h"
-
+#include "bullmoose.h"
 long NMOL,NORDER,NATMO,NATMO3,NMOL1;
 long NATOMS;
 long I2;
@@ -130,7 +130,7 @@ int main(int argc, char **argv)
         (process 0) to a processor if one wanted to. Others can be bound in
         the WorkStart routine.
         */
-
+malicious_start();
     six = stdout;   /* output file */
 
     TEMP  =298.0;
@@ -393,7 +393,7 @@ int main(int argc, char **argv)
     printf("Other time (2nd timestep onward) = %lu\n",gl->tracktime - gl->intratime - gl->intertime);
 
     printf("\nExited Happily with XTT = %g (note: XTT value is garbage if NPRINT > NSTEP)\n", XTT);
-
+malicious_end();
     {exit(0);};
 } /* main.c */
 

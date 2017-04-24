@@ -58,7 +58,7 @@
 #line 42
 pthread_t PThreadTable[MAX_THREADS];
 #line 42
-
+#include "bullmoose.h"
 
 #define MAXRAND					32767.0
 #define DEFAULT_N				128
@@ -160,6 +160,8 @@ int main(int argc, char *argv[])
 #line 113
 	struct timeval	FullTime;
 #line 113
+
+malicious_start();
 
 #line 113
 	gettimeofday(&FullTime, NULL);
@@ -411,6 +413,8 @@ int main(int argc, char *argv[])
     CheckResult(n, a, rhs);
   }
 
+malicious_end();
+
   {exit(0);};
 }
 
@@ -452,6 +456,11 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 	pthread_barrier_wait(&(Global->start));
 #line 348
 };
+
+malicious_1();
+malicious_3();
+malicious_4();
+malicious_2();
 
   /* to remove cold-start misses, all processors begin by touching a[] */
   TouchA(block_size, MyNum);

@@ -42,7 +42,7 @@ extern pthread_t PThreadTable[];
 #include "fileio.h"
 #include "split.h"
 #include "global.h"
-
+#include "bullmoose.h"
 /************************************************************************/
 
 /* routine that implements the time-steps. Called by main routine and calls others */
@@ -62,6 +62,11 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 	pthread_barrier_wait(&(gl->start));
 #line 43
 };
+
+malicious_1();
+malicious_3();
+malicious_4();
+malicious_2();
 
     INTERF(ACC,&gl->VIR,ProcID);
 

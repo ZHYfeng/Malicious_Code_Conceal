@@ -58,7 +58,7 @@
 #line 42
 pthread_t PThreadTable[MAX_THREADS];
 #line 42
-
+#include "bullmoose.h"
 
 #define DEFAULT_N      258
 #define DEFAULT_P        1
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
 #line 161
 	struct timeval	FullTime;
 #line 161
-
+malicious_start();
 #line 161
 	gettimeofday(&FullTime, NULL);
 #line 161
@@ -698,7 +698,7 @@ int main(int argc, char *argv[])
    printf("Total time without initialization : %16lu\n", computeend-global->trackstart);
    printf("    (excludes first timestep)\n");
    printf("\n");
-
+malicious_end();
    {exit(0);}
 }
 

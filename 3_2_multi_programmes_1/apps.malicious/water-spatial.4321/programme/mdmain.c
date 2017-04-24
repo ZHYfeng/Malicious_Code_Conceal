@@ -44,7 +44,7 @@ extern pthread_t PThreadTable[];
 #include "fileio.h"
 #include "split.h"
 #include "global.h"
-
+#include "bullmoose.h"
 /************************************************************************/
 
 double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
@@ -87,6 +87,11 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 	pthread_barrier_wait(&(gl->start));
 #line 68
 };
+
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
 
     INTERF(ACC,&gl->VIR,ProcID);
 

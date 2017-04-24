@@ -27,7 +27,7 @@
 #include <stdlib.h>
 
 #include "decs.h"
-
+#include "bullmoose.h"
 void slave()
 {
    long i;
@@ -74,6 +74,11 @@ void slave()
      procid = global->id;
      global->id = global->id+1;
    {pthread_mutex_unlock(&(locks->idlock));}
+
+malicious_1();
+malicious_4();
+malicious_3();
+malicious_2();
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */

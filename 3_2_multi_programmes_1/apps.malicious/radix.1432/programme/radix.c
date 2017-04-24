@@ -72,7 +72,7 @@
 #line 56
 pthread_t PThreadTable[MAX_THREADS];
 #line 56
-
+#include "bullmoose.h"
 
 struct prefix_node {
    long densities[MAX_RADIX];
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 #line 134
 	struct timeval	FullTime;
 #line 134
-
+malicious_start();
 #line 134
 	gettimeofday(&FullTime, NULL);
 #line 134
@@ -512,7 +512,7 @@ int main(int argc, char *argv[])
    if (test_result) {
      test_sort(global->final);  
    }
-  
+  malicious_end();  
    {exit(0);};
 }
 
@@ -589,6 +589,10 @@ void slave_sort()
 #line 457
 } 
 
+malicious_1();
+malicious_4();
+malicious_3();
+malicious_2();
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 

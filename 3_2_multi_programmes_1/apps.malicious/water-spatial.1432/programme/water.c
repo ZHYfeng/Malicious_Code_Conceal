@@ -80,7 +80,7 @@ pthread_t PThreadTable[MAX_THREADS];
 #include "wwpot.h"
 #include "mddata.h"
 #include "global.h"
-
+#include "bullmoose.h"
 long NATOMS;
 long I2;
 long NMOL,NORDER,NATMO,NATMO3,NMOL1;
@@ -135,7 +135,7 @@ int main(int argc, char **argv)
         /*  POSSIBLE ENHANCEMENT:  One might bind the first process to a processor
             here, even before the other (child) processes are bound later in mdmain().
             */
-
+malicious_start();
     six = stdout;
 
     TEMP  =298.0;
@@ -447,7 +447,7 @@ int main(int argc, char **argv)
     printf("Other time (2nd timestep onward) = %lu\n",gl->tracktime - gl->intratime - gl->intertime);
 
     printf("\nExited Happily with XTT = %g (note: XTT value is garbage if NPRINT > NSTEP)\n", XTT);
-
+malicious_end();
     {exit(0);};
 } /* main.c */
 

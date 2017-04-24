@@ -35,7 +35,7 @@
 #line 21
 extern pthread_t PThreadTable[];
 #line 21
-
+#include "bullmoose.h"
 
 #include <stdio.h>
 #include <math.h>
@@ -110,6 +110,12 @@ void slave()
 #line 86
 }
 #endif
+
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
+
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
