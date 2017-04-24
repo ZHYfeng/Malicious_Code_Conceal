@@ -1,8 +1,7 @@
-
 set RUN_TIMES=10000
 set THREADS=4
 set MALICIOUS=4
-set LOOPS=40000
+set LOOPS=30000
 
 call:run_load 30000
 call:run_load 40000

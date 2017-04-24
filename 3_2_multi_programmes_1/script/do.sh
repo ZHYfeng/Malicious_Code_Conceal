@@ -3,7 +3,7 @@
 for FILE in ../apps/*
 do 
     echo $FILE
-
+    
     # rm -rf $FILE/statistic $FILE/script
     # mv -t ./programme $FILE/*
     # mkdir $FILE/programme
@@ -13,8 +13,19 @@ do
     # mkdir $FILE/script
     # cp -t $FILE/script ./run.bat
 
+    # cp ../../2_bullmoose/BullMoose_4_pthread.c $FILE/programme/bullmoose.c
+    # cp ../../2_bullmoose/BullMoose_4_pthread.h $FILE/programme/bullmoose.h
+
+
+    cp -rf $FILE $FILE.1342
+    cp -rf $FILE $FILE.1432
+    cp -rf $FILE $FILE.4321
 
 done
+
+rm -rf ../apps.malicious
+mkdir ../apps.malicious
+mv -t ../apps.malicious ../apps/*.*
 
 
 

@@ -1,5 +1,5 @@
 TARGET = programme
-OBJS = bndry.o cnstnt.o cshift.o initia.o interf.o intraf.o kineti.o mdmain.o poteng.o predcor.o syscons.o water.o
+OBJS = bullmoose.o bndry.o cnstnt.o cshift.o initia.o interf.o intraf.o kineti.o mdmain.o poteng.o predcor.o syscons.o water.o
 
 include ../../../null_macros/Makefile.config
 
@@ -15,3 +15,4 @@ poteng.o: poteng.c global.h split.h mdvar.h frcnst.h water.h wwpot.h parameters.
 predcor.o: predcor.c split.h mdvar.h parameters.h mddata.h global.h
 syscons.o: syscons.c parameters.h mdvar.h water.h wwpot.h cnst.h mddata.h global.h
 water.o: water.c parameters.h mdvar.h water.h wwpot.h cnst.h mddata.h fileio.h frcnst.h randno.h global.h split.h
+bullmoose.c: bullmoose.h

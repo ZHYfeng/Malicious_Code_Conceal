@@ -1,5 +1,6 @@
 TARGET = programme
-OBJS = lu.o
+OBJS = bullmoose.o lu.o
 
 include ../../../null_macros/Makefile.config
 
+bullmoose.c: bullmoose.h

