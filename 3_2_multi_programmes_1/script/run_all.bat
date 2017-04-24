@@ -5,7 +5,7 @@ for /d %%i in (../apps/*) do (
 
     cd %%i/programme
     del *.o *.exe 
-    del statistic.log sequence.log
+    REM del occurrence.log sequence.log
     make
 
     cd ../script
