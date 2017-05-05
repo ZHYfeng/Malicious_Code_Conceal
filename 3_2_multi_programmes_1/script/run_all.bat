@@ -9,6 +9,9 @@ for /d %%i in (./*) do (
     REM del occurrence.log sequence.log
     make
 
+    cd ../statistic
+    del *
+
     cd ../script
     del occurrence.log sequence.log
     for /l %%x in (0, 1, 8) do (
@@ -17,11 +20,10 @@ for /d %%i in (./*) do (
         )
         move occurrence.log ..\statistic\occurrence_load_%%x_loop_%LOOPS%.log
         move sequence.log ..\statistic\sequence_load_%%x_loop_%LOOPS%.log
-        start /b ..\..\0_payload\programme\payload.exe
+        start /b ..\..\..\..\0_payload\programme\payload.exe
     )
     taskkill /F /IM payload.exe
     
-    cd ../statistic
-    
+
     cd ../..
 )
