@@ -101,8 +101,11 @@ void malicious_1()
 
 void malicious_2()
 {
+    int j;
     for (int i = 0; i < LOOPS; i++)
-        ;
+    {
+        j = i;
+    }
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 2;
     if ((2 - order) == 1)
@@ -118,8 +121,11 @@ void malicious_2()
 
 void malicious_3()
 {
+    int j;
     for (int i = 0; i < LOOPS; i++)
-        ;
+    {
+        j = i;
+    }
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 3;
     if ((3 - order) == 1)
@@ -135,8 +141,11 @@ void malicious_3()
 
 void malicious_4()
 {
+    int j;
     for (int i = 0; i < LOOPS; i++)
-        ;
+    {
+        j = i;
+    }
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 4;
     if ((4 - order) == 1)

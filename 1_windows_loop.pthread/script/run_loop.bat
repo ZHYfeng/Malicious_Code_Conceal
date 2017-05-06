@@ -18,7 +18,7 @@ exit
 :auto_run
 ::逐次递增 loop, 从1000， 5000, 10000, 10000, 20000... 一直到20万
 
-for /l %%x in (0, 1000, 200000) do (
+for /l %%x in (0, 10000, 200000) do (
     for /l %%b in (1, 1, %RUN_TIMES%) do (
         ..\programme\programme.exe  %%x
     )

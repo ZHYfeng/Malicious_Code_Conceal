@@ -2,8 +2,8 @@
 #include <math.h>
 #include <stdio.h>
 
-#define num_of_thread 4
-#define num_of_malicious 4
+#define num_of_thread 2
+#define num_of_malicious 3
 
 long long int factorial(long long int n) {
   if (n > 1) {
@@ -49,7 +49,6 @@ void permutation_of_sequence(long long int *order_of_thread,
     lang = lang + order_of_thread[i];
   }
   if (lang == num_of_thread * num_of_malicious) {
-
     for (long long int i = 0; i < num_of_malicious * num_of_thread; i++) {
       all_sequence_of_thread[order_of_sequence][i] = sequence_of_thread[i];
     }
@@ -59,6 +58,7 @@ void permutation_of_sequence(long long int *order_of_thread,
     }
     order_of_sequence++;
   }
+
   for (long long int i = 0; i < num_of_thread; i++) {
     if (order_of_thread[i] < num_of_malicious) {
       long long int temp_order_of_thread[num_of_thread];
@@ -77,7 +77,6 @@ void permutation_of_sequence(long long int *order_of_thread,
         temp_sequence_of_malicious[j] = sequence_of_malicious[j];
       }
       temp_sequence_of_malicious[lang] = temp_order_of_thread[i];
-
       permutation_of_sequence(temp_order_of_thread, temp_sequence_of_malicious,
                               temp_sequence_of_thread);
     }
@@ -87,7 +86,7 @@ void permutation_of_sequence(long long int *order_of_thread,
 long long int main(long long int argc, char *argv[]) {
 
   //   freopen("input.txt", "r", stdin);
-  // freopen("output.txt", "w", stdout);
+  freopen("output.txt", "w", stdout);
 
   order_of_subsequence = 0;
   subsequence = (long long int(*)[num_of_malicious])malloc(
@@ -99,7 +98,6 @@ long long int main(long long int argc, char *argv[]) {
   order_of_sequence = 0;
   long long int size = factorial(num_of_malicious * num_of_thread) /
                        pow(factorial(num_of_malicious), num_of_thread);
-
   all_sequence_of_thread = (long long int(*)[num_of_malicious * num_of_thread])
       malloc(sizeof(long long int) * num_of_malicious * num_of_thread * size);
   all_sequence_of_malicious =
@@ -121,6 +119,15 @@ long long int main(long long int argc, char *argv[]) {
                           sequence_of_thread);
   long long int count_of_subsequence[order_of_subsequence];
   long long int ishappen;
+  long long int all_sequence_of_ishappen[order_of_subsequence][size]
+                                        [num_of_malicious * num_of_thread + 1];
+  for (long long int i = 0; i < order_of_subsequence; i++) {
+    for (long long int j = 0; j < size; j++) {
+      for (long long int k = 0; k < num_of_malicious * num_of_thread + 1; k++) {
+        all_sequence_of_ishappen[i][j][k] = 0;
+      }
+    }
+  }
   for (long long int i = 0; i < order_of_subsequence; i++) {
     count_of_subsequence[i] = 0;
     for (long long int j = 0; j < size; j++) {
@@ -128,8 +135,10 @@ long long int main(long long int argc, char *argv[]) {
       for (long long int k = 0; k < num_of_malicious * num_of_thread; k++) {
         if (all_sequence_of_malicious[j][k] == subsequence[i][ishappen]) {
           ishappen++;
+          all_sequence_of_ishappen[i][j][k] = 1;
         }
         if (ishappen == num_of_malicious) {
+          all_sequence_of_ishappen[i][j][num_of_malicious * num_of_thread] = 1;
           count_of_subsequence[i]++;
           break;
         }
@@ -139,18 +148,52 @@ long long int main(long long int argc, char *argv[]) {
 
   printf("num_of_thread : %d\n", num_of_thread);
   printf("num_of_malicious : %d\n", num_of_malicious);
-  for (long long int i = 0; i < order_of_subsequence; i++) {
-    for (long long int j = 0; j < num_of_malicious; j++) {
-      printf("%lld ", subsequence[i][j]);
-    }
-    printf(" : %lld", count_of_subsequence[i]);
-    printf("\n");
-  }
+  printf("\n");
+  // for (long long int i = 0; i < order_of_subsequence; i++) {
+  //   for (long long int j = 0; j < num_of_malicious; j++) {
+  //     printf("%lld ", subsequence[i][j]);
+  //   }
+  //   printf(" : %lld", count_of_subsequence[i]);
+  //   printf("\n");
+  // }
   printf("size : %lld\n", size);
   for (long long int i = 0; i < size; i++) {
     for (long long int j = 0; j < num_of_malicious * num_of_thread; j++) {
-      printf("T%lld", all_sequence_of_thread[i][j]);
-      printf("M%lld-", all_sequence_of_malicious[i][j]);
+      printf("T%lld", all_sequence_of_thread[i][j] + 1);
+      printf("(%lld)-", all_sequence_of_malicious[i][j]);
+    }
+    printf("\n");
+  }
+  printf("\n");
+
+  for (long long int i = 0; i < order_of_subsequence; i++) {
+    for (long long int j = 0; j < num_of_malicious - 1; j++) {
+      printf("S%lld<", subsequence[i][j]);
+    }
+    printf("S%lld", subsequence[i][num_of_malicious - 1]);
+    printf(" : %lld", count_of_subsequence[i]);
+    printf("\n");
+    for (long long int j = 0; j < size; j++) {
+      for (long long int k = 0; k < num_of_malicious * num_of_thread - 1; k++) {
+        printf("T%lld", all_sequence_of_thread[j][k] + 1);
+        printf("(%lld", all_sequence_of_malicious[j][k]);
+        printf(",%lld)-", all_sequence_of_ishappen[i][j][k]);
+      }
+      printf("T%lld",
+             all_sequence_of_thread[j][num_of_malicious * num_of_thread - 1] +
+                 1);
+      printf(
+          "(%lld",
+          all_sequence_of_malicious[j][num_of_malicious * num_of_thread - 1]);
+      printf(
+          ",%lld)",
+          all_sequence_of_ishappen[i][j][num_of_malicious * num_of_thread - 1]);
+      if (all_sequence_of_ishappen[i][j][num_of_malicious * num_of_thread] ==
+          1) {
+        printf(" : Active\n");
+      } else {
+        printf(" : Inactive\n");
+      }
     }
     printf("\n");
   }
