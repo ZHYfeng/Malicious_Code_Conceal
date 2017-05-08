@@ -32,8 +32,8 @@ do
     echo $FILE
     
 
-    cp ../../2_bullmoose/bullmoose_4_pthread.c $FILE/programme/bullmoose.c
-    cp ../../2_bullmoose/bullmoose_4_pthread.h $FILE/programme/bullmoose.h
+    # cp ../../2_bullmoose/bullmoose_4_pthread.c $FILE/programme/bullmoose.c
+    # cp ../../2_bullmoose/bullmoose_4_pthread.h $FILE/programme/bullmoose.h
 
 done
 
@@ -41,7 +41,16 @@ for FILE in ../apps.bullmoose/*
 do 
     echo $FILE
     
-    cp ../../2_bullmoose/bullmoose_pthread.c $FILE/programme/bullmoose.c
-    cp ../../2_bullmoose/bullmoose_pthread.h $FILE/programme/bullmoose.h
+    # cp ../../2_bullmoose/bullmoose_pthread.c $FILE/programme/bullmoose.c
+    # cp ../../2_bullmoose/bullmoose_pthread.h $FILE/programme/bullmoose.h
+
+done
+
+for FILE in ../apps.LCLB/*
+do 
+    echo $FILE
+    # cp ../../2_bullmoose/bullmoose_4_pthread.c $FILE/programme/bullmoose.c
+    # cp ../../2_bullmoose/bullmoose_4_pthread.h $FILE/programme/bullmoose.h
+    cp $FILE/programme/programme.exe $FILE.exe
 
 done
