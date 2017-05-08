@@ -1,0 +1,29 @@
+SLEEP : 1000
+time : 0.999824 s
+
+LOOPS : 10
+time : 1.53651e-006 s
+
+LOOPS : 100
+time : 1.67619e-006 s
+
+LOOPS : 1000
+time : 4.95873e-006 s
+
+LOOPS : 10000
+time : 4.06476e-005 s
+
+LOOPS : 100000
+time : 0.000352349 s
+
+LOOPS : 1000000
+time : 0.00353495 s
+
+LOOPS : 10000000
+time : 0.0353671 s
+
+LOOPS : 100000000
+time : 0.351403 s
+
+LOOPS : 1000000000
+time : 3.38357 s

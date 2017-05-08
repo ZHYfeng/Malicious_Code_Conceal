@@ -11,7 +11,7 @@
 
 #define MALICIOUS_CODE 1
 
-static long LOOPS = 110000;
+static long LOOPS = 90000;
 static int sequence[100];
 int sequenceOrder;
 unsigned int order = 0;
@@ -81,11 +81,7 @@ HKEY Key32;
 
 void malicious_1()
 {
-    int j;
-    for (int i = 0; i < LOOPS; i++)
-    {
-        j = i;
-    }
+    for (int i = 0; i < LOOPS; i++);
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 1;
     if ((1 - order) == 1)
@@ -101,11 +97,7 @@ void malicious_1()
 
 void malicious_2()
 {
-    int j;
-    for (int i = 0; i < LOOPS; i++)
-    {
-        j = i;
-    }
+    for (int i = 0; i < LOOPS; i++);
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 2;
     if ((2 - order) == 1)
@@ -121,11 +113,7 @@ void malicious_2()
 
 void malicious_3()
 {
-    int j;
-    for (int i = 0; i < LOOPS; i++)
-    {
-        j = i;
-    }
+    for (int i = 0; i < LOOPS; i++);
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 3;
     if ((3 - order) == 1)
@@ -141,11 +129,7 @@ void malicious_3()
 
 void malicious_4()
 {
-    int j;
-    for (int i = 0; i < LOOPS; i++)
-    {
-        j = i;
-    }
+    for (int i = 0; i < LOOPS; i++);
     pthread_mutex_lock(&mutex);
     sequence[sequenceOrder++] = 4;
     if ((4 - order) == 1)

@@ -10,19 +10,19 @@ for /d %%i in (./*) do (
     make
 
     cd ../statistic
-    REM del *
+    REM del *.*
 
     cd ../script
-    del occurrence.log sequence.log
-    for /l %%x in (0, 1, 4) do (
-        for /l %%b in (1, 1, %RUN_TIMES%) do (
-            .\run.bat
-        )
-        move occurrence.log ..\statistic\occurrence_load_%%x_loop_%LOOPS%.log
-        move sequence.log ..\statistic\sequence_load_%%x_loop_%LOOPS%.log
-        start /b ..\..\..\..\0_payload\programme\payload.exe
-    )
-    taskkill /F /IM payload.exe
+    REM del occurrence.log sequence.log
+    REM for /l %%x in (0, 1, 4) do (
+    REM     for /l %%b in (1, 1, %RUN_TIMES%) do (
+    REM         .\run.bat
+    REM     )
+    REM     move occurrence.log ..\statistic\occurrence_load_%%x_loop_%LOOPS%.log
+    REM     move sequence.log ..\statistic\sequence_load_%%x_loop_%LOOPS%.log
+    REM     start /b ..\..\..\..\0_payload\programme\payload.exe
+    REM )
+    REM taskkill /F /IM payload.exe
     
 
     cd ../..

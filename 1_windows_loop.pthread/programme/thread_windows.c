@@ -1,9 +1,9 @@
 // thread_windows.cpp : Defines the entry point for the console application.
 //
 
-#include <windows.h>
-#include <stdio.h>
 #include <pthread.h>
+#include <stdio.h>
+#include <windows.h>
 
 #define MAX_THREADS 10
 
@@ -23,110 +23,88 @@ void placeholder();
 void maliciousePrototype(int o);
 void recordMessage();
 
-int ThreadRoutine()
-{
-    for (unsigned int m = 0; m < MCODE_NUMS; m++)
-    {
-		maliciousePrototype(m + 1);
-    }
-    return 0;
+int ThreadRoutine() {
+  for (unsigned int m = 0; m < MCODE_NUMS; m++) {
+    maliciousePrototype(m + 1);
+  }
+  return 0;
 }
 
-int ThreadCreation()
-{
-    pthread_t threads[MAX_THREADS];
+int ThreadCreation() {
+  pthread_t threads[MAX_THREADS];
 
-    const unsigned int num_threads = THREAD_NUMS;
-    unsigned int running_threads = 0;
+  const unsigned int num_threads = THREAD_NUMS;
+  unsigned int running_threads = 0;
 
-    for (running_threads = 0; running_threads < num_threads; running_threads++)
-    {
-		pthread_create(&threads[running_threads], NULL, (void *)ThreadRoutine, NULL);
-    }
+  for (running_threads = 0; running_threads < num_threads; running_threads++) {
+    pthread_create(&threads[running_threads], NULL, (void *)ThreadRoutine,
+                   NULL);
+  }
 
-    for (running_threads = 0; running_threads < num_threads; running_threads++)
-    {
-		pthread_join(threads[running_threads], NULL);
-    }
+  for (running_threads = 0; running_threads < num_threads; running_threads++) {
+    pthread_join(threads[running_threads], NULL);
+  }
 
-    return 1;
+  return 1;
 }
 
-int main(int argc, char *argv[])
-{
-	int i;
+int main(int argc, char *argv[]) {
+  int i;
 
-    // THREAD_NUMS = atoi(argv[1]);
-    // MCODE_NUMS = atoi(argv[2]);
-    LOOPS = atol(argv[1]);
+  // THREAD_NUMS = atoi(argv[1]);
+  // MCODE_NUMS = atoi(argv[2]);
+  LOOPS = atol(argv[1]);
 
-    pthread_mutex_init(&mutex, NULL);
-    for (i = 0; i < 100; i++)
-    {
-        sequence[i] = 0;
-    }
-    sequenceOrder = 0;
+  pthread_mutex_init(&mutex, NULL);
+  for (i = 0; i < 100; i++) {
+    sequence[i] = 0;
+  }
+  sequenceOrder = 0;
 
-    ThreadCreation();
-    recordMessage();
+  ThreadCreation();
+  recordMessage();
 
-    //system("pause");
-    return 0;
+  // system("pause");
+  return 0;
 }
 
-inline void placeholder()
-{
-    int j;
-    for (int i = 0; i < LOOPS; i++)
-    {
-        j = i;
-    }
+inline void placeholder() {
+
+  for (int i = 0; i < LOOPS; i++)
+    ;
 }
 
-void recordMessage()
-{
-    int i;
-    FILE *fp;
-    if ((fp = fopen(IF_FILENAME, "a+")) == NULL)
-    {
-		printf("can't open the file! \n");
+void recordMessage() {
+  int i;
+  FILE *fp;
+  if ((fp = fopen(IF_FILENAME, "a+")) == NULL) {
+    printf("can't open the file! \n");
+  } else {
+    if (order == 4) {
+      fprintf(fp, "1\n");
+    } else {
+      fprintf(fp, "0\n");
     }
-    else
-    {
-		if (order == 4)
-		{
-		    fprintf(fp, "1\n");
-		}
-		else
-		{
-		    fprintf(fp, "0\n");
-		}
-    }
-    fclose(fp);
+  }
+  fclose(fp);
 
-    if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL)
-    {
-		printf("can't open the file! \n");
+  if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL) {
+    printf("can't open the file! \n");
+  } else {
+    for (i = 0; sequence[i] != 0; i++) {
+      fprintf(fp, "%d, ", sequence[i]);
     }
-    else
-    {
-		for (i = 0; sequence[i] != 0; i++)
-		{
-		    fprintf(fp, "%d, ", sequence[i]);
-		}
-		fprintf(fp, "\n");
-    }
-    fclose(fp);
+    fprintf(fp, "\n");
+  }
+  fclose(fp);
 }
 
-void maliciousePrototype(int o)
-{
-    placeholder();
-    pthread_mutex_lock(&mutex);
-	sequence[sequenceOrder++] = o;
-    if ((o - order) == 1)
-    {
-		order = o;
-    }
-    pthread_mutex_unlock(&mutex);
+void maliciousePrototype(int o) {
+  placeholder();
+  pthread_mutex_lock(&mutex);
+  sequence[sequenceOrder++] = o;
+  if ((o - order) == 1) {
+    order = o;
+  }
+  pthread_mutex_unlock(&mutex);
 }

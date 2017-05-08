@@ -1,3 +1,3 @@
-for /l %%x in (0, 1, 8) do (
-    start /b ..\..\0_payload\programme\bin\Debug\payload.exe
+for /l %%x in (0, 1, 7) do (
+    start /b ..\..\0_payload\programme\payload.exe
 )

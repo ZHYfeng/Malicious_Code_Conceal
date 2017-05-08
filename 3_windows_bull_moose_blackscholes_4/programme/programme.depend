@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1490598616 source:c:\users\administrator\desktop\temp\5_windows_bull_moose_blackscholes_4\programme\blackscholes.c
+	"bullmoose.c"
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<hooks.h>
+	<pthread.h>
+	<time.h>
+	<omp.h>
+	"tbb/blocked_range.h"
+	"tbb/parallel_for.h"
+	"tbb/task_scheduler_init.h"
+	"tbb/tick_count.h"
+	<windows.h>
+	<shellapi.h>
+
+1490630601 c:\users\administrator\desktop\temp\5_windows_bull_moose_blackscholes_4\programme\bullmoose.c
+	<stdio.h>
+	<windows.h>
+	<shellapi.h>
+

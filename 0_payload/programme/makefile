@@ -2,7 +2,7 @@ TARGET = payload
 OBJS = payload.o
 
 CC := gcc
-CFLAGS := -O3 -pthread
+CFLAGS := -pthread
 LDFLAGS := -lm -static
 
 $(TARGET): $(OBJS)
