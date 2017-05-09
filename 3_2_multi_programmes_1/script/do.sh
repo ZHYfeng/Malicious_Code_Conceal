@@ -27,7 +27,7 @@ done
 # mkdir ../apps.malicious
 # mv -t ../apps.malicious ../apps/*.*
 
-for FILE in ../apps.malicious/*
+for FILE in ../apps.LCLB.all/*
 do 
     echo $FILE
     
