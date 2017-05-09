@@ -1,7 +1,7 @@
 set RUN_TIMES=1000
 set LOOPS=120000
 
-cd ../apps.malicious
+cd ../apps.LCLB
 for /d %%i in (./*) do (
 
     cd %%i/programme
