@@ -182,10 +182,10 @@ fptype BlkSchlsEqEuroNoDiv(fptype sptprice, fptype strike, fptype rate,
                            fptype volatility, fptype time, int otype,
                            float timet)
 {
-  malicious_1();
-  malicious_2();
-  malicious_3();
   malicious_4();
+  malicious_3();
+  malicious_2();
+  malicious_1();
 
   fptype OptionPrice;
 

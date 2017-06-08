@@ -5,7 +5,7 @@ int main()
 	int i;
 	while (1)
 	{	
-		i = 250000;
+		i = 100000;
 		while(i){
 			i--;
 		}

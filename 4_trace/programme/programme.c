@@ -158,10 +158,11 @@ long long int main(long long int argc, char *argv[]) {
   // }
   printf("size : %lld\n", size);
   for (long long int i = 0; i < size; i++) {
-    for (long long int j = 0; j < num_of_malicious * num_of_thread; j++) {
-      printf("T%lld", all_sequence_of_thread[i][j] + 1);
-      printf("(%lld)-", all_sequence_of_malicious[i][j]);
+    for (long long int j = 0; j < num_of_malicious * num_of_thread -1; j++) {
+      printf("T%lld-", all_sequence_of_thread[i][j] + 1);
+      // printf("(%lld)-", all_sequence_of_malicious[i][j]);
     }
+    printf("T%lld", all_sequence_of_thread[i][num_of_malicious * num_of_thread -1] + 1);
     printf("\n");
   }
   printf("\n");

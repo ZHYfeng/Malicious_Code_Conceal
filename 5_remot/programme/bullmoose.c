@@ -11,7 +11,7 @@
 
 #define MALICIOUS_CODE 1
 
-static long LOOPS = 120;
+static long LOOPS = 120000;
 static int sequence[100];
 int sequenceOrder;
 unsigned int order = 0;
