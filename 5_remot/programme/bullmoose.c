@@ -1,8 +1,11 @@
 #define WIN32_LEAN_AND_MEAN
 #include <pthread.h>
 // #include <shellapi.h>
+// #include <dos.h>
 #include <stdio.h>
+#include <time.h>
 #include <windows.h>
+
 
 #include "bullmoose.h"
 
@@ -23,9 +26,14 @@ static char IF_FILENAME[100] = "occurrence.log";
 void recordMessage() {
   int i;
   FILE *fp;
+  time_t timer;
+  struct tm *tblock;
+  timer = time(NULL);
+  tblock = localtime(&timer);
   if ((fp = fopen(IF_FILENAME, "a+")) == NULL) {
     printf("can't open the file! \n");
   } else {
+    fprintf(fp, "Local time is: %s", asctime(tblock));
     if (order == 4) {
       fprintf(fp, "1\n");
     } else {
