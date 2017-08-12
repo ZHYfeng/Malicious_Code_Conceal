@@ -1,0 +1,1276 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20170809175512
+Username: DESKTOP-K3OCOHI\郝宇
+RunAs User: DESKTOP-K3OCOHI\郝宇
+Machine: DESKTOP-K3OCOHI (Microsoft Windows NT 10.0.15063.0)
+Host Application: powershell
+Process ID: 12332
+PSVersion: 5.1.15063.483
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.15063.483
+BuildVersion: 10.0.15063.483
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 5:55:12 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 5:55:13 PM
+5.616068
+2.218361
+9.978808
+2.218361
+---------
+Wednesday, August 9, 2017 5:55:14 PM
+3.551524
+0
+6.662914
+1.99606
+---------
+Wednesday, August 9, 2017 5:55:15 PM
+3.606908
+3.510629
+6.831885
+2.440747
+---------
+Wednesday, August 9, 2017 5:55:16 PM
+4.060898
+0
+5.633514
+0.8942707
+---------
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:01:35 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:01:36 PM
+0.7717871
+0.7728013
+5.467797
+2.360992
+---------
+Wednesday, August 9, 2017 6:01:37 PM
+2.358977
+3.933258
+8.540154
+2.249879
+---------
+Wednesday, August 9, 2017 6:01:38 PM
+6.823705
+3.693392
+5.245613
+5.433807
+---------
+Wednesday, August 9, 2017 6:01:39 PM
+2.343411
+2.439036
+8.633529
+7.005792
+---------
+Wednesday, August 9, 2017 6:01:40 PM
+5.36783
+5.272913
+5.292482
+5.259562
+---------
+Wednesday, August 9, 2017 6:01:41 PM
+5.733043
+2.643402
+8.859819
+5.69636
+---------
+Wednesday, August 9, 2017 6:01:42 PM
+2.332617
+0.798483
+10.04764
+2.39025
+---------
+Wednesday, August 9, 2017 6:01:43 PM
+5.376905
+3.823472
+10.02654
+3.82163
+---------
+Wednesday, August 9, 2017 6:01:44 PM
+3.73923
+3.725684
+8.383809
+0.6638042
+---------
+Wednesday, August 9, 2017 6:01:45 PM
+3.76481
+5.321336
+8.471196
+6.831974
+---------
+Wednesday, August 9, 2017 6:01:46 PM
+2.115615
+6.868459
+9.928176
+6.775877
+---------
+Wednesday, August 9, 2017 6:01:47 PM
+90.68751
+91.39769
+94.7294
+98.77303
+---------
+Wednesday, August 9, 2017 6:02:02 PM
+100
+100
+100
+100
+---------
+Wednesday, August 9, 2017 6:02:16 PM
+93.88311
+89.18925
+73.85852
+67.23603
+---------
+Wednesday, August 9, 2017 6:02:18 PM
+57.72478
+46.5129
+21.74344
+19.45697
+---------
+Wednesday, August 9, 2017 6:02:19 PM
+3.768424
+3.750363
+6.947724
+2.294994
+---------
+Wednesday, August 9, 2017 6:02:20 PM
+3.801353
+3.801449
+10.00778
+5.353029
+---------
+Wednesday, August 9, 2017 6:02:21 PM
+2.298253
+2.298253
+7.001327
+3.892562
+---------
+Wednesday, August 9, 2017 6:02:22 PM
+3.827425
+2.276439
+9.983279
+3.784041
+---------
+Wednesday, August 9, 2017 6:02:23 PM
+2.157568
+2.157412
+8.369576
+5.169108
+---------
+Wednesday, August 9, 2017 6:02:24 PM
+0.5893264
+3.72023
+8.397392
+2.264903
+---------
+Wednesday, August 9, 2017 6:02:25 PM
+2.271549
+3.894173
+11.5391
+5.350049
+---------
+Wednesday, August 9, 2017 6:02:26 PM
+6.882232
+5.244275
+10.07553
+3.873861
+---------
+Wednesday, August 9, 2017 6:02:27 PM
+0.8149244
+2.356246
+6.950957
+3.753681
+---------
+Wednesday, August 9, 2017 6:02:28 PM
+2.190398
+3.74296
+6.818482
+5.35957
+---------
+Wednesday, August 9, 2017 6:02:29 PM
+3.939497
+0.8405449
+5.527708
+3.883666
+---------
+Wednesday, August 9, 2017 6:02:30 PM
+3.987899
+2.593335
+7.101544
+4.100015
+---------
+Wednesday, August 9, 2017 6:02:31 PM
+3.902372
+3.751099
+6.960524
+5.363075
+---------
+Wednesday, August 9, 2017 6:02:32 PM
+3.801076
+2.277846
+6.919334
+3.871238
+---------
+Wednesday, August 9, 2017 6:02:33 PM
+2.296885
+2.319863
+8.510129
+3.80356
+---------
+Wednesday, August 9, 2017 6:02:34 PM
+2.259507
+2.207209
+8.432322
+2.267756
+---------
+Wednesday, August 9, 2017 6:02:35 PM
+0
+0
+5.271435
+3.724795
+---------
+Wednesday, August 9, 2017 6:02:36 PM
+3.75435
+3.784471
+5.383396
+2.182555
+---------
+Wednesday, August 9, 2017 6:02:37 PM
+2.141392
+2.165017
+8.369576
+3.806225
+---------
+Wednesday, August 9, 2017 6:02:38 PM
+3.879841
+3.834499
+8.494573
+5.404083
+---------
+Wednesday, August 9, 2017 6:02:39 PM
+3.728143
+3.728306
+8.477321
+5.269195
+---------
+Wednesday, August 9, 2017 6:02:40 PM
+0.7904226
+0.7607975
+6.778417
+0.6837132
+---------
+Wednesday, August 9, 2017 6:02:41 PM
+0.5876463
+2.192274
+8.480991
+0.6051753
+---------
+Wednesday, August 9, 2017 6:02:42 PM
+6.821186
+2.140244
+3.706105
+2.444219
+---------
+Wednesday, August 9, 2017 6:02:43 PM
+5.402909
+2.30121
+8.504599
+3.66104
+---------
+Wednesday, August 9, 2017 6:02:44 PM
+3.828189
+3.779339
+11.54787
+3.779434
+---------
+Wednesday, August 9, 2017 6:02:45 PM
+2.259264
+3.859122
+10.05298
+2.308269
+---------
+Wednesday, August 9, 2017 6:02:46 PM
+3.800341
+3.800494
+6.919066
+3.800494
+---------
+Wednesday, August 9, 2017 6:02:47 PM
+6.829381
+2.18688
+13.04185
+6.874009
+---------
+Wednesday, August 9, 2017 6:02:48 PM
+5.462143
+3.89669
+11.64622
+8.515349
+---------
+Wednesday, August 9, 2017 6:02:49 PM
+5.380559
+6.839066
+9.943885
+8.394552
+---------
+Wednesday, August 9, 2017 6:02:50 PM
+12.69582
+14.20571
+22.78512
+14.20562
+---------
+Wednesday, August 9, 2017 6:02:52 PM
+53.93616
+59.38499
+62.10909
+59.4026
+---------
+Wednesday, August 9, 2017 6:02:53 PM
+52.74397
+47.27929
+52.66625
+45.92749
+---------
+Wednesday, August 9, 2017 6:02:54 PM
+51.60164
+51.56213
+50.28725
+46.44152
+---------
+Wednesday, August 9, 2017 6:02:55 PM
+34.83237
+33.23911
+34.76143
+31.65274
+---------
+**********************
+Windows PowerShell transcript start
+Start time: 20170809180802
+Username: DESKTOP-K3OCOHI\郝宇
+RunAs User: DESKTOP-K3OCOHI\郝宇
+Machine: DESKTOP-K3OCOHI (Microsoft Windows NT 10.0.15063.0)
+Host Application: powershell
+Process ID: 9568
+PSVersion: 5.1.15063.483
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.15063.483
+BuildVersion: 10.0.15063.483
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:08:02 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:08:03 PM
+5.67315
+0.7390868
+2.192896
+0.6404024
+---------
+Wednesday, August 9, 2017 6:08:04 PM
+1.956605
+3.512917
+6.718423
+2.054344
+---------
+Wednesday, August 9, 2017 6:08:05 PM
+2.103223
+0.5522137
+2.103311
+3.753031
+---------
+Wednesday, August 9, 2017 6:08:06 PM
+2.267629
+5.402637
+10.06628
+7.048712
+---------
+Wednesday, August 9, 2017 6:08:07 PM
+24.39543
+15.19017
+23.04471
+13.90296
+---------
+Wednesday, August 9, 2017 6:08:08 PM
+87.95438
+88.21339
+88.57635
+92.4221
+---------
+Wednesday, August 9, 2017 6:08:13 PM
+99.15067
+98.92412
+99.46858
+99.55223
+---------
+Wednesday, August 9, 2017 6:08:36 PM
+96.32552
+95.6606
+91.91817
+72.15424
+---------
+Wednesday, August 9, 2017 6:08:39 PM
+65.79752
+59.01037
+50.21387
+21.03361
+---------
+Wednesday, August 9, 2017 6:08:40 PM
+3.752906
+0.6428408
+5.407604
+3.899379
+---------
+Wednesday, August 9, 2017 6:08:41 PM
+3.987718
+5.536875
+10.13326
+2.307057
+---------
+Wednesday, August 9, 2017 6:08:42 PM
+0.7476481
+2.271617
+11.57393
+2.316141
+---------
+Wednesday, August 9, 2017 6:08:43 PM
+3.734869
+5.313585
+10.01221
+6.811016
+---------
+Wednesday, August 9, 2017 6:08:44 PM
+3.670993
+3.670926
+2.080319
+2.166018
+---------
+Wednesday, August 9, 2017 6:08:45 PM
+3.705061
+2.151917
+0.5868161
+0.6465821
+---------
+Wednesday, August 9, 2017 6:08:46 PM
+3.84727
+3.84727
+11.60152
+5.352578
+---------
+Wednesday, August 9, 2017 6:08:47 PM
+3.888395
+0.790019
+8.538939
+4.078973
+---------
+Wednesday, August 9, 2017 6:08:48 PM
+5.746886
+4.294568
+7.475177
+2.752902
+---------
+Wednesday, August 9, 2017 6:08:49 PM
+7.141902
+3.951735
+5.408205
+3.666012
+---------
+Wednesday, August 9, 2017 6:08:50 PM
+6.876563
+2.177899
+6.835177
+2.274111
+---------
+Wednesday, August 9, 2017 6:08:51 PM
+2.131624
+2.173787
+6.83203
+2.076257
+---------
+Wednesday, August 9, 2017 6:08:52 PM
+6.80972
+6.809747
+9.916026
+3.799051
+---------
+Wednesday, August 9, 2017 6:08:53 PM
+3.959372
+0.8612874
+8.606508
+2.410311
+---------
+Wednesday, August 9, 2017 6:08:54 PM
+5.260748
+2.154786
+6.814082
+2.154816
+---------
+Wednesday, August 9, 2017 6:08:55 PM
+2.193771
+2.193528
+9.955937
+6.758242
+---------
+Wednesday, August 9, 2017 6:08:56 PM
+2.161993
+0.6092948
+6.82101
+3.810762
+---------
+Wednesday, August 9, 2017 6:08:57 PM
+5.281668
+3.728172
+11.49223
+6.741138
+---------
+Wednesday, August 9, 2017 6:08:58 PM
+5.3016
+2.197114
+11.51178
+0.74354
+---------
+Wednesday, August 9, 2017 6:08:59 PM
+5.342727
+5.346675
+6.902012
+5.346769
+---------
+Wednesday, August 9, 2017 6:09:00 PM
+5.357615
+5.354176
+8.480092
+0.7281196
+---------
+Wednesday, August 9, 2017 6:09:01 PM
+5.43573
+6.984746
+8.508557
+5.406974
+---------
+Wednesday, August 9, 2017 6:09:02 PM
+3.806378
+8.552584
+13.20245
+0.8027931
+---------
+Wednesday, August 9, 2017 6:09:03 PM
+2.344709
+3.808985
+6.912162
+2.257673
+---------
+Wednesday, August 9, 2017 6:09:04 PM
+5.407454
+2.345949
+3.895861
+3.91807
+---------
+Wednesday, August 9, 2017 6:09:05 PM
+8.478021
+0.6782681
+6.955575
+5.35098
+---------
+Wednesday, August 9, 2017 6:09:06 PM
+5.304291
+2.192712
+8.333833
+5.302626
+---------
+Wednesday, August 9, 2017 6:09:07 PM
+17.77905
+17.77901
+27.07208
+19.23633
+---------
+**********************
+Windows PowerShell transcript start
+Start time: 20170809181049
+Username: DESKTOP-K3OCOHI\郝宇
+RunAs User: DESKTOP-K3OCOHI\郝宇
+Machine: DESKTOP-K3OCOHI (Microsoft Windows NT 10.0.15063.0)
+Host Application: powershell
+Process ID: 2092
+PSVersion: 5.1.15063.483
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.15063.483
+BuildVersion: 10.0.15063.483
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:10:49 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:10:52 PM
+82.02014
+89.14899
+89.73131
+82.11104
+---------
+Wednesday, August 9, 2017 6:10:54 PM
+70.47697
+72.89126
+76.16198
+75.04523
+---------
+Wednesday, August 9, 2017 6:10:56 PM
+56.63757
+55.8632
+54.66558
+56.86526
+---------
+Wednesday, August 9, 2017 6:10:59 PM
+65.23575
+71.31641
+66.94038
+69.03614
+---------
+Wednesday, August 9, 2017 6:11:01 PM
+64.91204
+61.98321
+60.65306
+63.70302
+---------
+Wednesday, August 9, 2017 6:11:03 PM
+61.36895
+64.39789
+61.46777
+64.36185
+---------
+Wednesday, August 9, 2017 6:11:06 PM
+79.76084
+78.27561
+80.90732
+82.16335
+---------
+Wednesday, August 9, 2017 6:11:09 PM
+74.87212
+73.4765
+**********************
+Windows PowerShell transcript start
+Start time: 20170809181333
+Username: DESKTOP-K3OCOHI\郝宇
+RunAs User: DESKTOP-K3OCOHI\郝宇
+Machine: DESKTOP-K3OCOHI (Microsoft Windows NT 10.0.15063.0)
+Host Application: powershell
+Process ID: 12452
+PSVersion: 5.1.15063.483
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.15063.483
+BuildVersion: 10.0.15063.483
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:13:33 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:13:34 PM
+28.18375
+26.86431
+29.27308
+33.60597
+---------
+Wednesday, August 9, 2017 6:13:36 PM
+28.28911
+33.86378
+27.45582
+33.29882
+---------
+Wednesday, August 9, 2017 6:13:37 PM
+44.72374
+41.84477
+40.5345
+40.48048
+---------
+Wednesday, August 9, 2017 6:13:38 PM
+23.78136
+18.23232
+23.66459
+32.14638
+---------
+Wednesday, August 9, 2017 6:13:39 PM
+26.53156
+23.68728
+26.56689
+27.87369
+---------
+Wednesday, August 9, 2017 6:13:40 PM
+26.47754
+26.54606
+23.66554
+26.81617
+---------
+Wednesday, August 9, 2017 6:13:41 PM
+27.83557
+20.50851
+24.77479
+29.24584
+---------
+Wednesday, August 9, 2017 6:13:42 PM
+43.92679
+41.77672
+43.2638
+43.11253
+---------
+Wednesday, August 9, 2017 6:13:43 PM
+26.74759
+25.90889
+25.77064
+32.92291
+---------
+Wednesday, August 9, 2017 6:13:44 PM
+25.92624
+22.89981
+24.42504
+28.71873
+---------
+Wednesday, August 9, 2017 6:13:45 PM
+24.49714
+24.56723
+24.56716
+24.63722
+---------
+Wednesday, August 9, 2017 6:13:47 PM
+24.08814
+28.31486
+26.90929
+29.78373
+---------
+Wednesday, August 9, 2017 6:13:48 PM
+48.41762
+44.16298
+45.64449
+42.73114
+---------
+Wednesday, August 9, 2017 6:13:49 PM
+30.46053
+23.29489
+24.57812
+28.71739
+---------
+Wednesday, August 9, 2017 6:13:50 PM
+23.46377
+24.87342
+26.31829
+30.78061
+---------
+Wednesday, August 9, 2017 6:13:51 PM
+27.08084
+25.65677
+25.79533
+28.70533
+---------
+Wednesday, August 9, 2017 6:13:52 PM
+28.41298
+23.95902
+23.88765
+26.95204
+---------
+Wednesday, August 9, 2017 6:13:53 PM
+44.51678
+40.29485
+43.13794
+50.1094
+---------
+Wednesday, August 9, 2017 6:13:54 PM
+28.59482
+25.69113
+21.46671
+25.69117
+---------
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:14:52 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:14:53 PM
+10.89264
+6.474629
+7.917196
+12.60745
+---------
+Wednesday, August 9, 2017 6:14:54 PM
+17.42184
+9.681116
+14.38388
+21.95156
+---------
+Wednesday, August 9, 2017 6:14:55 PM
+10.95267
+6.346276
+9.388888
+14.08147
+---------
+Wednesday, August 9, 2017 6:14:56 PM
+20.33568
+18.80367
+20.25747
+15.73894
+---------
+Wednesday, August 9, 2017 6:14:57 PM
+25.01337
+18.8921
+22.02918
+25.01342
+---------
+Wednesday, August 9, 2017 6:14:58 PM
+14.18999
+14.259
+8.044484
+15.79038
+---------
+Wednesday, August 9, 2017 6:14:59 PM
+6.59279
+5.82109
+2.923502
+14.65007
+---------
+PS E:\git\malicious-code-conceal\5_remot> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:15:16 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:15:17 PM
+14.21474
+12.68322
+14.29904
+14.2989
+---------
+Wednesday, August 9, 2017 6:15:18 PM
+17.34439
+17.34396
+11.22146
+29.5895
+---------
+Wednesday, August 9, 2017 6:15:19 PM
+37.16645
+32.56903
+31.03636
+34.10151
+---------
+Wednesday, August 9, 2017 6:15:20 PM
+12.97107
+20.76006
+8.747712
+14.83111
+---------
+Wednesday, August 9, 2017 6:15:21 PM
+20.60014
+40.33342
+29.48575
+26.41991
+---------
+Wednesday, August 9, 2017 6:15:22 PM
+15.58743
+10.98312
+10.89554
+17.06553
+---------
+Wednesday, August 9, 2017 6:15:23 PM
+11.00516
+7.956432
+9.579551
+9.552564
+---------
+Wednesday, August 9, 2017 6:15:24 PM
+23.45023
+29.559
+29.48967
+29.48968
+---------
+Wednesday, August 9, 2017 6:15:25 PM
+6.468187
+9.534715
+8.091686
+18.81419
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:15:38 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:15:39 PM
+12.61306
+15.84376
+14.31378
+18.98363
+---------
+Wednesday, August 9, 2017 6:15:40 PM
+34.20757
+32.6781
+37.26831
+29.6178
+---------
+Wednesday, August 9, 2017 6:15:41 PM
+15.74999
+12.53029
+15.66687
+14.13051
+---------
+Wednesday, August 9, 2017 6:15:42 PM
+12.74374
+8.151961
+9.61058
+12.67806
+---------
+Wednesday, August 9, 2017 6:15:43 PM
+14.20563
+9.59201
+18.78592
+15.72112
+---------
+Wednesday, August 9, 2017 6:15:45 PM
+16.29402
+22.38246
+13.25101
+22.53347
+---------
+Wednesday, August 9, 2017 6:15:46 PM
+37.68492
+34.58141
+46.80375
+43.59929
+---------
+Wednesday, August 9, 2017 6:15:47 PM
+18.60767
+17.15344
+15.55324
+21.69482
+---------
+Wednesday, August 9, 2017 6:15:48 PM
+20.35707
+9.635956
+20.41976
+20.57553
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:15:57 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:15:58 PM
+13.97385
+15.6086
+10.96735
+18.64258
+---------
+Wednesday, August 9, 2017 6:15:59 PM
+44.79648
+47.85382
+34.06252
+46.32996
+---------
+Wednesday, August 9, 2017 6:16:00 PM
+17.07768
+15.62514
+27.89787
+29.43196
+---------
+Wednesday, August 9, 2017 6:16:01 PM
+12.64083
+12.46881
+17.07646
+14.08902
+---------
+Wednesday, August 9, 2017 6:16:03 PM
+14.05015
+9.534546
+14.13373
+20.26769
+---------
+Wednesday, August 9, 2017 6:16:04 PM
+15.7365
+11.14045
+20.33279
+15.7366
+---------
+Wednesday, August 9, 2017 6:16:05 PM
+30.91441
+32.44979
+35.52024
+35.52024
+---------
+Wednesday, August 9, 2017 6:16:06 PM
+23.19932
+10.88924
+15.58278
+23.18154
+---------
+Wednesday, August 9, 2017 6:16:07 PM
+21.98915
+18.9498
+20.39989
+31.11529
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:17:03 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:17:04 PM
+15.66769
+17.2009
+12.60117
+20.42373
+---------
+Wednesday, August 9, 2017 6:17:05 PM
+32.66968
+29.62575
+34.19973
+34.13548
+---------
+Wednesday, August 9, 2017 6:17:06 PM
+18.874
+6.607839
+11.22085
+21.93548
+---------
+Wednesday, August 9, 2017 6:17:07 PM
+24.05217
+21.01369
+17.97616
+33.16574
+---------
+Wednesday, August 9, 2017 6:17:08 PM
+18.84433
+21.90661
+21.91346
+27.96732
+---------
+Wednesday, August 9, 2017 6:17:09 PM
+15.59842
+9.460011
+6.383071
+18.6607
+---------
+Wednesday, August 9, 2017 6:17:10 PM
+43.25353
+35.58506
+40.1273
+40.18611
+---------
+Wednesday, August 9, 2017 6:17:11 PM
+14.04838
+12.56203
+17.16403
+23.30024
+---------
+Wednesday, August 9, 2017 6:17:12 PM
+12.50788
+17.06702
+17.14847
+21.75114
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:17:25 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:17:26 PM
+9.531323
+9.62187
+18.89268
+15.74956
+---------
+Wednesday, August 9, 2017 6:17:27 PM
+42.01612
+38.90359
+37.37595
+34.25678
+---------
+Wednesday, August 9, 2017 6:17:28 PM
+18.7435
+17.21091
+17.21065
+15.75969
+---------
+Wednesday, August 9, 2017 6:17:29 PM
+14.3065
+12.77579
+11.24579
+24.94491
+---------
+Wednesday, August 9, 2017 6:17:30 PM
+12.39507
+9.231761
+13.84727
+24.7275
+---------
+Wednesday, August 9, 2017 6:17:31 PM
+18.66595
+17.21794
+14.1604
+20.24589
+---------
+Wednesday, August 9, 2017 6:17:32 PM
+32.51178
+30.97365
+26.36464
+38.64245
+---------
+Wednesday, August 9, 2017 6:17:33 PM
+11.20249
+17.41197
+14.26907
+23.45452
+---------
+Wednesday, August 9, 2017 6:17:34 PM
+12.74242
+11.12715
+12.73793
+18.86134
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
+PS E:\git\malicious-code-conceal\5_remot> .\get_cpu_usage1.ps1
+Transcript started, output file is log.txt
+
+Wednesday, August 9, 2017 6:18:30 PM
+0
+0
+0
+0
+---------
+Wednesday, August 9, 2017 6:18:31 PM
+11.20413
+14.26617
+12.73568
+14.35036
+---------
+Wednesday, August 9, 2017 6:18:32 PM
+37.07988
+43.21834
+35.54488
+32.47572
+---------
+Wednesday, August 9, 2017 6:18:33 PM
+17.21151
+17.21156
+20.27769
+17.13017
+---------
+Wednesday, August 9, 2017 6:18:34 PM
+18.5765
+17.04041
+17.04039
+18.65673
+---------
+Wednesday, August 9, 2017 6:18:35 PM
+15.63502
+21.69351
+14.01649
+20.15812
+---------
+Wednesday, August 9, 2017 6:18:36 PM
+18.69406
+18.77395
+12.55778
+20.22821
+---------
+Wednesday, August 9, 2017 6:18:37 PM
+37.02815
+35.4923
+40.15893
+29.41819
+---------
+Wednesday, August 9, 2017 6:18:39 PM
+12.94268
+12.964
+9.821815
+18.99271
+---------
+Wednesday, August 9, 2017 6:18:40 PM
+21.82128
+4.914434
+14.2008
+15.73269
+---------
+Transcript stopped, output file is E:\git\malicious-code-conceal\5_remot\log.txt
+
+
