@@ -17,12 +17,8 @@ int sequenceOrder;
 unsigned int order = 0;
 pthread_mutex_t mutex;
 
-static char OUTPUT_FILENAME[100] = "sequence.log";
-static char IF_FILENAME[100] = "occurrence.log";
-
 void recordMessage() {
   int i;
-  
 }
 
 void malicious_start() {

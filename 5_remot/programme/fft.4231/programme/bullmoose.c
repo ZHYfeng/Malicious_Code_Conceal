@@ -20,37 +20,8 @@ int sequenceOrder;
 unsigned int order = 0;
 pthread_mutex_t mutex;
 
-static char OUTPUT_FILENAME[100] = "sequence.log";
-static char IF_FILENAME[100] = "occurrence.log";
-
 void recordMessage() {
   int i;
-  FILE *fp;
-  time_t timer;
-  struct tm *tblock;
-  timer = time(NULL);
-  tblock = localtime(&timer);
-  if ((fp = fopen(IF_FILENAME, "a+")) == NULL) {
-    printf("can't open the file! \n");
-  } else {
-    fprintf(fp, "Local time is: %s", asctime(tblock));
-    if (order == 4) {
-      fprintf(fp, "1\n");
-    } else {
-      fprintf(fp, "0\n");
-    }
-  }
-  fclose(fp);
-
-  if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL) {
-    printf("can't open the file! \n");
-  } else {
-    for (i = 0; sequence[i] != 0; i++) {
-      fprintf(fp, "%d, ", sequence[i]);
-    }
-    fprintf(fp, "\n");
-  }
-  fclose(fp);
 }
 
 void malicious_start() {
