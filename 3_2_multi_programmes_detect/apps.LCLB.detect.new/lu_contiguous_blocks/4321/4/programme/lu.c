@@ -550,10 +550,7 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 #line 441
 };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 
   /* to remove cold-start misses, all processors touch their own data */
   TouchA(block_size, MyNum);
@@ -602,7 +599,10 @@ malicious_1();
 	pthread_barrier_wait(&(Global->start));
 #line 461
 };
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
   if ((MyNum == 0) || (dostats)) {
     Global->t_in_fac[MyNum] = lc->t_in_fac;
     Global->t_in_solve[MyNum] = lc->t_in_solve;
