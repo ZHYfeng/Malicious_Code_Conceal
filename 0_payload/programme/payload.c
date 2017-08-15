@@ -9,7 +9,7 @@ int main()
 		while(i){
 			i--;
 		}
-		Sleep(1);
+		// Sleep(1);
 	}
 	return 0;
 }

@@ -11,8 +11,8 @@ for($j=0; $j -lt 10; $j++){
         $cpu;
 
     }
-        if($cpu -ge 0){
-            for($i=0; $i -lt 1; $i++){
+        if($cpu -ge 98){
+            for($i=0; $i -lt 4; $i++){
                 Start-Process -FilePath .\programme.exe
             }
         }
