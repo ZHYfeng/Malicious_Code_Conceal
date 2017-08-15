@@ -630,6 +630,10 @@ void SlaveStart()
 #line 440
   };
 
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
 
   upriv = (double *)malloc(2 * (rootN - 1) * sizeof(double));
   if (upriv == NULL)
@@ -652,10 +656,7 @@ void SlaveStart()
     pthread_barrier_wait(&(Global->start));
 #line 456
   };
-  malicious_4();
-  malicious_1();
-  malicious_3();
-  malicious_2();
+
 
   /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */

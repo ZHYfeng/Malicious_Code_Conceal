@@ -630,7 +630,6 @@ void SlaveStart()
 #line 440
   };
 
-
   upriv = (double *)malloc(2 * (rootN - 1) * sizeof(double));
   if (upriv == NULL)
   {
@@ -652,10 +651,7 @@ void SlaveStart()
     pthread_barrier_wait(&(Global->start));
 #line 456
   };
-  malicious_4();
-  malicious_1();
-  malicious_3();
-  malicious_2();
+
 
   /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
@@ -971,7 +967,10 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
     pthread_barrier_wait(&(Global->start));
 #line 657
   };
-
+  malicious_4();
+  malicious_1();
+  malicious_3();
+  malicious_2();
   /* copy columns from scratch to x */
   if ((test_result) || (doprint))
   {
