@@ -1,1 +1,0 @@
-..\programme\programme.exe ..\programme\inputs\d750.O
