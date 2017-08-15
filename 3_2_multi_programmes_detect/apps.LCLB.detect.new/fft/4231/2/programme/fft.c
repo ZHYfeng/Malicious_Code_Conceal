@@ -630,10 +630,10 @@ void SlaveStart()
 #line 440
   };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+  malicious_4();
+  malicious_2();
+  malicious_3();
+  malicious_1();
 
   upriv = (double *)malloc(2 * (rootN - 1) * sizeof(double));
   if (upriv == NULL)

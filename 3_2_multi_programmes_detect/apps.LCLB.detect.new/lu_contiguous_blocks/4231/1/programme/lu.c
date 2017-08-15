@@ -532,7 +532,10 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
   unsigned long myrf; 
   unsigned long mydone;
   struct LocalCopies *lc;
-
+  malicious_4();
+  malicious_2();
+  malicious_3();
+  malicious_1();w
   lc = (struct LocalCopies *) malloc(sizeof(struct LocalCopies));
   if (lc == NULL) {
     fprintf(stderr,"Proc %ld could not malloc memory for lc\n",MyNum);
@@ -550,10 +553,7 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 #line 441
 };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 
   /* to remove cold-start misses, all processors touch their own data */
   TouchA(block_size, MyNum);

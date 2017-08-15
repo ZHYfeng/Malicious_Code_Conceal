@@ -512,7 +512,10 @@ malicious_end();
 void SlaveStart()
 {
   long MyNum;
-
+  malicious_4();
+  malicious_1();
+  malicious_3();
+  malicious_2();
   {pthread_mutex_lock(&(Global->idlock));}
     MyNum = Global->id;
     Global->id ++;
@@ -550,10 +553,7 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 #line 441
 };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 
   /* to remove cold-start misses, all processors touch their own data */
   TouchA(block_size, MyNum);

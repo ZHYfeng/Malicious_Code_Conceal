@@ -630,10 +630,7 @@ void SlaveStart()
 #line 440
   };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 
   upriv = (double *)malloc(2 * (rootN - 1) * sizeof(double));
   if (upriv == NULL)
@@ -972,7 +969,10 @@ void FFT1D(long direction, long M, long N, double *x, double *scratch, double *u
     pthread_barrier_wait(&(Global->start));
 #line 657
   };
-
+  malicious_4();
+  malicious_3();
+  malicious_2();
+  malicious_1();
   /* copy columns from scratch to x */
   if ((test_result) || (doprint))
   {
