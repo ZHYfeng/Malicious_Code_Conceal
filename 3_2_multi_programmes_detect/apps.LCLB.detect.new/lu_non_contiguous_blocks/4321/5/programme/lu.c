@@ -457,10 +457,7 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 #line 348
 };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 
   /* to remove cold-start misses, all processors begin by touching a[] */
   TouchA(block_size, MyNum);
@@ -675,7 +672,10 @@ void lu(long n, long bs, long MyNum, struct LocalCopies *lc, long dostats)
 	pthread_barrier_wait(&(Global->start));
 #line 500
 };
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
     if ((MyNum == 0) || (dostats)) {
       {
 #line 503

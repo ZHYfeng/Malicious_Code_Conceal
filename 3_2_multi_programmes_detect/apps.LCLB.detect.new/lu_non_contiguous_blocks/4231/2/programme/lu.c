@@ -458,8 +458,8 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 };
 
 malicious_4();
-malicious_3();
 malicious_2();
+malicious_3();
 malicious_1();
 
   /* to remove cold-start misses, all processors begin by touching a[] */
