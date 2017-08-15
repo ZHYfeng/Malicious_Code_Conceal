@@ -7,23 +7,25 @@ rootdir = "./"
 # all_the_text_of_Makefile_config = open(
 #     "../1_splash2-master/Makefile.config").read()
 
-malicious_code_4_c = "../2_base/2_bullmoose/BullMoose_4.c"
-malicious_code_4_h = "../2_base/2_bullmoose/BullMoose_4.h"
+malicious_code_4_c = "../2_bullmoose/BullMoose_4_pthread_NoOutPut.c"
+malicious_code_4_h = "../2_bullmoose/BullMoose_4_pthread_NoOutPut.h"
 
 for parent, dirnames, filenames in os.walk(rootdir):
-    # for dirname in dirnames:
-    #     if dirname == "programme":
+    for dirname in dirnames:
+        if dirname == "programme":
 
-    #         shutil.copy(malicious_code_4_c, os.path.join(parent, dirname))
-    #         shutil.copy(malicious_code_4_h, os.path.join(parent, dirname))
+            # os.remove(os.path.join(parent, dirname, "BullMoose_4_pthread_NoOutPut.c"))
+            # os.remove(os.path.join(parent, dirname, "BullMoose_4_pthread_NoOutPut.h"))
+            shutil.copy(malicious_code_4_c, os.path.join(parent, dirname, "bullmoose.c"))
+            shutil.copy(malicious_code_4_h, os.path.join(parent, dirname, "bullmoose.h"))
 
     #         for filename in filenames:
     #             shutil.move(os.path.join(parent, filename),
     #                         os.path.join(parent, dirname))
 
-    for filename in filenames:
+    # for filename in filenames:
 
-        if "makefile" == filename:
+        # if "makefile" == filename:
 
             # # replace makefile
             # infile = open(os.path.join(parent, filename), "r")
@@ -60,3 +62,4 @@ for parent, dirnames, filenames in os.walk(rootdir):
             # os.remove(os.path.join(parent, filename))
             # shutil.move(os.path.join(parent, "temp_makefile"),
             #             os.path.join(parent, filename))
+

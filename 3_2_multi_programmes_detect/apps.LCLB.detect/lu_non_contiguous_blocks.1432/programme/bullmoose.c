@@ -11,23 +11,29 @@
 
 #define MALICIOUS_CODE 1
 
-static long LOOPS = 120000;
+static long LOOPS = 9120000;
+static int sequence[100];
+int sequenceOrder;
 unsigned int order = 0;
 pthread_mutex_t mutex;
 
-
-
-
+void recordMessage() {
+  int i;
+}
 
 void malicious_start() {
 
   // OUTPUT_FILENAME = f;
   // LOOPS = atol(argv[4]);
-
+  int i;
+  for (i = 0; i < 100; i++) {
+    sequence[i] = 0;
+  }
+  sequenceOrder = 0;
   pthread_mutex_init(&mutex, NULL);
 }
 
-void malicious_end() {  }
+void malicious_end() { recordMessage(); }
 
 char MyPath[256];
 char CpyPath[256];
@@ -37,6 +43,7 @@ void malicious_1() {
   for (int i = 0; i < LOOPS; i++)
     ;
   pthread_mutex_lock(&mutex);
+  sequence[sequenceOrder++] = 1;
   if ((1 - order) == 1) {
     order = 1;
 #if MALICIOUS_CODE
@@ -51,6 +58,7 @@ void malicious_2() {
   for (int i = 0; i < LOOPS; i++)
     ;
   pthread_mutex_lock(&mutex);
+  sequence[sequenceOrder++] = 2;
   if ((2 - order) == 1) {
     order = 2;
 #if MALICIOUS_CODE
@@ -65,6 +73,7 @@ void malicious_3() {
   for (int i = 0; i < LOOPS; i++)
     ;
   pthread_mutex_lock(&mutex);
+  sequence[sequenceOrder++] = 3;
   if ((3 - order) == 1) {
     order = 3;
 #if MALICIOUS_CODE
@@ -80,6 +89,7 @@ void malicious_4() {
   for (int i = 0; i < LOOPS; i++)
     ;
   pthread_mutex_lock(&mutex);
+  sequence[sequenceOrder++] = 4;
   if ((4 - order) == 1) {
     order = 4;
 #if MALICIOUS_CODE
