@@ -1,0 +1,1 @@
+..\programme\programme.exe < ..\programme\input

@@ -71,8 +71,10 @@ for parent, dirnames, filenames in os.walk(rootdir):
 
 appdir = ".\\apps"
 detectdir = ".\\apps.LCLB.detect.new"
-squences = ['4132','4231','4321']
+squences = ['4132', '4231', '4321']
 for file in os.listdir(appdir):
+    app_name = os.path.join(appdir, file)
+    print(app_name)
     path_name = os.path.join(detectdir, file)
     print(path_name)
     if not os.path.exists(path_name):
@@ -80,4 +82,11 @@ for file in os.listdir(appdir):
     for squence in squences:
         squence_name = os.path.join(path_name, squence)
         print(squence_name)
-        os.makedirs(squence_name)
+        if not os.path.exists(squence_name):
+            os.makedirs(squence_name)
+        for order in '123456':
+            order_name = os.path.join(squence_name, order)
+            print(order_name)
+            if os.path.exists(order_name):
+                os.removedirs(order_name)
+            shutil.copytree (app_name, order_name)
