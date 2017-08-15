@@ -329,7 +329,10 @@ malicious_start();
 	}
 #line 255
 };
-
+malicious_4();
+malicious_2();
+malicious_3();
+malicious_1();
   printf("%.0f operations for factorization\n", work_tree[M.n]);
 
   printf("\n");
@@ -417,10 +420,7 @@ void Go()
 	pthread_barrier_wait(&(Global->start));
 #line 339
 };
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 

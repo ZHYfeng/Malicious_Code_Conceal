@@ -390,7 +390,10 @@ void Go()
 {
   long MyNum;
   struct LocalCopies *lc;
-
+  malicious_4();
+  malicious_3();
+  malicious_2();
+  malicious_1();
   {pthread_mutex_lock(&(Global->waitLock));}
     MyNum = gp->pid;
     gp->pid++;
@@ -417,10 +420,7 @@ void Go()
 	pthread_barrier_wait(&(Global->start));
 #line 339
 };
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
+
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 

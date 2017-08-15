@@ -329,7 +329,10 @@ malicious_start();
 	}
 #line 255
 };
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
   printf("%.0f operations for factorization\n", work_tree[M.n]);
 
   printf("\n");
