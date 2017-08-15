@@ -2,22 +2,28 @@ import os
 import os.path
 import shutil
 
-rootdir = "./"
+rootdir = ".\\"
 
 # all_the_text_of_Makefile_config = open(
-#     "../1_splash2-master/Makefile.config").read()
+#     "..\\1_splash2-master\\Makefile.config").read()
 
-malicious_code_4_c = "../2_bullmoose/BullMoose_4_pthread_NoOutPut.c"
-malicious_code_4_h = "../2_bullmoose/BullMoose_4_pthread_NoOutPut.h"
+malicious_code_4_c = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.c"
+malicious_code_4_h = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.h"
 
 for parent, dirnames, filenames in os.walk(rootdir):
     for dirname in dirnames:
         if dirname == "programme":
 
-            # os.remove(os.path.join(parent, dirname, "BullMoose_4_pthread_NoOutPut.c"))
-            # os.remove(os.path.join(parent, dirname, "BullMoose_4_pthread_NoOutPut.h"))
-            shutil.copy(malicious_code_4_c, os.path.join(parent, dirname, "bullmoose.c"))
-            shutil.copy(malicious_code_4_h, os.path.join(parent, dirname, "bullmoose.h"))
+            if os.path.exists(os.path.join(parent, dirname, "BullMoose_4_pthread_NoOutPut.c")):
+                os.remove(os.path.join(parent, dirname,
+                                       "BullMoose_4_pthread_NoOutPut.c"))
+                os.remove(os.path.join(parent, dirname,
+                                       "BullMoose_4_pthread_NoOutPut.h"))
+
+            shutil.copy(malicious_code_4_c, os.path.join(
+                parent, dirname, "bullmoose.c"))
+            shutil.copy(malicious_code_4_h, os.path.join(
+                parent, dirname, "bullmoose.h"))
 
     #         for filename in filenames:
     #             shutil.move(os.path.join(parent, filename),
@@ -34,13 +40,13 @@ for parent, dirnames, filenames in os.walk(rootdir):
             # for line in lines:
 
             #     # outfile.write(line.replace(
-            #     #     "include ../../Makefile.config", all_the_text_of_Makefile_config))
+            #     #     "include ..\\..\\Makefile.config", all_the_text_of_Makefile_config))
 
             #     if line.startswith("TARGET"):
-            #         outfile.write("TARGET = programme\n")
+            #         outfile.write("TARGET = programme\\n")
             #     elif line.startswith("include"):
             #         outfile.write(
-            #             "include ../../../null_macros/Makefile.config\n")
+            #             "include ..\\..\\..\\null_macros\\Makefile.config\\n")
             #     else:
             #         outfile.write(line)
             # infile.close()
@@ -63,3 +69,15 @@ for parent, dirnames, filenames in os.walk(rootdir):
             # shutil.move(os.path.join(parent, "temp_makefile"),
             #             os.path.join(parent, filename))
 
+appdir = ".\\apps"
+detectdir = ".\\apps.LCLB.detect.new"
+squences = ['4132','4231','4321']
+for file in os.listdir(appdir):
+    path_name = os.path.join(detectdir, file)
+    print(path_name)
+    if not os.path.exists(path_name):
+        os.makedirs(path_name)
+    for squence in squences:
+        squence_name = os.path.join(path_name, squence)
+        print(squence_name)
+        os.makedirs(squence_name)

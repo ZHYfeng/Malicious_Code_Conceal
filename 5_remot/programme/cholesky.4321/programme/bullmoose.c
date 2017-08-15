@@ -1,11 +1,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <pthread.h>
 // #include <shellapi.h>
-// #include <dos.h>
 #include <stdio.h>
-#include <time.h>
 #include <windows.h>
-
 
 #include "bullmoose.h"
 
@@ -14,14 +11,38 @@
 
 #define MALICIOUS_CODE 1
 
-static long LOOPS = 120000;
+static long LOOPS = 9120000;
 static int sequence[100];
 int sequenceOrder;
 unsigned int order = 0;
 pthread_mutex_t mutex;
 
+static char OUTPUT_FILENAME[100] = "sequence.log";
+static char IF_FILENAME[100] = "occurrence.log";
+
 void recordMessage() {
   int i;
+  FILE *fp;
+  if ((fp = fopen(IF_FILENAME, "a+")) == NULL) {
+    printf("can't open the file! \n");
+  } else {
+    if (order == 4) {
+      fprintf(fp, "1\n");
+    } else {
+      fprintf(fp, "0\n");
+    }
+  }
+  fclose(fp);
+
+  if ((fp = fopen(OUTPUT_FILENAME, "a+")) == NULL) {
+    printf("can't open the file! \n");
+  } else {
+    for (i = 0; sequence[i] != 0; i++) {
+      fprintf(fp, "%d, ", sequence[i]);
+    }
+    fprintf(fp, "\n");
+  }
+  fclose(fp);
 }
 
 void malicious_start() {
