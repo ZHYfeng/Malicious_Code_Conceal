@@ -4,15 +4,15 @@ $counters=new-object 'System.Diagnostics.PerformanceCounter[]' ([System.Environm
 for($i=0;$i -lt $counters.Length;$i++){
     $counters[$i]=new-object System.Diagnostics.PerformanceCounter("Processor", "% Processor Time",$i)
 }
-for($j=0; $j -lt 10; $j++){
+for($j=0; $j -lt 50; $j++){
     Get-Date
     foreach($c in $counters){
         $cpu =  $c.NextValue();
         $cpu;
 
     }
-        if($cpu -ge 98){
-            for($i=0; $i -lt 4; $i++){
+        if($cpu -ge 50){
+            for($i=0; $i -lt 1; $i++){
                 Start-Process -FilePath .\programme.exe
             }
         }

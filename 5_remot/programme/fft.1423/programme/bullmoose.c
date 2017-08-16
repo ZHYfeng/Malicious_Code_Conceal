@@ -33,9 +33,9 @@ void recordMessage() {
   } else {
     fprintf(fp, "Local time is: %s", asctime(tblock));
     if (order == 4) {
-      fprintf(fp, "1\n");
+      fprintf(fp, "R1\n");
     } else {
-      fprintf(fp, "0\n");
+      fprintf(fp, "R0\n");
     }
   }
   fclose(fp);
