@@ -111,11 +111,6 @@ void slave()
 }
 #endif
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -742,7 +737,10 @@ eof(double) +
 #line 680
 }
 #endif
-
+malicious_4();
+malicious_2();
+malicious_3();
+malicious_1();
 /***************************************************************
  one-time stuff over at this point
  ***************************************************************/

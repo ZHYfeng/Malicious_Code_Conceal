@@ -112,9 +112,9 @@ void slave()
 #endif
 
 malicious_4();
+malicious_1();
 malicious_3();
 malicious_2();
-malicious_1();
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */

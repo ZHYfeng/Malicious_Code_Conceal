@@ -365,6 +365,11 @@ void slave2(long procid, long firstrow, long lastrow, long numrows, long firstco
 #line 341
 }
 #endif
+malicious_4();
+malicious_1();
+malicious_3();
+malicious_2();
+
 /*     *******************************************************
 
               s e c o n d   p h a s e
