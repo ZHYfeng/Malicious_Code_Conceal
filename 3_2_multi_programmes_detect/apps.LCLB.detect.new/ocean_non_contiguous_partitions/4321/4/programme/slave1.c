@@ -75,11 +75,6 @@ void slave()
      global->id = global->id+1;
    {pthread_mutex_unlock(&(locks->idlock));}
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -535,7 +530,10 @@ malicious_1();
 #line 496
 }
 #endif
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
 /***************************************************************
  one-time stuff over at this point
  ***************************************************************/

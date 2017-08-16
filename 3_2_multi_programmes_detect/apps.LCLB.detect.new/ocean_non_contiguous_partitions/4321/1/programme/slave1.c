@@ -75,11 +75,6 @@ void slave()
      global->id = global->id+1;
    {pthread_mutex_unlock(&(locks->idlock));}
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -245,6 +240,10 @@ malicious_1();
 #line 230
 }
 #endif
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
    istart = gp[procid].rel_start_y[numlev-1];
    iend = istart + gp[procid].rel_num_y[numlev-1] - 1;
    jstart = gp[procid].rel_start_x[numlev-1];
