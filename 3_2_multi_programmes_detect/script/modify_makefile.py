@@ -2,13 +2,13 @@ import os
 import os.path
 import shutil
 
-rootdir = ".\\"
+rootdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\"
 
 # malicious_code_4_c = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.c"
 # malicious_code_4_h = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.h"
 
-appdir = ".\\apps"
-detectdir = ".\\apps.LCLB.detect.new"
+appdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\apps"
+detectdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\apps.LCLB.detect.new"
 # squences = ['4132', '4231', '4321']
 # for file in os.listdir(appdir):
 #     app_name = os.path.join(appdir, file)
@@ -34,7 +34,7 @@ for parent, dirnames, filenames in os.walk(detectdir):
     for filename in filenames:
         if "makefile" == filename:
             # replace makefile
-            # print(os.path.join(parent, filename))
+            print(os.path.join(parent, filename))
             # infile = open(os.path.join(parent, filename), "r")
             # outfile = open(os.path.join(parent, "temp_makefile"), "w")
             # lines = infile.readlines()
@@ -49,4 +49,8 @@ for parent, dirnames, filenames in os.walk(detectdir):
             # os.remove(os.path.join(parent, filename))
             # shutil.move(os.path.join(parent, "temp_makefile"),
             #             os.path.join(parent, filename))
-            os.system('make')  
+            os.chdir(parent)
+            print(os.getcwd())
+            os.system('make')
+            os.chdir('..\\..\\..\\..\\')
+            print(os.getcwd())
