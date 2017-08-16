@@ -2,7 +2,7 @@ TARGET = programme
 OBJS = bullmoose.o amal.o assign.o bfac.o bksolve.o block2.o fo.o malloc.o \
        mf.o numLL.o parts.o seg.o solve.o tree.o util.o
 
-include ../../../null_macros/Makefile.config
+include ..\..\..\..\..\null_macros\Makefile.config
 
 matrix.h: matrix.h
 amal.c: matrix.h
