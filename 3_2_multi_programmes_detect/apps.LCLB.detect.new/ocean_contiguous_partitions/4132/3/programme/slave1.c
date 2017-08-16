@@ -449,6 +449,11 @@ eof(double) +
 #line 403
 }
 #endif
+malicious_4();
+malicious_1();
+malicious_3();
+malicious_2();
+
    t2a = (double **) psib[procid];
    j = gp[procid].neighbors[UP];
    if (j != -1) {

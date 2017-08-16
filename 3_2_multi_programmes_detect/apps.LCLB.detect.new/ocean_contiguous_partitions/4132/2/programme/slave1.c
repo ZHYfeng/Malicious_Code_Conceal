@@ -111,11 +111,6 @@ void slave()
 }
 #endif
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -379,6 +374,10 @@ eof(double) +
 }
 #endif
 /* compute psib array (one-time computation) and integrate into psibi */
+malicious_4();
+malicious_1();
+malicious_3();
+malicious_2();
 
    istart = 1;
    iend = istart + gp[procid].rel_num_y[numlev-1] - 1;

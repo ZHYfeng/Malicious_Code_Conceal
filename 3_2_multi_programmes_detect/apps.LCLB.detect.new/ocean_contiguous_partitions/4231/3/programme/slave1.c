@@ -111,11 +111,6 @@ void slave()
 }
 #endif
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -449,6 +444,10 @@ eof(double) +
 #line 403
 }
 #endif
+malicious_4();
+malicious_2();
+malicious_3();
+malicious_1();
    t2a = (double **) psib[procid];
    j = gp[procid].neighbors[UP];
    if (j != -1) {

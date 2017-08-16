@@ -111,11 +111,6 @@ void slave()
 }
 #endif
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
-
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */
 
@@ -519,7 +514,11 @@ eof(double) +
 #endif
 /* update the local running sum psibipriv by summing all the resulting
    values in that process's share of the psib matrix   */
-
+   malicious_4();
+   malicious_1();
+   malicious_3();
+   malicious_2();
+   
    t2a = (double **) psib[procid];
    psibipriv=0.0;
    if ((gp[procid].neighbors[UP] == -1) && (gp[procid].neighbors[LEFT] == -1)) {
