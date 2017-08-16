@@ -64,9 +64,9 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 };
 
 malicious_4();
+malicious_1();
 malicious_3();
 malicious_2();
-malicious_1();
 
     INTERF(ACC,&gl->VIR,ProcID);
 

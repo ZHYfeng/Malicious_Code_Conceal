@@ -589,10 +589,6 @@ void slave_sort()
 #line 457
 } 
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 
@@ -737,7 +733,10 @@ malicious_1();
 	pthread_barrier_wait(&(global->barrier_rank));
 #line 534
 };
-
+malicious_4();
+malicious_1();
+malicious_3();
+malicious_2();
      if (MyNum != (number_of_processors - 1)) {
        offset = MyNum;
        level = number_of_processors;

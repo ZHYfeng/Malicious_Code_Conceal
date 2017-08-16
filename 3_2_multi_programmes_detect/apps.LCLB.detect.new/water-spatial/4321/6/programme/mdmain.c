@@ -88,10 +88,6 @@ double MDMAIN(long NSTEP, long NPRINT, long NSAVE, long NORD1, long ProcID)
 #line 68
 };
 
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
 
     INTERF(ACC,&gl->VIR,ProcID);
 
@@ -269,7 +265,10 @@ malicious_1();
 	pthread_barrier_wait(&(gl->start));
 #line 155
 };
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
             if ((ProcID == 0) && (i >= 2)) {
                 {
 #line 158

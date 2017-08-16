@@ -588,11 +588,6 @@ void slave_sort()
 	pthread_barrier_wait(&(global->barrier_key));
 #line 457
 } 
-
-malicious_4();
-malicious_3();
-malicious_2();
-malicious_1();
 /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */
 
@@ -660,7 +655,10 @@ malicious_1();
 	pthread_barrier_wait(&(global->barrier_rank));
 #line 497
 }  
-
+malicious_4();
+malicious_3();
+malicious_2();
+malicious_1();
      n = &(global->prefix_tree[MyNum]);
      for (i = 0; i < radix; i++) {
         n->densities[i] = key_density[i];
