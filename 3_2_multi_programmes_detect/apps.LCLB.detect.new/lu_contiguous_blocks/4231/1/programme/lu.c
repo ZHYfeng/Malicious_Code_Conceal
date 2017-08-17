@@ -535,7 +535,7 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
   malicious_4();
   malicious_2();
   malicious_3();
-  malicious_1();w
+  malicious_1();
   lc = (struct LocalCopies *) malloc(sizeof(struct LocalCopies));
   if (lc == NULL) {
     fprintf(stderr,"Proc %ld could not malloc memory for lc\n",MyNum);

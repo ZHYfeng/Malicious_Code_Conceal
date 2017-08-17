@@ -4,11 +4,12 @@ import shutil
 
 rootdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\"
 
-# malicious_code_4_c = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.c"
-# malicious_code_4_h = "..\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.h"
+malicious_code_4_c = "E:\\git\\malicious-code-conceal\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.c"
+malicious_code_4_h = "E:\\git\\malicious-code-conceal\\2_bullmoose\\BullMoose_4_pthread_NoOutPut.h"
 
 appdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\apps"
 detectdir = "E:\\git\\malicious-code-conceal\\3_2_multi_programmes_detect\\apps.LCLB.detect.new"
+
 # squences = ['4132', '4231', '4321']
 # for file in os.listdir(appdir):
 #     app_name = os.path.join(appdir, file)
@@ -35,6 +36,10 @@ for parent, dirnames, filenames in os.walk(detectdir):
         if "makefile" == filename:
             # replace makefile
             print(os.path.join(parent, filename))
+
+            shutil.copy(malicious_code_4_c, os.path.join(parent, 'bullmoose.c'))
+            shutil.copy(malicious_code_4_h, os.path.join(parent, 'bullmoose.h'))
+
             # infile = open(os.path.join(parent, filename), "r")
             # outfile = open(os.path.join(parent, "temp_makefile"), "w")
             # lines = infile.readlines()
@@ -50,7 +55,7 @@ for parent, dirnames, filenames in os.walk(detectdir):
             # shutil.move(os.path.join(parent, "temp_makefile"),
             #             os.path.join(parent, filename))
             os.chdir(parent)
-            print(os.getcwd())
             os.system('make')
             os.chdir('..\\..\\..\\..\\')
-            print(os.getcwd())
+        # if "programme.exe" == filename:
+            

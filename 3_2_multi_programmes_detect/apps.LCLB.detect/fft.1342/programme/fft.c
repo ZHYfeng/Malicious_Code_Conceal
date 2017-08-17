@@ -67,7 +67,7 @@
 #include <stdlib.h>
 #line 55
 #include <malloc.h>
-// #include "bullmoose.h"
+#include "bullmoose.h"
 #line 55
 #define MAX_THREADS 32
 #line 55
@@ -181,7 +181,7 @@ int main(int argc, char *argv[])
   long pages;
   unsigned long start;
 
-  // malicious_start();
+  malicious_start();
 
   {
 #line 134
@@ -589,7 +589,7 @@ int main(int argc, char *argv[])
       printf("TEST FAILED\n");
     }
   }
-    // malicious_end();
+    malicious_end();
   {
     exit(0);
   };
@@ -653,10 +653,10 @@ void SlaveStart()
     pthread_barrier_wait(&(Global->start));
 #line 456
   };
-// malicious_1();
-// malicious_2();
-// malicious_3();
-// malicious_4();
+malicious_1();
+malicious_2();
+malicious_3();
+malicious_4();
 
   /* POSSIBLE ENHANCEMENT:  Here is where one might reset the
    statistics that one is measuring about the parallel execution */

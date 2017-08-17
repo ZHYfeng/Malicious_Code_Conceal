@@ -736,7 +736,8 @@ eof(double) +
 	pthread_barrier_wait(&(bars->barrier));
 #line 680
 }
-#endifmalicious_4();
+#endif
+malicious_4();
 malicious_1();
 malicious_3();
 malicious_2();
