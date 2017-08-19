@@ -99,7 +99,7 @@ void malicious_5() {
   for (int i = 0; i < LOOPS; i++)
     what = what * 2 - what + 1;
   pthread_mutex_lock(&mutex);
-  sequence[sequenceOrder++] = 1;
+  sequence[sequenceOrder++] = 5;
   if (((1 - order) == 1) && unorder != 4) {
     order = 1;
 #if MALICIOUS_CODE
@@ -114,7 +114,7 @@ void malicious_6() {
   for (int i = 0; i < LOOPS; i++)
     what = what * 2 - what + 1;
   pthread_mutex_lock(&mutex);
-  sequence[sequenceOrder++] = 2;
+  sequence[sequenceOrder++] = 6;
   if (((2 - order) == 1) && unorder != 4) {
     order = 2;
 #if MALICIOUS_CODE
@@ -129,7 +129,7 @@ void malicious_7() {
   for (int i = 0; i < LOOPS; i++)
     what = what * 2 - what + 1;
   pthread_mutex_lock(&mutex);
-  sequence[sequenceOrder++] = 3;
+  sequence[sequenceOrder++] = 7;
   if (((3 - order) == 1) && unorder != 4) {
     order = 3;
 #if MALICIOUS_CODE
@@ -144,7 +144,7 @@ void malicious_8() {
   for (int i = 0; i < LOOPS; i++)
     what = what * 2 - what + 1;
   pthread_mutex_lock(&mutex);
-  sequence[sequenceOrder++] = 4;
+  sequence[sequenceOrder++] = 8;
   if (((4 - order) == 1) && unorder != 4) {
     order = 4;
 #if MALICIOUS_CODE
