@@ -58,4 +58,3 @@ for parent, dirnames, filenames in os.walk(detectdir):
             os.system('make')
             os.chdir('..\\..\\')
         # if "programme.exe" == filename:
-            
