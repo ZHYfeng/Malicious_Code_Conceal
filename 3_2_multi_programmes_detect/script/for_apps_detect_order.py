@@ -37,8 +37,8 @@ for parent, dirnames, filenames in os.walk(detectdir):
             # replace makefile
             print(os.path.join(parent, filename))
 
-            shutil.copy(malicious_code_4_c, os.path.join(parent, 'bullmoose.c'))
-            shutil.copy(malicious_code_4_h, os.path.join(parent, 'bullmoose.h'))
+            # shutil.copy(malicious_code_4_c, os.path.join(parent, 'bullmoose.c'))
+            # shutil.copy(malicious_code_4_h, os.path.join(parent, 'bullmoose.h'))
 
             # infile = open(os.path.join(parent, filename), "r")
             # outfile = open(os.path.join(parent, "temp_makefile"), "w")
