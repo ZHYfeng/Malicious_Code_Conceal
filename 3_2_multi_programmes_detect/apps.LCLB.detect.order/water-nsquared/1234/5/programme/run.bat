@@ -1,0 +1,1 @@
+Get-Content .\input | .\WATER-NSQUARED.exe
