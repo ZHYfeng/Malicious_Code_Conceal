@@ -1,0 +1,176 @@
+#!/usr/bin/env python 
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+# 
+#   http://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+
+'''
+gpscp -- scp to multiple hosts at once
+
+Usage: gpscp [--version] [-?v] [-r] [-p port] [-u user]
+             [-h host] [-f hostfile] [-J host_substitution_character] [[user@]host1:]file1 [...] [[user@]hosts2:]file2
+
+	     --version    : print version information
+             -?           : print this help screen
+	     -v	          : verbose mode
+             -r           : recursively copy entire directories
+	     -h host      : ssh host to connect to (multiple -h is okay)
+	     -f file      : a file listing all hosts to connect to
+             -J character : character to be substitute as hostname [default='=']
+'''
+
+#disable deprecationwarnings
+import warnings
+warnings.simplefilter('ignore', DeprecationWarning)
+
+import os
+import sys
+import getopt
+import subprocess
+from gppylib.util import ssh_utils
+from gppylib.gpparseopts import OptParser
+from gppylib.gpcoverage import GpCoverage
+from gppylib.parseutils import canonicalize_address
+
+
+progname = os.path.split(sys.argv[0])[-1]
+
+if sys.version_info < (2, 5, 0):
+    sys.exit(
+'''Error: %s is supported on Python versions 2.5 or greater
+Please upgrade python installed on this machine.''' % progname)
+
+#
+# all the command line options
+#
+class Global:
+    script_name = os.path.split(__file__)[-1]
+    USER = os.environ.get('LOGNAME') or os.environ.get('USER')
+    opt = {}
+    opt['-v'] = False
+    opt['-h'] = []
+    opt['-f'] = None
+    opt['-J'] = '=:'
+    opt['-r'] = False
+    opt['--ignore-bad-hosts'] = False
+    filePath = []
+
+GV = Global()
+
+################
+def usage(exitarg):
+    parser = OptParser()
+    try:
+        parser.print_help()
+    except:
+        print __doc__
+    sys.exit(0)
+
+
+#############
+def print_version():
+    print '%s version $Revision$' % GV.script_name
+    sys.exit(0)
+
+#############
+def parseCommandLine():
+    try:
+        (options, args) = getopt.getopt(sys.argv[1:], '?vrJ:p:u:h:f:', ['version', 'ignore-bad-hosts'])
+    except Exception, e:
+        usage('[ERROR] ' + str(e))
+
+    for (switch, val) in options:
+        if (switch == '-?'): 	                              usage(0)
+        elif (switch == '-v'):                              GV.opt[switch] = True
+        elif (switch == '-f'):                              GV.opt[switch] = val
+        elif (switch == '-h'):                              GV.opt[switch].append(val)
+        elif (switch == '-J'):                              GV.opt[switch] = val + ':'
+        elif (switch == '-r'):                              GV.opt[switch] = True
+        elif (switch == '--version'):                       print_version()
+        elif (switch == '--ignore-bad-hosts'):          GV.opt[switch] = True
+
+    hf = (len(GV.opt['-h']) and 1 or 0) + (GV.opt['-f'] and 1 or 0)
+    if hf != 1:
+	usage('Error: please specify at least one of -h or -f args, but not both')
+
+    if (len(args) < 2):
+	usage('Error: please specify local and remote file paths')
+
+    GV.filePath = args
+
+
+#############
+def run(cmd, peer):
+    if GV.opt['-v']: print '[INFO]', cmd
+    p = subprocess.Popen(cmd, shell=True)
+    p.x_cmd = cmd
+    p.x_peer = peer
+    return p
+
+#############
+coverage = GpCoverage()
+coverage.start()
+    
+try:
+    parseCommandLine()
+    hostlist = ssh_utils.HostList()
+    for h in GV.opt['-h']:
+        hostlist.add(h)
+    if GV.opt['-f']:
+        hostlist.parseFile(GV.opt['-f'])
+
+    if GV.opt['--ignore-bad-hosts']:
+        original_hostlist = hostlist.list
+        bad_hosts = hostlist.removeBadHosts()
+        if len(bad_hosts) == len(original_hostlist):
+            sys.exit('[ERROR]: Unable to SSH to any of the hosts {0}'.format(original_hostlist))
+        if len(bad_hosts) > 0:
+            print "[WARN]: Skipping syncing configuration file on hosts {0}, as ssh test failed".format(bad_hosts)
+    else:
+        try:
+            hostlist.checkSSH()
+        except ssh_utils.SSHError, e:
+            sys.exit('[ERROR] ' + str(e))
+
+    GV.opt['-h'] = hostlist.filterMultiHomedHosts()
+
+    if len(GV.opt['-h']) == 0:
+        usage('Error: missing hosts in -h and/or -f arguments')
+    scp = 'scp -o "BatchMode yes" -o "StrictHostKeyChecking no"'
+    if GV.opt['-r']:  scp += ' -r'
+    
+    proc = []
+    for peer in GV.opt['-h']:
+        peer = canonicalize_address(peer) # MPP-13617
+        cmd = scp + ' ' 
+        for f in GV.filePath:
+            cmd += f.replace(GV.opt['-J'], '%s:' % peer) + ' '
+        proc.append(run(cmd, peer))
+
+    errmsg = None
+    for p in proc:
+        p.communicate()
+        if p.returncode:
+            errmsg = '[ERROR %s] exit %d, cmd - %s' % (p.x_peer, p.returncode, p.x_cmd)
+            print errmsg
+
+    if errmsg: sys.exit(1)
+    if GV.opt['-v']: print '[INFO] completed successfully'
+
+except KeyboardInterrupt:
+    sys.exit('\nInterrupted...')
+finally:
+    coverage.stop()
+    coverage.generate_report()

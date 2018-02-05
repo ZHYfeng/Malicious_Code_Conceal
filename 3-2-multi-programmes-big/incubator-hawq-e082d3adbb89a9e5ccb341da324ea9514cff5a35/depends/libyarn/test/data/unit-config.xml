@@ -1,0 +1,103 @@
+<?xml version='1.0'?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<configuration>
+
+	<property>
+		<name>TestString</name>
+		<value>TestString</value>
+	</property>
+
+	<property>
+		<name>TestInt32</name>
+		<value>123456</value>
+	</property>
+
+	<property>
+		<name>TestInt32Invalid</name>
+		<value>123a456</value>
+	</property>
+
+	<property>
+		<name>TestInt32OverFlow</name>
+		<value>12345678901</value>
+	</property>
+
+	<property>
+		<name>TestInt64</name>
+		<value>12345678901</value>
+	</property>
+
+	<property>
+		<name>TestInt64Invalid</name>
+		<value>12345a678901</value>
+	</property>
+
+	<property>
+		<name>TestInt64OverFlow</name>
+		<value>123456789011234567890112345678901</value>
+	</property>
+
+	<property>
+		<name>TestDouble</name>
+		<value>123.456</value>
+	</property>
+
+	<property>
+		<name>TestDoubleInvalid</name>
+		<value>123e1234a</value>
+	</property>
+
+	<property>
+		<name>TestDoubleOverflow</name>
+		<value>123e1234</value>
+	</property>
+
+	<property>
+		<name>TestDoubleUnderflow</name>
+		<value>123e-1234</value>
+	</property>
+
+	<property>
+		<name>TestTrue1</name>
+		<value>true</value>
+	</property>
+
+	<property>
+		<name>TestTrue2</name>
+		<value>1</value>
+	</property>
+
+	<property>
+		<name>TestFalse1</name>
+		<value>faLse</value>
+	</property>
+
+	<property>
+		<name>TestFalse2</name>
+		<value>0</value>
+	</property>
+
+	<property>
+		<name>TestBoolInvalid</name>
+		<value>atrue</value>
+	</property>
+
+</configuration>
