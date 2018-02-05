@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-select * from f4();
-

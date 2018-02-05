@@ -1,2 +1,0 @@
-explain select * from a;
-

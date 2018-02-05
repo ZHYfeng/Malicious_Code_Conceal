@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-DROP FUNCTION scube_accum(numeric, numeric);
-DROP FUNCTION

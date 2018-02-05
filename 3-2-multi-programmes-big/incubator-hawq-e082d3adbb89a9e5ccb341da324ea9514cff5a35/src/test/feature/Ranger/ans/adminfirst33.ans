@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-create temp table ta(i int);
-CREATE TABLE

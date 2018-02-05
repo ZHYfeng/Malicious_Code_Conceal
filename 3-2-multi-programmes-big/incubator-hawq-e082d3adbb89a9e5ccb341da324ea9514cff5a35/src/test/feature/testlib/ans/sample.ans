@@ -1,7 +1,0 @@
-select * from test;
- p |  q  
----+-----
- 1 | 1.1
- 2 | 2.2
-(2 rows)
-

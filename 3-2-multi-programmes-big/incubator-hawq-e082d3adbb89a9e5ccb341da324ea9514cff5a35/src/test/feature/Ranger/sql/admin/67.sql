@@ -1,2 +1,0 @@
-drop view av;
-

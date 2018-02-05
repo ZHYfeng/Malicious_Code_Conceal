@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-drop FUNCTION normalize_si(text);
-DROP FUNCTION

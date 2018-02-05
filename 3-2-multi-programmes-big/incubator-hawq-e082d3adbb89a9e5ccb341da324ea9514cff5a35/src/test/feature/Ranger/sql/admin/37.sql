@@ -1,2 +1,0 @@
-CREATE SEQUENCE myseq START 1;
-

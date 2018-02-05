@@ -1,2 +1,0 @@
-drop function f4();
-

@@ -1,7 +1,0 @@
-select * from serialtest order by f2;
-  f1   | f2  
--------+-----
- foo   |   1
- force | 100
-(2 rows)
-

@@ -1,4 +1,0 @@
-Playready
-=========
-
-To be completed.

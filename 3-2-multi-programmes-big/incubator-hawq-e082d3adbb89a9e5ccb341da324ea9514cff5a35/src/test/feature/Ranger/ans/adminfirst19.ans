@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-CREATE TABLESPACE mytblspace FILESPACE dfs_system;    
-CREATE TABLESPACE

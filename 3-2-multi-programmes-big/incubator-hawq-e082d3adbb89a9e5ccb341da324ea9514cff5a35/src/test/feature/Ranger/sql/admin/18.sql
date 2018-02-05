@@ -1,2 +1,0 @@
-DROP RESOURCE QUEUE myqueue;
-

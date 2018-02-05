@@ -1,4 +1,0 @@
--- start_ignore
--- end_ignore
-DROP AGGREGATE scube2(numeric);
-DROP AGGREGATE
