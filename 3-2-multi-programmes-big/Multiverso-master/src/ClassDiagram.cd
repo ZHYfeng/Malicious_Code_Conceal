@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="multiverso::SyncServer" Collapsed="true">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AFAACAAAAAABAAAAAAAAhAAAAAQgAABAAAAAAAAAAAA=</HashCode>
+      <FileName>server.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MtQueue&lt;T&gt;" Collapsed="true">
+    <Position X="25.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAACAQgAAAAAIAAIAAAACAAAQAIAAgAgQAKAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\mt_queue.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Actor" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAQAQCAAgQAEAAAAAAAAAACEAABQIAAgBAAAIAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\actor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Blob" Collapsed="true">
+    <Position X="23.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAIAAAAAAACAAAKAAAABAAAEAQAAAAAAwAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\blob.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::NetInterface" Collapsed="true">
+    <Position X="1.75" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgCAAQQAAAABIAMAABIAAAIAEgAAAAAACIAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Communicator" Collapsed="true">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAIAAAAAAAAAAAAAAACACEAAAAAAAABAAIABA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\communicator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Controller" Collapsed="true">
+    <Position X="15.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAgAgAACAAAAAAABAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\controller.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Monitor" Collapsed="true">
+    <Position X="23.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAAAAAAAEgAAABACAAABAAAAEEAAAAAAAAAAgIAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\dashboard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Dashboard" Collapsed="true">
+    <Position X="27" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAgAAIAAAQAAQAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\dashboard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Message" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAIQGBAAQEAIAAIAEAACAAAABAgAABAASAAAACAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\message.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::ServerTable" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAACAACQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table_interface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Server" Collapsed="true">
+    <Position X="17.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABAAAAAAAAAIAAAAQAAAABAAAAAgAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\server.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Waiter" Collapsed="true">
+    <Position X="27" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAABAAAAAAAEAAAAAQAACBAAAAAAAAAIAg=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\waiter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::WorkerTable" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIIIAAAAAIAABABAAAAAAQEAQEQAQABACAIAIAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table_interface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Stream" Collapsed="true">
+    <Position X="9.75" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAEAAAE=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\io.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Serializable" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table_interface.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Worker" Collapsed="true">
+    <Position X="10.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAABAABIABAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\worker.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Zoo" Collapsed="true">
+    <Position X="20" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQKhQAARSAABABAAKAEAAAABwDAACMQIAAAIAAAIAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\zoo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MemoryBlock" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAACAABAAAAAACAAEAAAAAAAAAUQAIAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\allocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::FreeList" Collapsed="true">
+    <Position X="23.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAABAAAAAAAAAABAAACAAAAAAAAAAAEAKAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\allocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Allocator" Collapsed="true">
+    <Position X="5.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACABAAgAAAAgAAAAAAAAAAAAAAAAQAAI=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\allocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::SmartAllocator" Collapsed="true">
+    <Position X="5.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAgACAAAAAAAAAAAAAAQMAI=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\allocator.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::ASyncBuffer&lt;BufferType&gt;" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAMAAIEMAAhIAEAAEAAAAAAAAAAAAAAiAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\async_buffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Logger" Collapsed="true">
+    <Position X="27" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABQICAAAAoAgYAAAAAAIAAAAAEAAAAAAAAgBEEsAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\log.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Log" Collapsed="true">
+    <Position X="25.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAgYAAAAAAAAAAAAAAAAAAAAAAEEEkAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\log.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::QuantizationFilter" Collapsed="true">
+    <Position X="11.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAQAAAAAAAAAAgAAAAAAABA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\quantization_util.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::SparseFilter&lt;data_type, index_type&gt;" Collapsed="true">
+    <Position X="10.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAICAAQAAAAAAwAAAAgAAAAAAABA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\quantization_util.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::OneBitsFilter" Collapsed="true">
+    <Position X="12.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\quantization_util.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Timer" Collapsed="true">
+    <Position X="25.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAABAAAAAAAAAAAABAAAEAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::BruckMap" Collapsed="true">
+    <Position X="25.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAACAQAAgAAEAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\allreduce_engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::RecursiveHalvingMap" Collapsed="true">
+    <Position X="20" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEgAAAAAACAgAAAAAACAAAQAAAhAAAIgAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\allreduce_engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::AllreduceEngine" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAIAEIQAAIAAAAAAAAAgSBABCAAAAAgACAiAAAQA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\allreduce_engine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MPINetWrapper" Collapsed="true">
+    <Position X="0.5" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgKggQQgAAAAIAMAABIhADIAEgAAgAQADIAAAIAE=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\mpi_net.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::ZMQNetWrapper" Collapsed="true">
+    <Position X="2.75" Y="14.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAgCAAQQAAAAAIAMAABIAAAIAEgAAAAAACIAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\zmq_net.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::HDFSStream" Collapsed="true">
+    <Position X="10.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAQAAAgAAAAAAAAEJQAAAEAAAE=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\hdfs_stream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::HDFSStreamFactory" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAICAAAABAAAAAAAAAAAAAAIAAAACAABA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\hdfs_stream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::StreamFactory" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAQAAAAIIAAAAAAAAAAAAAACAACAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\io.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::TextReader" Collapsed="true">
+    <Position X="21.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAIAAAABAAAAEAAAAAAAAAAAAAAAAAAAEACIAAE=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\io.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::LocalStream" Collapsed="true">
+    <Position X="8.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAgAAAAAAAAEBAAAAEAAAU=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\local_stream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::LocalStreamFactory" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIABAAAAAEAAAAAAAAAAIAAAAAACAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\local_stream.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::ArrayWorker&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAoAAIAAAIAAAABAQgAAAAFAAAAAQAAAAAAAIAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\array_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::Updater&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAABAAAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\updater.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::ArrayServer&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAkAAAAAABABAAAAAAAABAAASAAAAAAAAgAQAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\array_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::KVWorkerTable&lt;Key, Val&gt;" Collapsed="true">
+    <Position X="0.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAIAIAAAABAAAAAAAAIAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\kv_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::KVServerTable&lt;Key, Val&gt;" Collapsed="true">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAABAABAAAAAAAAAAAQAAAAAAgAAAQAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\kv_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MatrixWorker&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQAAAAIIAAAABAQhKAAAAAAAAgQAAAAAACAAAAAEA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MatrixServer&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAmAAAAAABgBAAABAAAISAAASgQAAAAAAAAQAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MatrixWorkerTable&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIQAAAAAIAAKABAQhIAAAEAAAAAQAAAAAACIAAAAEA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MatrixServerTable&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQkAAAAAABABAAABAAAAQAAASAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::SparseMatrixWorkerTable&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAABAAAAAAAAAAAACQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\sparse_matrix_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::SparseMatrixServerTable&lt;T&gt;" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACAAAAAABgQAAAIAAAICAAAQAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\sparse_matrix_table.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::AdaGradUpdater&lt;T&gt;" Collapsed="true">
+    <Position X="0.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAABAAAAAAAABAAAAAAAACAAACAIAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\adagrad_updater.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::SGDUpdater&lt;T&gt;" Collapsed="true">
+    <Position X="3" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAEAAAAAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\sgd_updater.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::MomentumUpdater&lt;T&gt;" Collapsed="true">
+    <Position X="5.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAABBAAAAAAAUAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\momentum_updater.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::thread" Collapsed="true">
+    <Position X="23.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAACgAAAAEAAAAIAACQAAQIAAAAAQAgAAAAQAA=</HashCode>
+      <FileName>c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\thread</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="std::mutex" Collapsed="true">
+    <Position X="27" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAIAA=</HashCode>
+      <FileName>c:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\mutex</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::configure::FlagRegister&lt;T&gt;" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAIAAABAAACAACAAAAAAAEAAAABAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\configure.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="multiverso::configure::FlagRegisterHelper&lt;T&gt;" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\configure.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="multiverso::Node" Collapsed="true">
+    <Position X="23.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAARAAAAAAAAAAABAAAAAAAAAAAAAAACEAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\node.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::AddOption" Collapsed="true">
+    <Position X="20" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAICBAgACAAEIAABAABAAAABAABASAwgAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\updater.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::GetOption" Collapsed="true">
+    <Position X="25.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAABAAACCAEIAABAAAAAAAAAAAACAQAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\updater\updater.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::URI" Collapsed="true">
+    <Position X="25.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAACAEBAAAAAgAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\io.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::ArrayTableOption&lt;T&gt;" Collapsed="true">
+    <Position X="21.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CCAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\array_table.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::KVTableOption&lt;Key, Val&gt;" Collapsed="true">
+    <Position X="27" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\kv_table.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::MatrixOption&lt;T&gt;" Collapsed="true">
+    <Position X="20" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACAAgAAAAAAAAABAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::MatrixTableOption&lt;T&gt;" Collapsed="true">
+    <Position X="21.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAgAAAAAAAAAAAABAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table\matrix_table.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="multiverso::configure::Command&lt;T&gt;" Collapsed="true">
+    <Position X="23.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\configure.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="TableHandler" Collapsed="true">
+    <Position X="25.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\c_api.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="multiverso::MessagePtr" Collapsed="true">
+    <Position X="21.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\message.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="multiverso::integer_t" Collapsed="true">
+    <Position X="20" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\table_interface.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="multiverso::ReduceFunction" Collapsed="true">
+    <Position X="23.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\allreduce_engine.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="multiverso::MsgType" Collapsed="true">
+    <Position X="23.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAKAAAAIUAAAEAAAwAAAAAAAAAIAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\message.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="multiverso::NetThreadLevel" Collapsed="true">
+    <Position X="25.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="multiverso::Role" Collapsed="true">
+    <Position X="20" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAACAAAAAAAAAAQAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\node.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="multiverso::LogLevel" Collapsed="true">
+    <Position X="21.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAEAEAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\util\log.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="multiverso::RecursiveHalvingNodeType" Collapsed="true">
+    <Position X="27" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\net\allreduce_engine.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="multiverso::FileOpenMode" Collapsed="true">
+    <Position X="20" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAEAAAAAgAAAAAQAAAAAAAAEAAEA=</HashCode>
+      <FileName>E:\git\malicious-code-conceal\3-2-multi-programmes-big\Multiverso-master\include\multiverso\io\io.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>
