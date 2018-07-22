@@ -10,7 +10,7 @@ totalline(){
 	echo "totalline:$sum" >> ../../statics.txt
 }
 
-for FILE in ../apps/*
+for FILE in ../apps.LCLB.detect.branko/*
 do 
     echo $FILE
     

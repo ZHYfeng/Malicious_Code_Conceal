@@ -7,7 +7,7 @@ for /d %%i in (./*) do (
     cd %%i/programme
     del *.o *.exe 
     REM del occurrence.log sequence.log
-    make
+    REM make
 
     cd ../statistic
     REM del *.*
