@@ -4,11 +4,11 @@ import shutil
 
 rootdir = "C:\\git\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\"
 
-malicious_code_4_c = "C:\\git\\2_branko\\4_pthread_NoOutPut.c"
-malicious_code_4_h = "C:\\git\\2_branko\\4_pthread_NoOutPut.h"
+malicious_code_4_c = "C:\\git\\2_hunatcha\\4_pthread_NoOutPut.c"
+malicious_code_4_h = "C:\\git\\2_hunatcha\\4_pthread_NoOutPut.h"
 
 appdir = "C:\\git\\3_2_multi_programmes_detect\\apps"
-detectdir = "C:\\git\\3_2_multi_programmes_detect\\apps.LCLB.detect.branko"
+detectdir = "C:\\git\\3_2_multi_programmes_detect\\apps.LCLB.detect.hunatcha"
 
 for parent, dirnames, filenames in os.walk(detectdir):
     for filename in filenames:

