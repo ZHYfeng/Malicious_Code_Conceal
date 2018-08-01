@@ -76,9 +76,9 @@ void slave()
    {pthread_mutex_unlock(&(locks->idlock));}
 
 malicious_1();
-malicious_2();
 malicious_3();
 malicious_4();
+malicious_2();
 
 /* POSSIBLE ENHANCEMENT:  Here is where one might pin processes to
    processors to avoid migration. */

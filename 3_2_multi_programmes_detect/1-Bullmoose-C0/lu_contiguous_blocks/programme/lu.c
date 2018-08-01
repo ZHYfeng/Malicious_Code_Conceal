@@ -550,10 +550,10 @@ void OneSolve(long n, long block_size, long MyNum, long dostats)
 #line 441
 };
 
-// malicious_1();
-// malicious_3();
-// malicious_4();
-// malicious_2();
+malicious_1();
+malicious_2();
+malicious_3();
+malicious_4();
 
   /* to remove cold-start misses, all processors touch their own data */
   TouchA(block_size, MyNum);
