@@ -1,16 +1,13 @@
 set RUN_TIMES=1000
 set LOOPS=120000
 
-cd ../apps.LCLB
+cd ../apps.LCLB.detect.branko
 for /d %%i in (./*) do (
 
     cd %%i/programme
     del *.o *.exe 
     REM del occurrence.log sequence.log
     REM make
-
-    cd ../statistic
-    REM del *.*
 
     cd ../script
     REM del occurrence.log sequence.log
