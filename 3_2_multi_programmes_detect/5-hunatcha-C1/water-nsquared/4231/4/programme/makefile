@@ -1,7 +1,8 @@
 TARGET = programme
 OBJS = bullmoose.o bndry.o cnstnt.o cshift.o initia.o interf.o intraf.o kineti.o mdmain.o poteng.o predcor.o syscons.o water.o
 
-include ..\..\..\..\..\null_macros\Makefile.config
+include ..\..\..\..\..
+ull_macros\Makefile.config
 
 bndry.o: bndry.c split.h mdvar.h parameters.h mddata.h global.h
 cnstnt.o: cnstnt.c water.h wwpot.h cnst.h frcnst.h fileio.h parameters.h global.h

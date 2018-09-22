@@ -2,13 +2,13 @@ import os
 import os.path
 import shutil
 
-rootdir = "C:\\git\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\"
+rootdir = "C:\\Users\\郝宇\\Documents\\Git\\malicious-code-conceal\\3_2_multi_programmes_detect\\3_2_multi_programmes_detect\\"
 
-malicious_code_4_c = "C:\\git\\2_hunatcha\\4_pthread_NoOutPut.c"
-malicious_code_4_h = "C:\\git\\2_hunatcha\\4_pthread_NoOutPut.h"
+malicious_code_4_c = "C:\\Users\\郝宇\\Documents\\Git\\malicious-code-conceal\\2_hunatcha\\4_pthread_NoOutPut.c"
+malicious_code_4_h = "C:\\Users\\郝宇\\Documents\\Git\\malicious-code-conceal\\2_hunatcha\\4_pthread_NoOutPut.h"
 
-appdir = "C:\\git\\3_2_multi_programmes_detect\\apps"
-detectdir = "C:\\git\\3_2_multi_programmes_detect\\apps.LCLB.detect.hunatcha"
+appdir = "C:\\Users\\郝宇\\Documents\\Git\\malicious-code-conceal\\3_2_multi_programmes_detect\\apps"
+detectdir = "C:\\Users\\郝宇\\Documents\\Git\\malicious-code-conceal\\3_2_multi_programmes_detect\\5-hunatcha-C1"
 
 for parent, dirnames, filenames in os.walk(detectdir):
     for filename in filenames:
@@ -27,7 +27,7 @@ for parent, dirnames, filenames in os.walk(detectdir):
             for line in lines:
                 if line.startswith("include"):
                     outfile.write(
-                        "include ..\\..\\..\\null_macros\\Makefile.config\n")
+                        "include ..\..\..\..\..\null_macros\Makefile.config\n")
                 else:
                     outfile.write(line)
             infile.close()
@@ -36,6 +36,6 @@ for parent, dirnames, filenames in os.walk(detectdir):
             shutil.move(os.path.join(parent, "temp_makefile"),
                         os.path.join(parent, filename))
             os.chdir(parent)
-            os.system('make')
+            # os.system('make')
             os.chdir('..\\..\\')
         # if "programme.exe" == filename:

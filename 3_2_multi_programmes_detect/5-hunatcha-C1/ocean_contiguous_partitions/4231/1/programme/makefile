@@ -1,7 +1,8 @@
 TARGET = programme
 OBJS = bullmoose.o jacobcalc.o jacobcalc2.o laplacalc.o linkup.o main.o multi.o slave1.o slave2.o subblock.o
 
-include ..\..\..\..\..\null_macros\Makefile.config
+include ..\..\..\..\..
+ull_macros\Makefile.config
 
 decs.h: decs.h
 jacobcalc.c: decs.h
